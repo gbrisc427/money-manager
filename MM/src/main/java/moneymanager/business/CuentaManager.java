@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class CuentaManager {
 
-    private List<Cuenta> cuentas;
+    private List<Cuenta> cuentas = new ArrayList<>();
     private static  CuentaManager instancia = null;
     private Cuenta cuentaActual;
 
@@ -51,6 +51,28 @@ public class CuentaManager {
         }
     }
 
+    public String getSaldo(){
+        String saldo = "0.00€";
+        if (cuentaActual != null){
+            saldo = cuentaActual.getSaldo() + "€";
+        }
+        return saldo;
+    }
+
+        public String getNombreCuenta(){
+        String nombre = "";
+        if (cuentaActual != null){
+            nombre = cuentaActual.getNombre();
+        }
+        return nombre;
+    }
 
 
+    public Cuenta getCuentaActual() {
+        return cuentaActual;
+    }
+
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
 }
