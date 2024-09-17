@@ -7,8 +7,8 @@ public class Gasto extends Operacion{
     private final TOperacion tipoOperacion = TOperacion.GASTO;
     private Cuenta cuenta;
 
-    public Gasto(Date fecha, String motivo, float cantidad, String color, Cuenta cuenta) {
-        super(fecha, motivo, cantidad, color);
+    public Gasto(Date fecha, String motivo, float cantidad, String color, Cuenta cuenta, Categoria categoria) {
+        super(fecha, motivo, cantidad, color, categoria);
         this.cuenta = cuenta;
     }
 
