@@ -5,15 +5,20 @@ import moneymanager.business.CuentaManager;
 
 import java.io.*;
 
-public class AccesoDatosCuentas implements AccesoDatos {
-    private static AccesoDatosCuentas instance = null;
+public class AccesoDatosOperaciones implements AccesoDatos {
+    private static AccesoDatosOperaciones instance = null;
 
-    private AccesoDatosCuentas(){}
+    private AccesoDatosOperaciones(){}
 
-    public static AccesoDatosCuentas getInstance(){
-        if(instance == null) instance = new AccesoDatosCuentas();
+    public static AccesoDatosOperaciones getInstance(){
+        if(instance == null) instance = new AccesoDatosOperaciones();
         return instance;
     }
+
+
+    // MODIFICAR LA CLASE PARA OPERACIONES (AHORA ES UN CNTL C CNTL V DE CUENTAS)
+
+
 
     public void escribirCsv(String ruta) throws IOException {
         CuentaManager CM = CuentaManager.getInstancia();

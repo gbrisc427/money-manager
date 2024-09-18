@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CuentaManager {
 
-    private List<Cuenta> cuentas = new ArrayList<>();
+    private final List<Cuenta> cuentas = new ArrayList<>();
     private static  CuentaManager instancia = null;
     private Cuenta cuentaActual;
 
