@@ -1,9 +1,7 @@
 package moneymanager.business;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CuentaManager {
 
@@ -13,7 +11,7 @@ public class CuentaManager {
 
     private CuentaManager(){
         if (!cuentas.isEmpty()){
-            this.cuentaActual = cuentas.get(0);
+            this.cuentaActual = cuentas.getFirst();
         }else this.cuentaActual = null;
     }
 
@@ -22,9 +20,13 @@ public class CuentaManager {
         return instancia;
     }
 
-    public void crearCuenta(){
-        String nombre = "";   // MEDIANTE LA VISTA HACER VENTANA EMERGENTE QUE SOLICITE EL NOMBRE DE LA NUEVA CUENTA
+    public void crearCuenta(String nombre){
         Cuenta cuenta = new Cuenta(nombre, 0, new ArrayList<>());
+        cuentas.add(cuenta);
+    }
+
+    public void crearCuenta(String nombre, float saldo){
+        Cuenta cuenta = new Cuenta(nombre, saldo, new ArrayList<>());
         cuentas.add(cuenta);
     }
 

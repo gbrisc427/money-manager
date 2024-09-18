@@ -7,8 +7,8 @@ public class Ingreso extends  Operacion{
     private final TOperacion tipoOperacion = TOperacion.INGRESO;
     private final Cuenta cuenta;
 
-    public Ingreso(Date fecha, String motivo, float cantidad, String color, Cuenta cuenta, Categoria categoria) {
-        super( fecha, motivo, cantidad, color, categoria);
+    public Ingreso(Date fecha, String motivo, float cantidad,  Cuenta cuenta, String categoria) {
+        super( fecha, motivo, cantidad, categoria);
         this.cuenta = cuenta;
     }
 

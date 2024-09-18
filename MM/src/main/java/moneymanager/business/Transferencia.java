@@ -6,20 +6,20 @@ public class Transferencia extends  Operacion{
 
     private final TOperacion tipoOperacion = TOperacion.TRANSFERENCIA;
     private Cuenta cuentaRemitente;
-    private Cuenta cunetaDestino;
+    private Cuenta cuentaDestino;
 
-    public Transferencia(Date fecha, String motivo, float cantidad, String color, Cuenta remitente, Cuenta destino, Categoria categoria) {
-        super(fecha, motivo, cantidad, color, categoria);
+    public Transferencia(Date fecha, String motivo, float cantidad, Cuenta remitente, Cuenta destino, String categoria) {
+        super(fecha, motivo, cantidad, categoria);
         this.cuentaRemitente = remitente;
-        this.cunetaDestino = destino;
+        this.cuentaDestino = destino;
     }
 
     public TOperacion getTipoOperacion() {
         return tipoOperacion;
     }
 
-    public Cuenta getCunetaDestino() {
-        return cunetaDestino;
+    public Cuenta getCuentaDestino() {
+        return cuentaDestino;
     }
 
     public Cuenta getCuentaRemitente() {
