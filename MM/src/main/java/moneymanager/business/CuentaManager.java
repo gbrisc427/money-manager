@@ -39,15 +39,12 @@ public class CuentaManager {
 
     public void eliminarCuenta(){
         if (cuentaActual != null){
-            // MOSTRAR VENTANA QUE PIDA INTRODUCIR EL NOMBRE DE LA CUENTA PARA ELIMINARLA
             cuentas.remove(cuentaActual);
             if (cuentas.isEmpty()){
                 cuentaActual = null;
             }else{
-                cuentaActual = cuentas.get(0);
+                cuentaActual = cuentas.getFirst();
             }
-        }else{
-            // VISTA, MOSTRAR EN LA PANTALLA QUE NO HAY CUENTAS DISPONIBLES PARA ELIMINAR
         }
     }
 
