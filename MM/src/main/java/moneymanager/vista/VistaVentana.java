@@ -45,7 +45,8 @@ public class VistaVentana extends JFrame {
 
         // BOTÓN NOMBRE DE LA CUENTA
         String nombreCuenta = CM.getNombreCuenta();
-        JButton botonNombreCuenta = new JButton("ACCOUNT");
+        System.out.println(nombreCuenta);
+        JButton botonNombreCuenta = new JButton(nombreCuenta);
         botonNombreCuenta.setFont(new Font("Lexend", Font.BOLD, 30));
         botonNombreCuenta.setBorder(new EmptyBorder(25, 15, 0, 15));
         botonNombreCuenta.setForeground(new Color(164, 227, 111));
@@ -89,7 +90,7 @@ public class VistaVentana extends JFrame {
         panelModificarCuenta.setVisible(false);
 
         // BOTÓN2 NOMBRE DE LA CUENTA
-        JButton botonNombreCuenta2 = new JButton("ACCOUNT");
+        JButton botonNombreCuenta2 = new JButton(nombreCuenta);
         botonNombreCuenta2.setFont(new Font("Lexend", Font.BOLD, 30));
         botonNombreCuenta2.setBorder(new EmptyBorder(25, 15, 0, 15));
         botonNombreCuenta2.setForeground(new Color(164, 227, 111));

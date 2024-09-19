@@ -17,9 +17,6 @@ public class CuentaManager {
 
     private CuentaManager(){
         AD = AccesoDatosCuentas.getInstance();
-        if (!cuentas.isEmpty()){
-            this.cuentaActual = cuentas.getFirst();
-        }else this.cuentaActual = null;
     }
 
     public static CuentaManager getInstancia() {
@@ -27,9 +24,19 @@ public class CuentaManager {
         return instancia;
     }
 
+    public void init(){
+        if (!cuentas.isEmpty()){
+            this.cuentaActual = cuentas.getFirst();
+        }else{
+            crearCuenta("CUENTA");
+            init();
+        }
+
+    }
+
     public void leerCSV(){
         try {
-            AD.leerCsv("CSV/mascotas.csv");}
+            AD.leerCsv("CSV/cuentas.csv");}
         catch (IOException e){
             // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
         }
@@ -37,7 +44,7 @@ public class CuentaManager {
 
     public void escribirCSV(){
         try {
-            AD.escribirCsv("CSV/mascotas.csv");}
+            AD.escribirCsv("CSV/cuentas.csv");}
         catch (IOException e){
             // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
             }

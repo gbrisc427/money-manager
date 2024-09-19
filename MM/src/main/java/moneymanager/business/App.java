@@ -9,18 +9,19 @@ public class App {
 
     private final CuentaManager CM;
     private final OperacionesManager OM;
-    private final VistaVentana VV;
+    private VistaVentana VV;
 
 
     public App(){
         CM = CuentaManager.getInstancia();
         OM = OperacionesManager.getInstancia();
-        VV = VistaVentana.getInstancia();
     }
 
     public void init(){
         OM.leerCSV();
         CM.leerCSV();
+        CM.init();
+        VV = VistaVentana.getInstancia();
     }
 
 

@@ -1,7 +1,6 @@
 package moneymanager.business;
 
 import moneymanager.persistencia.AccesoDatos;
-import moneymanager.persistencia.AccesoDatosCuentas;
 import moneymanager.persistencia.AccesoDatosOperaciones;
 
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class OperacionesManager {
 
     public void leerCSV(){
         try {
-            AD.leerCsv("CSV/mascotas.csv");}
+            AD.leerCsv("CSV/operaciones.csv");}
         catch (IOException e){
             // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
         }
@@ -38,7 +37,7 @@ public class OperacionesManager {
 
     public void escribirCSV(){
         try {
-            AD.escribirCsv("CSV/mascotas.csv");}
+            AD.escribirCsv("CSV/operaciones.csv");}
         catch (IOException e){
             // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
         }
