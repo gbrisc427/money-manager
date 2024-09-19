@@ -24,12 +24,14 @@ public class CuentaManager {
         return instancia;
     }
 
-    public void init(){
+    public boolean inicializar(){
         if (!cuentas.isEmpty()){
             this.cuentaActual = cuentas.getFirst();
+            return false;
         }else{
             crearCuenta("CUENTA");
-            init();
+            this.cuentaActual = cuentas.getFirst();
+            return true;
         }
 
     }

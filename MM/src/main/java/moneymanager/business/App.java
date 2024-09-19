@@ -20,7 +20,6 @@ public class App {
     public void init(){
         OM.leerCSV();
         CM.leerCSV();
-        CM.init();
         VV = VistaVentana.getInstancia();
     }
 
