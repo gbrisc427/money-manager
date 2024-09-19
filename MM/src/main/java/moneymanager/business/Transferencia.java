@@ -1,6 +1,6 @@
 package moneymanager.business;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Transferencia extends  Operacion{
 
@@ -8,8 +8,8 @@ public class Transferencia extends  Operacion{
     private Cuenta cuentaRemitente;
     private Cuenta cuentaDestino;
 
-    public Transferencia(Date fecha, String motivo, float cantidad, Cuenta remitente, Cuenta destino, String categoria) {
-        super(fecha, motivo, cantidad, categoria);
+    public Transferencia(String id,LocalDateTime fecha, String motivo, float cantidad, Cuenta remitente, Cuenta destino, String categoria) {
+        super(id, fecha, motivo, cantidad, categoria);
         this.cuentaRemitente = remitente;
         this.cuentaDestino = destino;
     }
@@ -24,5 +24,10 @@ public class Transferencia extends  Operacion{
 
     public Cuenta getCuentaRemitente() {
         return cuentaRemitente;
+    }
+
+    @Override
+    public TOperacion getTOperacion() {
+        return tipoOperacion;
     }
 }

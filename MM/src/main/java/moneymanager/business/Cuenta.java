@@ -7,14 +7,33 @@ import java.util.List;
 
 public class Cuenta {
 
+    private String id;
     private String nombre;
     private float saldo;
     private List<Operacion> historial;
 
-    public Cuenta(String nombre, float saldo, ArrayList<Operacion> historial) {
+    public Cuenta(String id, String nombre, float saldo, ArrayList<Operacion> historial) {
         this.nombre = nombre;
         this.saldo = saldo;
         this.historial = historial;
+        this.id = id;
+    }
+
+    public void aniadirOperacion(Operacion operacion){
+        if (operacionNueva(operacion)) {
+            this.saldo += operacion.getCantidad();
+            historial.add(operacion);
+        }
+    }
+
+    private boolean operacionNueva(Operacion operacion){
+        boolean nuevo = true;
+        for (Operacion aux : this.historial){
+            if (operacion.equals(aux)){
+                nuevo = false;
+            }
+        }
+        return nuevo;
     }
 
     public String getNombre() {
@@ -39,5 +58,9 @@ public class Cuenta {
 
     public void setHistorial(List<Operacion> historial) {
         this.historial = historial;
+    }
+
+    public String getId() {
+        return id;
     }
 }

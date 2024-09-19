@@ -8,16 +8,19 @@ import static moneymanager.vista.VistaVentana.*;
 public class App {
 
     private final CuentaManager CM;
+    private final OperacionesManager OM;
     private final VistaVentana VV;
 
 
     public App(){
         CM = CuentaManager.getInstancia();
+        OM = OperacionesManager.getInstancia();
         VV = VistaVentana.getInstancia();
     }
 
     public void init(){
-        // CARGAR EL PROGRAMA CON LOS FICHEROS
+        OM.leerCSV();
+        CM.leerCSV();
     }
 
 
@@ -29,7 +32,8 @@ public class App {
 
 
     public void end(){
-        // GUARDAR LOS DATOS EN LOS FICHEROS
+        OM.escribirCSV();
+        CM.escribirCSV();
         System.out.println("end");
     }
 

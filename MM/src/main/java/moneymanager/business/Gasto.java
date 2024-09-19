@@ -1,14 +1,14 @@
 package moneymanager.business;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Gasto extends Operacion{
 
     private final TOperacion tipoOperacion = TOperacion.GASTO;
     private Cuenta cuenta;
 
-    public Gasto(Date fecha, String motivo, float cantidad, Cuenta cuenta, String categoria) {
-        super(fecha, motivo, cantidad, categoria);
+    public Gasto(String id,LocalDateTime fecha, String motivo, float cantidad, Cuenta cuenta, String categoria) {
+        super(id, fecha, motivo, cantidad, categoria);
         this.cuenta = cuenta;
     }
 
@@ -18,5 +18,10 @@ public class Gasto extends Operacion{
 
     public Cuenta getCuenta() {
         return cuenta;
+    }
+
+    @Override
+    public TOperacion getTOperacion() {
+        return tipoOperacion;
     }
 }

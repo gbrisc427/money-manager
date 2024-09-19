@@ -1,15 +1,17 @@
 package moneymanager.business;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public abstract class Operacion {
 
-    private Date fecha;
-    private String motivo;
-    private float cantidad;
-    private String categoria;
+    private final String id;
+    private final LocalDateTime fecha;
+    private final String motivo;
+    private final float cantidad;
+    private final String categoria;
 
-    public Operacion(Date fecha, String motivo, float cantidad, String categoria) {
+    public Operacion(String id, LocalDateTime fecha, String motivo, float cantidad, String categoria) {
+        this.id = id;
         this.fecha = fecha;
         this.motivo = motivo;
         this.cantidad = cantidad;
@@ -17,7 +19,7 @@ public abstract class Operacion {
     }
 
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
@@ -29,5 +31,16 @@ public abstract class Operacion {
         return cantidad;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
 
-}
+    public String getId() {
+        return id;
+    }
+
+    public abstract TOperacion getTOperacion();
+
+
+
+    }

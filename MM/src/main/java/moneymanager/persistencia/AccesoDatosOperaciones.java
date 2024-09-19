@@ -1,7 +1,6 @@
 package moneymanager.persistencia;
 
-import moneymanager.business.Cuenta;
-import moneymanager.business.CuentaManager;
+import moneymanager.business.*;
 
 import java.io.*;
 
@@ -16,17 +15,41 @@ public class AccesoDatosOperaciones implements AccesoDatos {
     }
 
 
-    // MODIFICAR LA CLASE PARA OPERACIONES (AHORA ES UN CNTL C CNTL V DE CUENTAS)
-
-
-
     public void escribirCsv(String ruta) throws IOException {
-        CuentaManager CM = CuentaManager.getInstancia();
+        OperacionesManager OM = OperacionesManager.getInstancia();
         PrintWriter escritor = null;
         try{
             escritor = new PrintWriter(new FileWriter(ruta, false));
-            for (Cuenta cuenta : CM.getCuentas()) {
-                escritor.println(cuenta.getNombre().toUpperCase()+";"+cuenta.getSaldo());
+            String tOperacion = "";
+            for (Operacion operacion : OM.getOperaciones()) {
+                switch (operacion.getTOperacion()){
+                    case TOperacion.TRANSFERENCIA:
+                        tOperacion = "T";
+                        break;
+                    case TOperacion.GASTO:
+                        tOperacion = "G";
+                        break;
+                    case TOperacion.INGRESO:
+                        tOperacion = "I";
+                        break;
+                }
+                String fecha = operacion.getFecha().getYear()+"/"+ operacion.getFecha().getMonthValue()+"/"
+                        +operacion.getFecha().getDayOfMonth();
+                switch (tOperacion){
+                    case "G":
+                        escritor.println(operacion.getId() +";"+tOperacion+ ";"+fecha+";"+operacion.getCantidad()+";"
+                                +operacion.getCategoria()+";"+operacion.getMotivo()+";"+ ((Gasto) operacion).getCuenta().getId());
+                        break;
+                    case "I":
+                        escritor.println(operacion.getId() +";"+tOperacion+ ";"+fecha+";"+operacion.getCantidad()+";"
+                                +operacion.getCategoria()+";"+operacion.getMotivo()+";"+ ((Ingreso) operacion).getCuenta().getId());
+                        break;
+                    case "T":
+                        escritor.println(operacion.getId() +";"+tOperacion+ ";"+fecha+";"+operacion.getCantidad()+";"
+                                +operacion.getCategoria()+";"+operacion.getMotivo()+";"+
+                                ((Transferencia) operacion).getCuentaRemitente().getId()+ ";"+
+                                ((Transferencia) operacion).getCuentaDestino().getId());
+                }
             }
         }catch (IOException e){
             throw e;
@@ -36,7 +59,7 @@ public class AccesoDatosOperaciones implements AccesoDatos {
     }
 
     public void leerCsv(String ruta) throws IOException{
-        CuentaManager CM = CuentaManager.getInstancia();
+        OperacionesManager OM = OperacionesManager.getInstancia();
         BufferedReader lector = null;
         try {
             lector = new BufferedReader(new FileReader(ruta));
@@ -44,7 +67,8 @@ public class AccesoDatosOperaciones implements AccesoDatos {
 
             while ((line = lector.readLine()) != null) {
                 String[] array = line.split(";");
-                CM.crearCuenta(array[0], Float.parseFloat(array[1]));
+                OM.cargarOperacionesCSV(array);
+
             }
         } catch (IOException e) {
             throw e;

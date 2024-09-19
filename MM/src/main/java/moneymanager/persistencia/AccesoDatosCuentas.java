@@ -21,7 +21,7 @@ public class AccesoDatosCuentas implements AccesoDatos {
         try{
             escritor = new PrintWriter(new FileWriter(ruta, false));
             for (Cuenta cuenta : CM.getCuentas()) {
-                escritor.println(cuenta.getNombre().toUpperCase()+";"+cuenta.getSaldo());
+                escritor.println(cuenta.getId()+";"+cuenta.getNombre().toUpperCase()+";"+cuenta.getSaldo());
             }
         }catch (IOException e){
             throw e;
@@ -39,7 +39,7 @@ public class AccesoDatosCuentas implements AccesoDatos {
 
             while ((line = lector.readLine()) != null) {
                 String[] array = line.split(";");
-                CM.crearCuenta(array[0], Float.parseFloat(array[1]));
+                CM.crearCuenta(array[0],array[1], Float.parseFloat(array[2]));
             }
         } catch (IOException e) {
             throw e;

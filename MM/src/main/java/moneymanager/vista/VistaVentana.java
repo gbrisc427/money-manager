@@ -151,7 +151,6 @@ public class VistaVentana extends JFrame {
             public void windowClosing(WindowEvent e) {
                 VistaVentana.this.dispose();
                 ventanaAbierta = false;
-                System.out.println(ventanaAbierta);
             }
         });
 
@@ -181,7 +180,7 @@ public class VistaVentana extends JFrame {
                     panelModificarCuenta.setVisible(false);
                     infoCambioNombre.setVisible(false);
                     if (cuenta != null) {
-                        CM.getCuentaActual().setNombre(textField);
+                        CM.modificarCuenta(textField);
                         nuevoNombre.setText("");
                     }
                     botonNombreCuenta.setText(textField);
