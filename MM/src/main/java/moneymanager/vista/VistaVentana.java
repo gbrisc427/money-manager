@@ -1,10 +1,7 @@
 package moneymanager.vista;
 
 
-import moneymanager.business.Cuenta;
-import moneymanager.business.CuentaManager;
-import moneymanager.business.LimitDocument;
-import moneymanager.business.NumericDocument;
+import moneymanager.business.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -37,6 +34,7 @@ public class VistaVentana extends JFrame {
 
     private VistaVentana() {
 
+        OperacionesManager OM = OperacionesManager.getInstancia();
         CuentaManager CM = CuentaManager.getInstancia();
         Cuenta cuenta = CM.getCuentaActual();
         if (CM.inicializar()){
@@ -202,7 +200,7 @@ public class VistaVentana extends JFrame {
 
         gbc.insets = new Insets(15, 15, 15, 15);
 
-        JLabel txtSubTitulo = new JLabel("<html> INTRODUCE LOS VALORES <br> A CONTINUACIÓN: </html>", SwingConstants.LEFT);
+        JLabel txtSubTitulo = new JLabel("<html> INTRODUCE LOS VALORES: </html>", SwingConstants.LEFT);
         txtSubTitulo.setFont(new Font("Lexend", Font.BOLD, 17));
         txtSubTitulo.setForeground(new Color(164, 227, 111));
         gbc.gridx = 0;
@@ -257,7 +255,7 @@ public class VistaVentana extends JFrame {
         txtFCategoria.setBorder(new EmptyBorder(8, 8, 8, 8));
         txtFCategoria.setForeground(new Color(253, 242, 240));
         txtFCategoria.setBackground(new Color(164, 227, 111));
-        txtFCategoria.setDocument(new NumericDocument(20));
+        txtFCategoria.setDocument(new LimitDocument(20));
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -282,7 +280,7 @@ public class VistaVentana extends JFrame {
         txtFAsunto.setBorder(new EmptyBorder(8, 8, 8, 8));
         txtFAsunto.setForeground(new Color(253, 242, 240));
         txtFAsunto.setBackground(new Color(164, 227, 111));
-        txtFAsunto.setDocument(new NumericDocument(50));
+        txtFAsunto.setDocument(new LimitDocument(50));
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -314,6 +312,8 @@ public class VistaVentana extends JFrame {
         cuentasTransf.setBorder(new EmptyBorder(0,0,0,0));
         if (opciones.length == 0){
             cuentasTransf.setEnabled(false);
+            cuentasTransf.setVisible(false);
+            checkBoxTransferencia.setVisible(false);
         }else{
             cuentasTransf.setSelectedIndex(0);
         }
@@ -325,8 +325,26 @@ public class VistaVentana extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         panelRealizarOp.add(cuentasTransf, gbc);
 
-        panelRealizarOp.setBorder(new EmptyBorder(15,15,15,15));
+        panelRealizarOp.setBorder(new EmptyBorder(15,30,15,15));
         panelRealizarOperacion.add(panelRealizarOp, BorderLayout.CENTER);
+
+        JPanel botonesRealizarOp = new JPanel();
+        botonesRealizarOp.setLayout(new FlowLayout(FlowLayout.CENTER));
+        botonesRealizarOp.setVisible(true);
+
+        JButton botonGuardarOp = new JButton("ACEPTAR");
+        botonGuardarOp.setBorder(new EmptyBorder(9, 9,9, 9));
+        botonGuardarOp.setForeground(new Color(253, 242, 240));
+        botonesRealizarOp.add(botonGuardarOp);
+
+        JButton botonCancelarOp = new JButton("CANCELAR");
+        botonCancelarOp.setBorder(new EmptyBorder(9, 9, 9, 9));
+        botonCancelarOp.setForeground(new Color(253, 242, 240));
+        botonCancelarOp.setBackground(new Color(227, 111, 111));
+        botonesRealizarOp.add(botonCancelarOp);
+
+        botonesRealizarOp.setBorder(new EmptyBorder(0,0,30,0));
+        panelRealizarOperacion.add(botonesRealizarOp, BorderLayout.SOUTH);
 
         // VENTANA
         this.add(menuPanel, BorderLayout.WEST); // Menú en el lado izquierdo
@@ -413,9 +431,13 @@ public class VistaVentana extends JFrame {
         realizarOperacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
-                panelPrincipal.setVisible(false);
-                panelRealizarOperacion.setVisible(true);
+                if (!panelNoHayCuentas.isVisible()){
+                    VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
+                    VistaVentana.this.remove(panelModificarCuenta);
+                    panelPrincipal.setVisible(false);
+                    panelModificarCuenta.setVisible(false);
+                    panelRealizarOperacion.setVisible(true);
+                }
             }
         });
 
@@ -429,6 +451,35 @@ public class VistaVentana extends JFrame {
                 }
             } else {
                 cuentasTransf.setEnabled(false);
+            }
+        });
+
+        botonGuardarOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ( !txtFAsunto.getText().isEmpty() && !txtFAsunto.getText().isEmpty()
+                        && !txtFCategoria.getText().isEmpty()) {
+                    if (Float.parseFloat(txtFCant.getText()) != 0) {
+                        if (checkBoxTransferencia.isSelected()) {
+                            if (cuentasTransf.getSelectedItem().equals(null)) {
+                                // pop - up
+                            } else {
+                                Cuenta cuentaDest = CM.getCuenta((String) cuentasTransf.getSelectedItem());
+                                OM.registrarTransferencia(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
+                                        txtFCategoria.getText(), cuentaDest);
+                            }
+                        } else {
+                            OM.registrarIngresoGasto(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
+                                    txtFCategoria.getText());
+                        }
+                        updateInfo();
+                        VistaVentana.this.remove(panelRealizarOp);
+                        panelRealizarOp.setVisible(false);
+                        panelPrincipal.setVisible(true);
+                    } else {
+                        // pop-up algun campo no es correcto + lista de lo que hay q introducir en cada campo
+                    }
+                }
             }
         });
 

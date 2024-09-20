@@ -18,8 +18,8 @@ public class App {
     }
 
     public void init(){
-        OM.leerCSV();
         CM.leerCSV();
+        OM.leerCSV();
         VV = VistaVentana.getInstancia();
     }
 
