@@ -4,14 +4,12 @@ package moneymanager.vista;
 import moneymanager.business.Cuenta;
 import moneymanager.business.CuentaManager;
 import moneymanager.business.LimitDocument;
+import moneymanager.business.NumericDocument;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 
 public class VistaVentana extends JFrame {
@@ -26,6 +24,7 @@ public class VistaVentana extends JFrame {
     private final JPanel panelPrincipal;
     private final JPanel panelModificarCuenta;
     private final JPanel panelNoHayCuentas;
+    private final JPanel panelRealizarOperacion;
 
 
     public static VistaVentana getInstancia() {
@@ -182,10 +181,157 @@ public class VistaVentana extends JFrame {
 
         panelNoHayCuentas.add(infoNoHayCuentas, BorderLayout.CENTER);
 
+
+        // PANEL REALIZAR OPERACION
+        panelRealizarOperacion = new JPanel();
+        panelRealizarOperacion.setLayout(new BorderLayout());
+        panelRealizarOperacion.setVisible(false);
+
+        JLabel reOpTitulo = new JLabel("REALIZAR OPERACIÓN", SwingConstants.CENTER);
+        reOpTitulo.setFont(new Font("Lexend", Font.BOLD, 25));
+        reOpTitulo.setBorder(new EmptyBorder(35, 15, 20, 15));
+        reOpTitulo.setForeground(new Color(164, 227, 111));
+        reOpTitulo.setBackground(new Color(253, 242, 240));
+        reOpTitulo.setVisible(true);
+        panelRealizarOperacion.add(reOpTitulo,BorderLayout.NORTH);
+
+        JPanel panelRealizarOp = new JPanel();
+        panelRealizarOp.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        panelRealizarOp.setVisible(true);
+
+        gbc.insets = new Insets(15, 15, 15, 15);
+
+        JLabel txtSubTitulo = new JLabel("<html> INTRODUCE LOS VALORES <br> A CONTINUACIÓN: </html>", SwingConstants.LEFT);
+        txtSubTitulo.setFont(new Font("Lexend", Font.BOLD, 17));
+        txtSubTitulo.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelRealizarOp.add(txtSubTitulo, gbc);
+
+        gbc.insets = new Insets(5, 0, 5, 5);
+
+        JLabel txtCant = new JLabel("<html>CANTIDAD: </html>", SwingConstants.LEFT);
+        txtCant.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtCant.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        panelRealizarOp.add(txtCant, gbc);
+
+        JTextField txtFCant = new JTextField(4);
+        txtFCant.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFCant.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFCant.setForeground(new Color(253, 242, 240));
+        txtFCant.setBackground(new Color(164, 227, 111));
+        txtFCant.setText("0.0");
+        txtFCant.setDocument(new NumericDocument(6));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelRealizarOp.add(txtFCant, gbc);
+
+        JLabel txtCategoria = new JLabel("<html>CATEGORÍA: </html>", SwingConstants.LEFT);
+        txtCategoria.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtCategoria.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        panelRealizarOp.add(txtCategoria, gbc);
+
+        JTextField txtFCategoria = new JTextField(15);
+        txtFCategoria.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFCategoria.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFCategoria.setForeground(new Color(253, 242, 240));
+        txtFCategoria.setBackground(new Color(164, 227, 111));
+        txtFCategoria.setDocument(new NumericDocument(20));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelRealizarOp.add(txtFCategoria, gbc);
+
+        JLabel txtAsunto = new JLabel("<html>ASUNTO: </html>", SwingConstants.LEFT);
+        txtAsunto.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtAsunto.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        panelRealizarOp.add(txtAsunto, gbc);
+
+        JTextField txtFAsunto = new JTextField(15);
+        txtFAsunto.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFAsunto.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFAsunto.setForeground(new Color(253, 242, 240));
+        txtFAsunto.setBackground(new Color(164, 227, 111));
+        txtFAsunto.setDocument(new NumericDocument(50));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        panelRealizarOp.add(txtFAsunto, gbc);
+
+        gbc.insets = new Insets(10, 0, 10, 5);
+
+        JCheckBox checkBoxTransferencia = new JCheckBox("TRANSEFERENCIA");
+        checkBoxTransferencia.setFont(new Font("Lexend", Font.BOLD, 15));
+        checkBoxTransferencia.setForeground(new Color(164, 227, 111));
+        checkBoxTransferencia.setBackground(new Color(253, 242, 240));
+        checkBoxTransferencia.setBorder(new EmptyBorder(1,1,1,1));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelRealizarOp.add(checkBoxTransferencia, gbc);
+
+        String[] opciones = CM.getCuentasOpTransf();
+        JComboBox<String> cuentasTransf = new JComboBox<>(opciones);
+        cuentasTransf.setFont(new Font("Lexend", Font.BOLD, 15));
+        cuentasTransf.setForeground(new Color(164, 227, 111));
+        cuentasTransf.setBackground(new Color(253, 242, 240));
+        cuentasTransf.setBorder(new EmptyBorder(0,0,0,0));
+        if (opciones.length == 0){
+            cuentasTransf.setEnabled(false);
+        }else{
+            cuentasTransf.setSelectedIndex(0);
+        }
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelRealizarOp.add(cuentasTransf, gbc);
+
+        panelRealizarOp.setBorder(new EmptyBorder(15,15,15,15));
+        panelRealizarOperacion.add(panelRealizarOp, BorderLayout.CENTER);
+
         // VENTANA
         this.add(menuPanel, BorderLayout.WEST); // Menú en el lado izquierdo
         this.add(panelPrincipal, BorderLayout.CENTER); // Contenido principal en el centro
-        this.add(panelModificarCuenta, BorderLayout.CENTER);
+
 
         // CONTROL DEL CIERRE DE LA VENTANA
         this.addWindowListener(new WindowAdapter() {
@@ -199,6 +345,7 @@ public class VistaVentana extends JFrame {
         botonNombreCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VistaVentana.this.add(panelModificarCuenta, BorderLayout.CENTER);
                 panelPrincipal.setVisible(false);
                 panelModificarCuenta.setVisible(true);
             }
@@ -207,8 +354,10 @@ public class VistaVentana extends JFrame {
         botonNombreCuenta2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VistaVentana.this.remove(panelModificarCuenta);
                 panelPrincipal.setVisible(true);
                 panelModificarCuenta.setVisible(false);
+                nuevoNombre.setText("");
             }
         });
 
@@ -219,6 +368,7 @@ public class VistaVentana extends JFrame {
                 if (!textField.isEmpty()) {
                     panelPrincipal.setVisible(true);
                     panelModificarCuenta.setVisible(false);
+                    VistaVentana.this.remove(panelModificarCuenta);
                     infoCambioNombre.setVisible(false);
                     CM.modificarCuenta(textField);
                     updateInfo();
@@ -233,17 +383,17 @@ public class VistaVentana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mostrarPopUpEliminarCuenta(VistaVentana.this);
+                updateInfo();
+                nuevoNombre.setText("");
                 if (cuenta == null){
-                    System.out.println("a");
                     VistaVentana.this.remove(panelModificarCuenta);
                     VistaVentana.this.add(panelNoHayCuentas, BorderLayout.CENTER);
                     panelModificarCuenta.setVisible(false);
                     panelNoHayCuentas.setVisible(true);
-                    System.out.println("a");
                 }else{
                     panelPrincipal.setVisible(true);
+                    VistaVentana.this.remove(panelModificarCuenta);
                     panelModificarCuenta.setVisible(false);
-                    updateInfo();
                 }
 
             }
@@ -255,9 +405,30 @@ public class VistaVentana extends JFrame {
                 CuentaManager.getInstancia().inicializar();
                 updateInfo();
                 VistaVentana.this.remove(panelNoHayCuentas);
-                VistaVentana.this.add(panelModificarCuenta, BorderLayout.CENTER);
                 panelNoHayCuentas.setVisible(false);
                 panelPrincipal.setVisible(true);
+            }
+        });
+
+        realizarOperacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
+                panelPrincipal.setVisible(false);
+                panelRealizarOperacion.setVisible(true);
+            }
+        });
+
+        checkBoxTransferencia.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (opciones.length == 0){
+                    cuentasTransf.setEnabled(false);
+                }else{
+                    cuentasTransf.setEnabled(true);
+                    cuentasTransf.setSelectedIndex(0);
+                }
+            } else {
+                cuentasTransf.setEnabled(false);
             }
         });
 
@@ -311,6 +482,7 @@ public class VistaVentana extends JFrame {
         confirmar.setBackground(new Color(227, 111, 111));
         confirmar.setDocument(new LimitDocument(9));
         confirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         confirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -345,6 +517,14 @@ public class VistaVentana extends JFrame {
         UIManager.put("Button.select", new Color(253, 242, 240));
         UIManager.put("Button.foreground", new Color(35, 33, 33));
         UIManager.put("Panel.background", new Color(253, 242, 240));
+        UIManager.put("CheckBox.select", new Color(253, 242, 240));
+        UIManager.put("CheckBox.focus", new Color(253, 242, 240));
+        UIManager.put("ComboBox.selectionBackground", new Color(164, 227, 111));
+        UIManager.put("ComboBox.selectionForeground", new Color(253, 242, 240));
+        UIManager.put("ComboBox.focus", new Color(253, 242, 240));
+        UIManager.put("ComboBox.buttonBackground", new Color(253, 242, 240));
+        UIManager.put("ComboBox.buttonDarkShadow", new Color(253, 242, 240));
+        UIManager.put("ComboBox.buttonHighlight", new Color(253, 242, 240));
     }
 
 }

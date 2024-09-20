@@ -139,4 +139,15 @@ public class CuentaManager {
     public List<Cuenta> getCuentas() {
         return cuentas;
     }
+
+    public String[] getCuentasOpTransf() {
+        String[] opc = new String[cuentas.size()-1];
+        int cont = 0;
+        for (Cuenta cuenta : cuentas){
+            if (!cuenta.equals(cuentaActual)){
+                opc[cont] = cuenta.getId();
+            }
+        }
+        return opc;
+    }
 }
