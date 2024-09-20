@@ -473,8 +473,8 @@ public class VistaVentana extends JFrame {
                                     txtFCategoria.getText());
                         }
                         updateInfo();
-                        VistaVentana.this.remove(panelRealizarOp);
-                        panelRealizarOp.setVisible(false);
+                        VistaVentana.this.remove(panelRealizarOperacion);
+                        panelRealizarOperacion.setVisible(false);
                         panelPrincipal.setVisible(true);
                     } else {
                         // pop-up algun campo no es correcto + lista de lo que hay q introducir en cada campo
