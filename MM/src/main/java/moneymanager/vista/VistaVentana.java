@@ -22,6 +22,7 @@ public class VistaVentana extends JFrame {
     private final JPanel panelModificarCuenta;
     private final JPanel panelNoHayCuentas;
     private final JPanel panelRealizarOperacion;
+    private boolean cuentaEilinada;
 
 
     public static VistaVentana getInstancia() {
@@ -403,17 +404,18 @@ public class VistaVentana extends JFrame {
                 mostrarPopUpEliminarCuenta(VistaVentana.this);
                 updateInfo();
                 nuevoNombre.setText("");
-                if (cuenta == null){
-                    VistaVentana.this.remove(panelModificarCuenta);
-                    VistaVentana.this.add(panelNoHayCuentas, BorderLayout.CENTER);
-                    panelModificarCuenta.setVisible(false);
-                    panelNoHayCuentas.setVisible(true);
-                }else{
-                    panelPrincipal.setVisible(true);
-                    VistaVentana.this.remove(panelModificarCuenta);
-                    panelModificarCuenta.setVisible(false);
+                if (cuentaEilinada){
+                    if (cuenta == null){
+                        VistaVentana.this.remove(panelModificarCuenta);
+                        VistaVentana.this.add(panelNoHayCuentas, BorderLayout.CENTER);
+                        panelModificarCuenta.setVisible(false);
+                        panelNoHayCuentas.setVisible(true);
+                    }else{
+                        panelPrincipal.setVisible(true);
+                        VistaVentana.this.remove(panelModificarCuenta);
+                        panelModificarCuenta.setVisible(false);
+                    }
                 }
-
             }
         });
 
@@ -482,7 +484,6 @@ public class VistaVentana extends JFrame {
                 }
             }
         });
-
     }
 
     private void popUpBienvenida(JFrame parentFrame){
@@ -541,6 +542,9 @@ public class VistaVentana extends JFrame {
                 if (text.equals("CONFIRMAR")) {
                     dialogo.dispose();
                     CM.eliminarCuenta();
+                    cuentaEilinada = true;
+                }else{
+                    cuentaEilinada = false;
                 }
             }
         });
