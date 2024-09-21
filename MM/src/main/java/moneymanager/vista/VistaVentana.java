@@ -464,7 +464,7 @@ public class VistaVentana extends JFrame {
                     if (Float.parseFloat(txtFCant.getText()) != 0) {
                         if (checkBoxTransferencia.isSelected()) {
                             if (cuentasTransf.getSelectedItem().equals(null)) {
-                                // pop - up
+                               popUpDatosOp(VistaVentana.this);
                             } else {
                                 Cuenta cuentaDest = CM.getCuenta((String) cuentasTransf.getSelectedItem());
                                 OM.registrarTransferencia(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
@@ -479,8 +479,10 @@ public class VistaVentana extends JFrame {
                         panelRealizarOperacion.setVisible(false);
                         panelPrincipal.setVisible(true);
                     } else {
-                        // pop-up algun campo no es correcto + lista de lo que hay q introducir en cada campo
+                        popUpDatosOp(VistaVentana.this);
                     }
+                }else {
+                    popUpDatosOp(VistaVentana.this);
                 }
             }
         });
@@ -549,6 +551,35 @@ public class VistaVentana extends JFrame {
             }
         });
         dialogo.add(confirmar);
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
+    }
+
+    private void popUpDatosOp(JFrame parentFrame){
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(400, 350);
+        dialogo.setLayout(new FlowLayout());
+
+        JLabel titulo = new JLabel("",SwingConstants.CENTER);
+        titulo.setFont(new Font("Lexend", Font.BOLD, 18));
+        titulo.setBorder(new EmptyBorder(25, 15, 15, 15));
+        titulo.setForeground(new Color(227, 111, 111));
+        titulo.setBackground(new Color(253, 242, 240));
+        titulo.setHorizontalTextPosition(0);
+        titulo.setText("<html>ALGUNO DE LOS DATOS <br> INTRODUCIDOS ES INCORRECTO</html>");
+        dialogo.add(titulo);
+
+        JLabel txt = new JLabel();
+        txt.setFont(new Font("Lexend", Font.BOLD, 12));
+        txt.setBorder(new EmptyBorder(0, 15, 25, 15));
+        txt.setForeground(new Color(164, 227, 111));
+        txt.setBackground(new Color(253, 242, 240));
+        txt.setHorizontalAlignment(0);
+        txt.setText("<html><p style=\"color: rgb(227, 111, 111);\">CANTIDAD:</p> DEBE CONTENER UN  <br>VALOR NUMÉRICO DIFERENTE A 0" +
+                "<br><p style=\"color: rgb(227, 111, 111);\">CATEGORÍA:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 20 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)" +
+                "<br><p style=\"color: rgb(227, 111, 111);\">ASUNTO:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 50 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)</html>");
+        dialogo.add(txt);
 
         dialogo.setLocationRelativeTo(parentFrame);
         dialogo.setVisible(true);
