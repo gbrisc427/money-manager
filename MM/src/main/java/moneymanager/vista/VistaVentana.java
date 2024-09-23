@@ -434,10 +434,17 @@ public class VistaVentana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelNoHayCuentas.isVisible()){
+                    Component[] componentes = VistaVentana.this.getComponents();
+                    for (Component componente : componentes) {
+                        if (componente instanceof JPanel) {
+                            if (!componente.equals(panelPrincipal) && !componente.equals(menuPanel)){
+                                VistaVentana.this.remove(componente);
+                                componente.setVisible(false);
+                            }
+                        }
+                    }
                     VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
-                    VistaVentana.this.remove(panelModificarCuenta);
                     panelPrincipal.setVisible(false);
-                    panelModificarCuenta.setVisible(false);
                     panelRealizarOperacion.setVisible(true);
                 }
             }
@@ -478,6 +485,10 @@ public class VistaVentana extends JFrame {
                         VistaVentana.this.remove(panelRealizarOperacion);
                         panelRealizarOperacion.setVisible(false);
                         panelPrincipal.setVisible(true);
+                        txtFAsunto.setText("");
+                        txtFCant.setText("");
+                        txtFCategoria.setText("");
+                        checkBoxTransferencia.setSelected(false);
                     } else {
                         popUpDatosOp(VistaVentana.this);
                     }
@@ -486,6 +497,20 @@ public class VistaVentana extends JFrame {
                 }
             }
         });
+
+        botonCancelarOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               VistaVentana.this.remove(panelRealizarOperacion);
+               panelRealizarOperacion.setVisible(false);
+               panelPrincipal.setVisible(true);
+               txtFAsunto.setText("");
+               txtFCant.setText("");
+               txtFCategoria.setText("");
+               checkBoxTransferencia.setSelected(false);
+            }
+        });
+
     }
 
     private void popUpBienvenida(JFrame parentFrame){
