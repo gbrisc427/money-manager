@@ -30,7 +30,6 @@ public class CuentaManager {
             return false;
         }else{
             crearCuenta("CUENTA");
-            this.cuentaActual = cuentas.getFirst();
             return true;
         }
 
@@ -55,6 +54,7 @@ public class CuentaManager {
     public void crearCuenta(String nombre){
         Cuenta cuenta = new Cuenta(generarIDAleatorio(),nombre, 0, new ArrayList<>());
         cuentas.add(cuenta);
+        this.cuentaActual = cuentas.getLast();
     }
 
     public void crearCuenta(String id, String nombre, float saldo){

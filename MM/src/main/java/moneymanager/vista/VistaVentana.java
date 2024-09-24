@@ -22,7 +22,10 @@ public class VistaVentana extends JFrame {
     private final JPanel panelModificarCuenta;
     private final JPanel panelNoHayCuentas;
     private final JPanel panelRealizarOperacion;
+    private final JPanel panelConsultarCuentas;
+    private final JPanel panelCuentas;
     private boolean cuentaEilinada;
+    private String nombreNuevaCuenta;
 
 
     public static VistaVentana getInstancia() {
@@ -347,6 +350,41 @@ public class VistaVentana extends JFrame {
         botonesRealizarOp.setBorder(new EmptyBorder(0,0,30,0));
         panelRealizarOperacion.add(botonesRealizarOp, BorderLayout.SOUTH);
 
+
+        // PANEL CUENTAS
+        panelConsultarCuentas = new JPanel();
+        panelConsultarCuentas.setLayout(new BorderLayout());
+        panelConsultarCuentas.setVisible(false);
+
+        panelCuentas = new JPanel();
+        panelCuentas.setLayout(new GridLayout(0, 1, 1, 1));
+
+        JScrollPane scrollCuentas = new JScrollPane(panelCuentas);
+        scrollCuentas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        for (Cuenta aux : CM.getCuentas()) {
+            String txt = aux.getNombre() + " \t \t \t " + aux.getSaldo() +"€";
+            JButton boton = new JButton(txt);
+
+            boton.setFont(new Font("Lexend", Font.BOLD, 20));
+            boton.setBorder(new EmptyBorder(15, 15, 15, 15));
+            boton.setForeground(new Color(164, 227, 111));
+            boton.setBackground(new Color(253, 242, 240));
+
+            panelCuentas.add(boton);
+        }
+
+        JButton botonCrearCuenta = new JButton("CREAR CUENTA");
+        botonCrearCuenta.setFont(new Font("Lexend", Font.BOLD, 15));
+        botonCrearCuenta.setBorder(new EmptyBorder(15, 15, 30, 15));
+        botonCrearCuenta.setForeground(new Color(164, 227, 111));
+        botonCrearCuenta.setBackground(new Color(253, 242, 240));
+
+
+        panelConsultarCuentas.add(panelCuentas, BorderLayout.CENTER);
+        panelConsultarCuentas.add(botonCrearCuenta, BorderLayout.SOUTH);
+
+
         // VENTANA
         this.add(menuPanel, BorderLayout.WEST); // Menú en el lado izquierdo
         this.add(panelPrincipal, BorderLayout.CENTER); // Contenido principal en el centro
@@ -434,17 +472,11 @@ public class VistaVentana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelNoHayCuentas.isVisible()){
-                    Component[] componentes = VistaVentana.this.getComponents();
-                    for (Component componente : componentes) {
-                        if (componente instanceof JPanel) {
-                            if (!componente.equals(panelPrincipal) && !componente.equals(menuPanel)){
-                                VistaVentana.this.remove(componente);
-                                componente.setVisible(false);
-                            }
-                        }
-                    }
-                    VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
+                    VistaVentana.this.remove(panelModificarCuenta);
+                    panelModificarCuenta.setVisible(false);
+                    VistaVentana.this.remove(panelPrincipal);
                     panelPrincipal.setVisible(false);
+                    VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
                     panelRealizarOperacion.setVisible(true);
                 }
             }
@@ -466,7 +498,7 @@ public class VistaVentana extends JFrame {
         botonGuardarOp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ( !txtFAsunto.getText().isEmpty() && !txtFAsunto.getText().isEmpty()
+                if ( !txtFCant.getText().isEmpty() && !txtFAsunto.getText().isEmpty()
                         && !txtFCategoria.getText().isEmpty()) {
                     if (Float.parseFloat(txtFCant.getText()) != 0) {
                         if (checkBoxTransferencia.isSelected()) {
@@ -484,17 +516,18 @@ public class VistaVentana extends JFrame {
                         updateInfo();
                         VistaVentana.this.remove(panelRealizarOperacion);
                         panelRealizarOperacion.setVisible(false);
+                        VistaVentana.this.add(panelPrincipal);
                         panelPrincipal.setVisible(true);
-                        txtFAsunto.setText("");
-                        txtFCant.setText("");
-                        txtFCategoria.setText("");
-                        checkBoxTransferencia.setSelected(false);
                     } else {
                         popUpDatosOp(VistaVentana.this);
                     }
                 }else {
                     popUpDatosOp(VistaVentana.this);
                 }
+                txtFAsunto.setText("");
+                txtFCant.setText("");
+                txtFCategoria.setText("");
+                checkBoxTransferencia.setSelected(false);
             }
         });
 
@@ -503,11 +536,33 @@ public class VistaVentana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                VistaVentana.this.remove(panelRealizarOperacion);
                panelRealizarOperacion.setVisible(false);
+               VistaVentana.this.add(panelPrincipal);
                panelPrincipal.setVisible(true);
                txtFAsunto.setText("");
                txtFCant.setText("");
                txtFCategoria.setText("");
                checkBoxTransferencia.setSelected(false);
+            }
+        });
+
+        consultarCuentas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelNoHayCuentas.isVisible()){
+                    VistaVentana.this.remove(panelModificarCuenta);
+                    panelModificarCuenta.setVisible(false);
+                    VistaVentana.this.remove(panelPrincipal);
+                    panelPrincipal.setVisible(false);
+                    VistaVentana.this.add(panelConsultarCuentas, BorderLayout.CENTER);
+                    panelConsultarCuentas.setVisible(true);
+                }
+            }
+        });
+
+        botonCrearCuenta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popUpNewCuenta(VistaVentana.this);
             }
         });
 
@@ -610,6 +665,60 @@ public class VistaVentana extends JFrame {
         dialogo.setVisible(true);
     }
 
+    private void popUpNewCuenta(JFrame parentFrame) {
+        CuentaManager CM = CuentaManager.getInstancia();
+
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(325, 200);
+        dialogo.setLayout(new FlowLayout());
+
+        JLabel mensaje = new JLabel("<html>INTRODUCE EL NOMBRE <br>DE LA NUEVA CUENTA.</html>");
+        mensaje.setFont(new Font("Lexend", Font.BOLD, 20));
+        mensaje.setBorder(new EmptyBorder(25, 15, 15, 15));
+        mensaje.setForeground(new Color(164, 227, 111));
+        dialogo.add(mensaje);
+
+        JTextField nombre = new JTextField(15);
+        nombre.setFont(new Font("Lexend", Font.BOLD, 12));
+        nombre.setBorder(new EmptyBorder(10, 25, 10, 25));
+        nombre.setForeground(new Color(253, 242, 240));
+        nombre.setBackground(new Color(164, 227, 111));
+        nombre.setDocument(new LimitDocument(20));
+        nombre.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        nombre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = nombre.getText();
+                if (!text.isEmpty()){
+                    CM.crearCuenta(text.toUpperCase());
+                    updateInfo();
+                    VistaVentana.this.remove(panelConsultarCuentas);
+                    panelConsultarCuentas.setVisible(false);
+                    VistaVentana.this.add(panelPrincipal, BorderLayout.CENTER);
+                    panelPrincipal.setVisible(true);
+
+                    Cuenta aux = CM.getCuentaActual();
+                    String txt = aux.getNombre() + "\t" + aux.getSaldo();
+                    JButton boton = new JButton(txt);
+
+                    boton.setFont(new Font("Lexend", Font.BOLD, 20));
+                    boton.setBorder(new EmptyBorder(15, 15, 15, 15));
+                    boton.setForeground(new Color(164, 227, 111));
+                    boton.setBackground(new Color(253, 242, 240));
+
+                    panelCuentas.add(boton);
+
+                    dialogo.dispose();
+                }
+            }
+        });
+        dialogo.add(nombre);
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
+    }
+
     private void updateInfo(){
         CuentaManager CM = CuentaManager.getInstancia();
         String nombre = CM.getNombreCuenta();
@@ -626,7 +735,6 @@ public class VistaVentana extends JFrame {
         UIManager.put("Button.border", BorderFactory.createEmptyBorder(10, 15, 10, 15));
         UIManager.put("Button.focus", new Color(0, 0, 0, 0));
         UIManager.put("Button.select", new Color(253, 242, 240));
-        UIManager.put("Button.foreground", new Color(35, 33, 33));
         UIManager.put("Panel.background", new Color(253, 242, 240));
         UIManager.put("CheckBox.select", new Color(253, 242, 240));
         UIManager.put("CheckBox.focus", new Color(253, 242, 240));

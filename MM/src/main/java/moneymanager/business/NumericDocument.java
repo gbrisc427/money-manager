@@ -36,7 +36,7 @@ public class NumericDocument extends PlainDocument {
 
         // Solo puede haber un signo negativo al principio
         if (newText.contains("-")) {
-            if (newText.indexOf('-') > 0 || currentText.contains("-")) {
+            if (!currentText.isEmpty() || currentText.contains("-")) {
                 return false;
             }
         }

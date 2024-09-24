@@ -17,7 +17,7 @@ public class LimitDocument extends PlainDocument {
         }
 
         if ((getLength() + str.length()) <= limit) {
-            super.insertString(offset, str, attr);
+            super.insertString(offset, str.toUpperCase(), attr);
         }
     }
 }
