@@ -79,6 +79,12 @@ public class CuentaManager {
         }
     }
 
+    public void cambiarCuenta(Cuenta cuenta){
+        if (cuentas.contains(cuenta)){
+            cuentaActual = cuenta;
+        }
+    }
+
     private String generarIDAleatorio() {
         String id = "";
         do{
@@ -119,6 +125,14 @@ public class CuentaManager {
             nombre = cuentaActual.getNombre();
         }
         return nombre;
+    }
+
+    public String getId(){
+        String saldo = "#";
+        if (cuentaActual != null){
+            saldo += cuentaActual.getId();
+        }
+        return saldo;
     }
 
     public Cuenta getCuenta(String id){
