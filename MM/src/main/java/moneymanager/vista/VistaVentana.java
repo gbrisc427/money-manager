@@ -24,8 +24,9 @@ public class VistaVentana extends JFrame {
     private final JPanel panelRealizarOperacion;
     private final JPanel panelConsultarCuentas;
     private final JPanel panelCuentas;
+    private Cuenta cuenta;
     private boolean cuentaEilinada;
-    private String nombreNuevaCuenta;
+
 
 
     public static VistaVentana getInstancia() {
@@ -40,7 +41,7 @@ public class VistaVentana extends JFrame {
 
         OperacionesManager OM = OperacionesManager.getInstancia();
         CuentaManager CM = CuentaManager.getInstancia();
-        Cuenta cuenta = CM.getCuentaActual();
+        cuenta = CM.getCuentaActual();
         if (CM.inicializar()){
             popUpBienvenida(VistaVentana.this);
         }
@@ -357,22 +358,19 @@ public class VistaVentana extends JFrame {
         panelConsultarCuentas.setVisible(false);
 
         panelCuentas = new JPanel();
-        panelCuentas.setLayout(new GridLayout(0, 1, 1, 1));
+        panelCuentas.setLayout(new FlowLayout(FlowLayout.LEFT, 20,20));
+
+        updateCuentas();
+
+        panelCuentas.setPreferredSize(new Dimension(300, CM.getCuentas().size()*52));
 
         JScrollPane scrollCuentas = new JScrollPane(panelCuentas);
         scrollCuentas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        for (Cuenta aux : CM.getCuentas()) {
-            String txt = aux.getNombre() + " \t \t \t " + aux.getSaldo() +"€";
-            JButton boton = new JButton(txt);
-
-            boton.setFont(new Font("Lexend", Font.BOLD, 20));
-            boton.setBorder(new EmptyBorder(15, 15, 15, 15));
-            boton.setForeground(new Color(164, 227, 111));
-            boton.setBackground(new Color(253, 242, 240));
-
-            panelCuentas.add(boton);
-        }
+        scrollCuentas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollCuentas.setVisible(true);
+        scrollCuentas.setFocusable(false);
+        scrollCuentas.setBackground(new Color(253, 242, 240));
+        scrollCuentas.setBorder(new EmptyBorder(0,0,0,0));
 
         JButton botonCrearCuenta = new JButton("CREAR CUENTA");
         botonCrearCuenta.setFont(new Font("Lexend", Font.BOLD, 15));
@@ -381,7 +379,7 @@ public class VistaVentana extends JFrame {
         botonCrearCuenta.setBackground(new Color(253, 242, 240));
 
 
-        panelConsultarCuentas.add(panelCuentas, BorderLayout.CENTER);
+        panelConsultarCuentas.add(scrollCuentas, BorderLayout.CENTER);
         panelConsultarCuentas.add(botonCrearCuenta, BorderLayout.SOUTH);
 
 
@@ -624,6 +622,7 @@ public class VistaVentana extends JFrame {
                 if (text.equals("CONFIRMAR")) {
                     dialogo.dispose();
                     CM.eliminarCuenta();
+                    updateInfo();
                     cuentaEilinada = true;
                 }else{
                     cuentaEilinada = false;
@@ -697,18 +696,6 @@ public class VistaVentana extends JFrame {
                     panelConsultarCuentas.setVisible(false);
                     VistaVentana.this.add(panelPrincipal, BorderLayout.CENTER);
                     panelPrincipal.setVisible(true);
-
-                    Cuenta aux = CM.getCuentaActual();
-                    String txt = aux.getNombre() + "\t" + aux.getSaldo();
-                    JButton boton = new JButton(txt);
-
-                    boton.setFont(new Font("Lexend", Font.BOLD, 20));
-                    boton.setBorder(new EmptyBorder(15, 15, 15, 15));
-                    boton.setForeground(new Color(164, 227, 111));
-                    boton.setBackground(new Color(253, 242, 240));
-
-                    panelCuentas.add(boton);
-
                     dialogo.dispose();
                 }
             }
@@ -721,11 +708,41 @@ public class VistaVentana extends JFrame {
 
     private void updateInfo(){
         CuentaManager CM = CuentaManager.getInstancia();
+        this.cuenta = CM.getCuentaActual();
         String nombre = CM.getNombreCuenta();
         String saldo = CM.getSaldo();
         botonNombreCuenta.setText(nombre);
         botonNombreCuenta2.setText(nombre);
         etiquetaSaldo.setText(saldo);
+        panelCuentas.removeAll();
+        panelCuentas.revalidate();
+        panelCuentas.repaint();
+        updateCuentas();
+    }
+
+    private void updateCuentas(){
+        CuentaManager CM = CuentaManager.getInstancia();
+        for (Cuenta aux : CM.getCuentas()) {
+            String txt = aux.getNombre();
+            JButton boton = new JButton(txt);
+
+            boton.setFont(new Font("Lexend", Font.BOLD, 20));
+            boton.setBorder(new EmptyBorder(1, 5, 1, 5));
+            boton.setPreferredSize(new Dimension(200, 30));
+            boton.setForeground(new Color(164, 227, 111));
+            boton.setBackground(new Color(253, 242, 240));
+
+            JLabel cant = new JLabel(aux.getSaldo()+"€");
+            cant.setFont(new Font("Lexend", Font.BOLD, 20));
+            cant.setBorder(new EmptyBorder(1, 20, 1, 5));
+            cant.setPreferredSize(new Dimension(80, 30));
+            cant.setForeground(new Color(164, 227, 111));
+            cant.setBackground(new Color(253, 242, 240));
+
+
+            panelCuentas.add(boton);
+            panelCuentas.add(cant);
+        }
     }
 
     private static void cambiarEstilo() {
@@ -744,6 +761,19 @@ public class VistaVentana extends JFrame {
         UIManager.put("ComboBox.buttonBackground", new Color(253, 242, 240));
         UIManager.put("ComboBox.buttonDarkShadow", new Color(253, 242, 240));
         UIManager.put("ComboBox.buttonHighlight", new Color(253, 242, 240));
+
+        UIManager.put("ScrollBar.thumb", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.thumbDarkShadow", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.thumbHighlight", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.thumbShadow", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.track", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.trackHighlight", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.trackDarkShadow", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.trackShadow", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.foreground", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.background", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.incrementButtonSize", new Dimension(0, 0));
+        UIManager.put("ScrollBar.decrementButtonSize", new Dimension(0, 0));
     }
 
 }
