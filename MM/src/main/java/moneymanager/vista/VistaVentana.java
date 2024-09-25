@@ -500,26 +500,39 @@ public class VistaVentana extends JFrame {
         botonGuardarOp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                updateInfo();
                 if ( !txtFCant.getText().isEmpty() && !txtFAsunto.getText().isEmpty()
                         && !txtFCategoria.getText().isEmpty()) {
                     if (Float.parseFloat(txtFCant.getText()) != 0) {
                         if (checkBoxTransferencia.isSelected()) {
-                            if (cuentasTransf.getSelectedItem().equals(null)) {
-                               popUpDatosOp(VistaVentana.this);
-                            } else {
+                            cuentasTransf.getSelectedItem();
+                            float res = cuenta.getSaldo() - Float.parseFloat(txtFCant.getText());
+                            if (res < 0 || Float.parseFloat(txtFCant.getText()) < 0){
+                                popUpDatosOp(VistaVentana.this);
+                            }else{
                                 Cuenta cuentaDest = CM.getCuenta((String) cuentasTransf.getSelectedItem());
                                 OM.registrarTransferencia(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
                                         txtFCategoria.getText(), cuentaDest);
+                                updateInfo();
+                                VistaVentana.this.remove(panelRealizarOperacion);
+                                panelRealizarOperacion.setVisible(false);
+                                VistaVentana.this.add(panelPrincipal);
+                                panelPrincipal.setVisible(true);
                             }
                         } else {
-                            OM.registrarIngresoGasto(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
-                                    txtFCategoria.getText());
+                            float res = cuenta.getSaldo() + Float.parseFloat(txtFCant.getText());
+                            if (res < 0){
+                                popUpDatosOp(VistaVentana.this);
+                            }else{
+                                OM.registrarIngresoGasto(txtFAsunto.getText(), Float.parseFloat(txtFCant.getText()),
+                                        txtFCategoria.getText());
+                                updateInfo();
+                                VistaVentana.this.remove(panelRealizarOperacion);
+                                panelRealizarOperacion.setVisible(false);
+                                VistaVentana.this.add(panelPrincipal);
+                                panelPrincipal.setVisible(true);
+                            }
                         }
-                        updateInfo();
-                        VistaVentana.this.remove(panelRealizarOperacion);
-                        panelRealizarOperacion.setVisible(false);
-                        VistaVentana.this.add(panelPrincipal);
-                        panelPrincipal.setVisible(true);
                     } else {
                         popUpDatosOp(VistaVentana.this);
                     }
@@ -644,7 +657,7 @@ public class VistaVentana extends JFrame {
 
     private void popUpDatosOp(JFrame parentFrame){
         JDialog dialogo = new JDialog(parentFrame, "", true);
-        dialogo.setSize(400, 350);
+        dialogo.setSize(400, 440);
         dialogo.setLayout(new FlowLayout());
 
         JLabel titulo = new JLabel("",SwingConstants.CENTER);
@@ -662,9 +675,10 @@ public class VistaVentana extends JFrame {
         txt.setForeground(new Color(164, 227, 111));
         txt.setBackground(new Color(253, 242, 240));
         txt.setHorizontalAlignment(0);
-        txt.setText("<html><p style=\"color: rgb(227, 111, 111);\">CANTIDAD:</p> DEBE CONTENER UN  <br>VALOR NUMÉRICO DIFERENTE A 0" +
+        txt.setText("<html><p style=\"color: rgb(227, 111, 111);\">CANTIDAD:</p> DEBE CONTENER UN  <br>VALOR NUMÉRICO DIFERENTE A 0. <br> LA OPERACIÓN NO PUEDE <br> DEJAR LA CUENTA EN NEGATIVO. " +
                 "<br><p style=\"color: rgb(227, 111, 111);\">CATEGORÍA:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 20 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)" +
-                "<br><p style=\"color: rgb(227, 111, 111);\">ASUNTO:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 50 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)</html>");
+                "<br><p style=\"color: rgb(227, 111, 111);\">ASUNTO:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 50 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)" +
+                "<br><p style=\"color: rgb(227, 111, 111);\">TRANSFERENCIA:</p>  SI SE SELECCIONA <br>ESTA OPCIÓN, LA CANTIDAD DEBE DE <br>SER UN VALOR POSITIVO.</html>");
         dialogo.add(txt);
 
         dialogo.setLocationRelativeTo(parentFrame);
@@ -744,7 +758,7 @@ public class VistaVentana extends JFrame {
             JLabel cant = new JLabel(aux.getSaldo()+"€");
             cant.setFont(new Font("Lexend", Font.BOLD, 20));
             cant.setBorder(new EmptyBorder(1, 20, 1, 5));
-            cant.setPreferredSize(new Dimension(80, 30));
+            cant.setPreferredSize(new Dimension(100, 30));
             cant.setForeground(new Color(164, 227, 111));
             cant.setBackground(new Color(253, 242, 240));
 

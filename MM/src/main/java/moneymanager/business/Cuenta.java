@@ -26,6 +26,12 @@ public class Cuenta {
         }
     }
 
+    public void cargarOperacion(Operacion operacion){
+        if (operacionNueva(operacion)) {
+            historial.add(operacion);
+        }
+    }
+
     private boolean operacionNueva(Operacion operacion){
         boolean nuevo = true;
         for (Operacion aux : this.historial){

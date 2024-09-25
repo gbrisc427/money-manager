@@ -71,6 +71,9 @@ public class CuentaManager {
     public void eliminarCuenta(){
         if (cuentaActual != null){
             cuentas.remove(cuentaActual);
+            for (Operacion opc : cuentaActual.getHistorial()){
+                OperacionesManager.getInstancia().eliminarOperacion(opc);
+            }
             if (cuentas.isEmpty()){
                 cuentaActual = null;
             }else{

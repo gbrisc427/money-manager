@@ -50,16 +50,16 @@ public class OperacionesManager {
         switch (array[1]){
             case "G":
                 operacion = new Gasto(array[0],fecha,array[5],Float.parseFloat(array[3]), cuenta, array[4]);
-                cuenta.aniadirOperacion(operacion);
+                cuenta.cargarOperacion(operacion);
                 break;
             case "I":
                 operacion = new Ingreso(array[0],fecha,array[5],Float.parseFloat(array[3]), cuenta, array[4]);
-                cuenta.aniadirOperacion(operacion);
+                cuenta.cargarOperacion(operacion);
                 break;
             case "T":
                 Cuenta cuentaDestino = CM.getCuenta(array[7]);
                 operacion = new Transferencia(array[0],fecha,array[5],Float.parseFloat(array[3]), cuenta, cuentaDestino,array[4]);
-                cuenta.aniadirOperacion(operacion);
+                cuenta.cargarOperacion(operacion);
                 break;
         }
         if (operacionNueva(operacion)){
@@ -103,6 +103,10 @@ public class OperacionesManager {
 
     public void eliminarOperacion(String id){
 
+    }
+
+    public void eliminarOperacion(Operacion operacion){
+        operaciones.remove(operacion);
     }
 
     private String generarIDAleatorio() {
