@@ -25,9 +25,18 @@ public class VistaVentana extends JFrame {
     private final JPanel panelRealizarOperacion;
     private final JPanel panelConsultarCuentas;
     private final JPanel panelCuentas;
+    private final JPanel panelHistorialOperaciones;
+    private final JPanel panelOperaciones;
+    private final JPanel panelOperacion;
+    private final JLabel idOperacion;
+    private final JLabel cantOperacion;
+    private final JLabel fechaOperacion;
+    private final JLabel categoriaOperacion;
+    private final JLabel asuntoOperacion;
+    private TOperacion tOpc;
     private Cuenta cuenta;
-    private boolean cuentaEilinada;
-
+    private boolean cuentaEliminada;
+    private boolean operacionEliminada;
 
 
     public static VistaVentana getInstancia() {
@@ -376,9 +385,100 @@ public class VistaVentana extends JFrame {
         botonCrearCuenta.setForeground(new Color(164, 227, 111));
         botonCrearCuenta.setBackground(new Color(253, 242, 240));
 
-
         panelConsultarCuentas.add(scrollCuentas, BorderLayout.CENTER);
         panelConsultarCuentas.add(botonCrearCuenta, BorderLayout.SOUTH);
+
+
+        // PANEL HISTORIAL
+
+        panelHistorialOperaciones = new JPanel();
+        panelHistorialOperaciones.setLayout(new BorderLayout());
+        panelHistorialOperaciones.setVisible(false);
+
+        panelOperaciones = new JPanel();
+        panelOperaciones.setLayout(new FlowLayout(FlowLayout.LEFT, 20,20));
+
+        updateOperaciones();
+
+        panelOperaciones.setPreferredSize(new Dimension(300, CM.getCuentaActual().getHistorial().size()*52));
+
+        JScrollPane scrollOperaciones = new JScrollPane(panelOperaciones);
+        scrollOperaciones.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollOperaciones.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollOperaciones.setVisible(true);
+        scrollOperaciones.setFocusable(false);
+        scrollOperaciones.setBackground(new Color(253, 242, 240));
+        scrollOperaciones.setBorder(new EmptyBorder(0,0,0,0));
+
+        panelHistorialOperaciones.add(scrollOperaciones, BorderLayout.CENTER);
+
+
+        // PANEL OPERACIÓN
+
+        panelOperacion = new JPanel();
+        panelOperacion.setLayout(new BorderLayout());
+        panelOperacion.setVisible(false);
+
+        idOperacion = new JLabel("",SwingConstants.CENTER);
+        idOperacion.setFont(new Font("Lexend", Font.BOLD, 30));
+        idOperacion.setBorder(new EmptyBorder(25, 15, 0, 15));
+        idOperacion.setForeground(new Color(164, 227, 111));
+        idOperacion.setBackground(new Color(253, 242, 240));
+        panelOperacion.add(idOperacion, BorderLayout.NORTH);
+
+
+        JPanel datosOperacion = new JPanel();
+        datosOperacion.setLayout(new FlowLayout(FlowLayout.CENTER));
+        datosOperacion.setVisible(true);
+
+        cantOperacion = new JLabel("", SwingConstants.CENTER);
+        cantOperacion.setFont(new Font("Lexend", Font.BOLD, 70));
+        cantOperacion.setBorder(new EmptyBorder(60, 0, 30, 0));
+        cantOperacion.setForeground(new Color(164, 227, 111));
+        cantOperacion.setPreferredSize(new Dimension(400,160));
+        datosOperacion.add(cantOperacion);
+
+        fechaOperacion = new JLabel("", SwingConstants.CENTER);
+        fechaOperacion.setFont(new Font("Lexend", Font.BOLD, 20));
+        fechaOperacion.setBorder(new EmptyBorder(10, 10, 10, 10));
+        fechaOperacion.setForeground(new Color(164, 227, 111));
+        fechaOperacion.setPreferredSize(new Dimension(400,40));
+        datosOperacion.add(fechaOperacion);
+
+        categoriaOperacion = new JLabel("", SwingConstants.CENTER);
+        categoriaOperacion.setFont(new Font("Lexend", Font.BOLD, 20));
+        categoriaOperacion.setBorder(new EmptyBorder(10, 10, 10, 10));
+        categoriaOperacion.setForeground(new Color(164, 227, 111));
+        categoriaOperacion.setPreferredSize(new Dimension(400,40));
+        datosOperacion.add(categoriaOperacion);
+
+        asuntoOperacion = new JLabel("", SwingConstants.CENTER);
+        asuntoOperacion.setFont(new Font("Lexend", Font.BOLD, 12));
+        asuntoOperacion.setBorder(new EmptyBorder(10, 10, 10, 10));
+        asuntoOperacion.setForeground(new Color(164, 227, 111));
+        asuntoOperacion.setPreferredSize(new Dimension(200,40));
+        datosOperacion.add(asuntoOperacion);
+
+        JPanel botonesOp = new JPanel();
+        botonesOp.setLayout(new FlowLayout(FlowLayout.CENTER));
+        botonesOp.setVisible(true);
+
+        JButton botonModificarOp = new JButton("MODIFICAR");
+        botonModificarOp.setBorder(new EmptyBorder(9, 9,9, 9));
+        botonModificarOp.setForeground(new Color(253, 242, 240));
+        botonesOp.add(botonModificarOp);
+
+        JButton botonEliminarOp = new JButton("ELIMINAR");
+        botonEliminarOp.setBorder(new EmptyBorder(9, 9, 9, 9));
+        botonEliminarOp.setForeground(new Color(253, 242, 240));
+        botonEliminarOp.setBackground(new Color(227, 111, 111));
+        botonesOp.add(botonEliminarOp);
+
+        botonesOp.setBorder(new EmptyBorder(0,0,30,0));
+        panelOperacion.add(botonesOp, BorderLayout.SOUTH);
+
+        panelOperacion.add(datosOperacion, BorderLayout.CENTER);
+
 
 
         // VENTANA
@@ -435,10 +535,10 @@ public class VistaVentana extends JFrame {
         botonEliminarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarPopUpEliminarCuenta(VistaVentana.this);
+                popUpEliminarCuenta(VistaVentana.this);
                 updateInfo();
                 nuevoNombre.setText("");
-                if (cuentaEilinada){
+                if (cuentaEliminada){
                     if (cuenta == null){
                         VistaVentana.this.remove(panelModificarCuenta);
                         VistaVentana.this.add(panelNoHayCuentas, BorderLayout.CENTER);
@@ -467,11 +567,15 @@ public class VistaVentana extends JFrame {
         realizarOperacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!panelNoHayCuentas.isVisible()){
+                if (!panelNoHayCuentas.isVisible() && !panelConsultarCuentas.isVisible()){
                     VistaVentana.this.remove(panelModificarCuenta);
                     panelModificarCuenta.setVisible(false);
                     VistaVentana.this.remove(panelPrincipal);
                     panelPrincipal.setVisible(false);
+                    VistaVentana.this.remove(panelHistorialOperaciones);
+                    panelHistorialOperaciones.setVisible(false);
+                    VistaVentana.this.remove(panelOperacion);
+                    panelOperacion.setVisible(false);
                     VistaVentana.this.add(panelRealizarOperacion, BorderLayout.CENTER);
                     panelRealizarOperacion.setVisible(true);
                     for (int i = 0; i < cuentasTransf.getItemCount(); i++ ){
@@ -570,6 +674,10 @@ public class VistaVentana extends JFrame {
                     panelPrincipal.setVisible(false);
                     VistaVentana.this.remove(panelRealizarOperacion);
                     panelRealizarOperacion.setVisible(false);
+                    VistaVentana.this.remove(panelHistorialOperaciones);
+                    panelHistorialOperaciones.setVisible(false);
+                    VistaVentana.this.remove(panelOperacion);
+                    panelOperacion.setVisible(false);
                     VistaVentana.this.add(panelConsultarCuentas, BorderLayout.CENTER);
                     panelConsultarCuentas.setVisible(true);
                     updateCuentas();
@@ -581,6 +689,40 @@ public class VistaVentana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 popUpNewCuenta(VistaVentana.this);
+            }
+        });
+
+        verHistorial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelNoHayCuentas.isVisible() && !panelConsultarCuentas.isVisible()){
+                    VistaVentana.this.remove(panelModificarCuenta);
+                    panelModificarCuenta.setVisible(false);
+                    VistaVentana.this.remove(panelPrincipal);
+                    panelPrincipal.setVisible(false);
+                    VistaVentana.this.remove(panelRealizarOperacion);
+                    panelRealizarOperacion.setVisible(false);
+                    VistaVentana.this.remove(panelOperacion);
+                    panelOperacion.setVisible(false);
+                    VistaVentana.this.add(panelHistorialOperaciones, BorderLayout.CENTER);
+                    panelHistorialOperaciones.setVisible(true);
+                    updateOperaciones();
+                }
+            }
+        });
+
+        botonEliminarOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popUpEliminarOperacion(VistaVentana.this);
+                updateInfo();
+                if (operacionEliminada){
+                        VistaVentana.this.remove(panelOperacion);
+                        panelOperacion.setVisible(false);
+                        VistaVentana.this.add(panelHistorialOperaciones, BorderLayout.CENTER);
+                        panelHistorialOperaciones.setVisible(true);
+                        updateOperaciones();
+                }
             }
         });
 
@@ -614,7 +756,7 @@ public class VistaVentana extends JFrame {
         dialogo.setVisible(true);
     }
 
-    private void mostrarPopUpEliminarCuenta(JFrame parentFrame) {
+    private void popUpEliminarCuenta(JFrame parentFrame) {
         CuentaManager CM = CuentaManager.getInstancia();
 
         JDialog dialogo = new JDialog(parentFrame, "", true);
@@ -643,9 +785,49 @@ public class VistaVentana extends JFrame {
                     dialogo.dispose();
                     CM.eliminarCuenta();
                     updateInfo();
-                    cuentaEilinada = true;
+                    cuentaEliminada = true;
                 }else{
-                    cuentaEilinada = false;
+                    cuentaEliminada = false;
+                }
+            }
+        });
+        dialogo.add(confirmar);
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
+    }
+
+    private void popUpEliminarOperacion(JFrame parentFrame) {
+
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(275, 200);
+        dialogo.setLayout(new FlowLayout());
+
+        JLabel mensaje = new JLabel("<html>PARA ELIMINAR LA OPERACIÓN <br> ESCRIBE \"CONFIRMAR\".</html>");
+        mensaje.setFont(new Font("Lexend", Font.BOLD, 15));
+        mensaje.setBorder(new EmptyBorder(25, 15, 15, 15));
+        mensaje.setForeground(new Color(227, 111, 111));
+        dialogo.add(mensaje);
+
+        JTextField confirmar = new JTextField(8);
+        confirmar.setFont(new Font("Lexend", Font.BOLD, 12));
+        confirmar.setBorder(new EmptyBorder(10, 25, 10, 25));
+        confirmar.setForeground(new Color(253, 242, 240));
+        confirmar.setBackground(new Color(227, 111, 111));
+        confirmar.setDocument(new LimitDocument(9));
+        confirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        confirmar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = confirmar.getText();
+                if (text.equals("CONFIRMAR")) {
+                    dialogo.dispose();
+                    OperacionesManager.getInstancia().eliminarOperacion(idOperacion.getText(), tOpc);
+                    updateInfo();
+                    operacionEliminada = true;
+                }else{
+                    operacionEliminada = false;
                 }
             }
         });
@@ -776,6 +958,78 @@ public class VistaVentana extends JFrame {
 
             panelCuentas.add(boton);
             panelCuentas.add(cant);
+        }
+    }
+
+    private void updateOperaciones(){
+        panelOperaciones.removeAll();
+        panelOperaciones.revalidate();
+        panelOperaciones.repaint();
+        updateInfo();
+        if (cuenta.getHistorial().isEmpty()){
+
+            JLabel noHayOperaciones = new JLabel("<html> EL HISTORIAL ESTÁ VACÍO </html>",SwingConstants.CENTER);
+            noHayOperaciones.setFont(new Font("Lexend", Font.BOLD, 30));
+            noHayOperaciones.setBorder(new EmptyBorder(110, 80, 10, 5));
+            noHayOperaciones.setPreferredSize(new Dimension(350, 300));
+            noHayOperaciones.setForeground(new Color(227, 111, 111));
+            panelOperaciones.add(noHayOperaciones);
+        }
+        for (Operacion opc : cuenta.getHistorial()) {
+            String id = opc.getId();
+            String fecha = opc.getFecha().getYear()+"/"+ opc.getFecha().getMonthValue()+"/"
+                    +opc.getFecha().getDayOfMonth();
+            String txt = "";
+            if (opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
+                txt = fecha + "  " + -opc.getCantidad() + "€  " + opc.getCategoria() ;
+            }else{
+                txt = fecha + "  " +opc.getCantidad() + "€  " + opc.getCategoria() ;
+            }
+
+            JButton boton = new JButton(id);
+
+            boton.setFont(new Font("Lexend", Font.BOLD, 15));
+            boton.setBorder(new EmptyBorder(1, 5, 1, 5));
+            boton.setPreferredSize(new Dimension(70, 30));
+            boton.setForeground(new Color(164, 227, 111));
+            boton.setBackground(new Color(253, 242, 240));
+
+            JLabel cant = new JLabel(txt);
+            cant.setFont(new Font("Lexend", Font.BOLD, 15));
+            cant.setBorder(new EmptyBorder(1, 5, 1, 5));
+            cant.setPreferredSize(new Dimension(300, 30));
+            cant.setForeground(new Color(164, 227, 111));
+            cant.setBackground(new Color(253, 242, 240));
+            if (opc.getCantidad() < 0 || opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
+                boton.setForeground(new Color(227, 111, 111));
+                cant.setForeground(new Color(227, 111, 111));
+            }
+
+            boton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateInfo();
+                    tOpc = opc.getTOperacion();
+                    idOperacion.setText(opc.getId());
+                    cantOperacion.setText(opc.getCantidad() + "€");
+                    fechaOperacion.setText(fecha);
+                    categoriaOperacion.setText(opc.getCategoria());
+                    asuntoOperacion.setText(opc.getMotivo());
+                    panelHistorialOperaciones.setVisible(false);
+                    VistaVentana.this.remove(panelHistorialOperaciones);
+                    panelOperacion.setVisible(true);
+                    VistaVentana.this.add(panelOperacion);
+                    if (opc.getCantidad() < 0){
+                        cantOperacion.setForeground(new Color(227, 111, 111));
+                    }else{
+                        cantOperacion.setForeground(new Color(164, 227, 111));
+                    }
+                }
+            });
+
+            panelOperaciones.add(boton);
+            panelOperaciones.add(cant);
+
         }
     }
 

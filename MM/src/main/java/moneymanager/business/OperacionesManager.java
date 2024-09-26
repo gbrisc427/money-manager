@@ -88,7 +88,7 @@ public class OperacionesManager {
         LocalDateTime fecha = LocalDateTime.now();
         Cuenta cuenta = CM.getCuentaActual();
         Transferencia transferencia = new Transferencia(id,fecha,motivo,-1*cantidad,cuenta,cuentaDestino,categoria);
-        Ingreso ingreso = new Ingreso(generarIDAleatorio(),fecha,motivo,cantidad,cuentaDestino,categoria);
+        Ingreso ingreso = new Ingreso(id,fecha,motivo,cantidad,cuentaDestino,categoria);
         if (operacionNueva(transferencia)){
             cuenta.aniadirOperacion(transferencia);
             cuentaDestino.aniadirOperacion(ingreso);
@@ -101,12 +101,43 @@ public class OperacionesManager {
 
     }
 
-    public void eliminarOperacion(String id){
-
+    public void eliminarOperacion(String id, TOperacion tOpc){
+        Operacion opc = buscarOperacion(id,tOpc);
+        if (opc != null){
+            float saldoAct = CM.getCuentaActual().getSaldo();
+            operaciones.remove(opc);
+            CM.getCuentaActual().getHistorial().remove(opc);
+            CM.getCuentaActual().setSaldo(saldoAct - opc.getCantidad());
+            if (tOpc.equals(TOperacion.INGRESO)){
+                opc = buscarOperacion(id, TOperacion.TRANSFERENCIA);
+                if (opc != null){
+                    Cuenta cuentaRemitente = ((Transferencia)opc).getCuentaRemitente();
+                    cuentaRemitente.getHistorial().remove(opc);
+                    cuentaRemitente.setSaldo(saldoAct - opc.getCantidad());
+                    operaciones.remove(opc);
+                }
+            } else if (tOpc.equals(TOperacion.TRANSFERENCIA)){
+                Cuenta cuentaDestino = ((Transferencia)opc).getCuentaDestino();
+                cuentaDestino.setSaldo(cuentaDestino.getSaldo() + opc.getCantidad());
+                opc = buscarOperacion(id, TOperacion.INGRESO);
+                operaciones.remove(opc);
+                cuentaDestino.getHistorial().remove(opc);
+            }
+        }
     }
 
     public void eliminarOperacion(Operacion operacion){
         operaciones.remove(operacion);
+    }
+
+    private Operacion buscarOperacion(String id, TOperacion tOpc){
+        Operacion opc = null;
+        for (Operacion aux : operaciones){
+            if (aux.getId().equals(id) && aux.getTOperacion().equals(tOpc)){
+                opc = aux;
+            }
+        }
+        return opc;
     }
 
     private String generarIDAleatorio() {

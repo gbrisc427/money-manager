@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Gasto extends Operacion{
 
     private final TOperacion tipoOperacion = TOperacion.GASTO;
-    private Cuenta cuenta;
+    private final Cuenta cuenta;
 
     public Gasto(String id,LocalDateTime fecha, String motivo, float cantidad, Cuenta cuenta, String categoria) {
         super(id, fecha, motivo, cantidad, categoria);

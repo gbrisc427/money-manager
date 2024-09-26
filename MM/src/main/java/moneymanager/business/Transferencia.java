@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public class Transferencia extends  Operacion{
 
     private final TOperacion tipoOperacion = TOperacion.TRANSFERENCIA;
-    private Cuenta cuentaRemitente;
-    private Cuenta cuentaDestino;
+    private final Cuenta cuentaRemitente;
+    private final Cuenta cuentaDestino;
 
     public Transferencia(String id,LocalDateTime fecha, String motivo, float cantidad, Cuenta remitente, Cuenta destino, String categoria) {
         super(id, fecha, motivo, cantidad, categoria);
