@@ -6,9 +6,9 @@ public abstract class Operacion {
 
     private final String id;
     private final LocalDateTime fecha;
-    private final String motivo;
-    private final float cantidad;
-    private final String categoria;
+    private  String motivo;
+    private  float cantidad;
+    private  String categoria;
 
     public Operacion(String id, LocalDateTime fecha, String motivo, float cantidad, String categoria) {
         this.id = id;
@@ -37,6 +37,18 @@ public abstract class Operacion {
 
     public String getId() {
         return id;
+    }
+
+    public void setMotivo(String motivo){
+        this.motivo = motivo;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setCantidad(float cantidad) {
+        this.cantidad = cantidad;
     }
 
     public abstract TOperacion getTOperacion();

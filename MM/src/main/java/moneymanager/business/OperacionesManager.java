@@ -97,8 +97,21 @@ public class OperacionesManager {
         }
     }
 
-    public void modificarOperacion(){
+    public void modificarTransferencia(String id, String categoria, String asunto, Float cant){
 
+    }
+    public void modificarIngresoGasto(TOperacion tOPc,String id, String categoria, String asunto, Float cant){
+        Operacion operacion = buscarOperacion(id, tOPc);
+        if (!categoria.isEmpty()){
+            operacion.setCategoria(categoria);
+        }
+        if (!asunto.isEmpty()){
+            operacion.setMotivo(asunto);
+        }
+        if (cant != 0){
+            CM.getCuentaActual().modificarSaldo(operacion.getCantidad(), cant);
+            operacion.setCantidad(cant);
+        }
     }
 
     public void eliminarOperacion(String id, TOperacion tOpc){
@@ -130,7 +143,7 @@ public class OperacionesManager {
         operaciones.remove(operacion);
     }
 
-    private Operacion buscarOperacion(String id, TOperacion tOpc){
+    public Operacion buscarOperacion(String id, TOperacion tOpc){
         Operacion opc = null;
         for (Operacion aux : operaciones){
             if (aux.getId().equals(id) && aux.getTOperacion().equals(tOpc)){

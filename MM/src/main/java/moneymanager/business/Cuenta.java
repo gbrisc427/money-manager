@@ -26,6 +26,10 @@ public class Cuenta {
         }
     }
 
+    public void modificarSaldo(float cantAntigua, float cantNueva){
+        this.saldo = this.saldo - cantAntigua + cantNueva;
+    }
+
     public void cargarOperacion(Operacion operacion){
         if (operacionNueva(operacion)) {
             historial.add(operacion);

@@ -726,6 +726,13 @@ public class VistaVentana extends JFrame {
             }
         });
 
+        botonModificarOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               popUpModOperacion(VistaVentana.this);
+            }
+        });
+
     }
 
     private void popUpBienvenida(JFrame parentFrame){
@@ -837,6 +844,178 @@ public class VistaVentana extends JFrame {
         dialogo.setVisible(true);
     }
 
+    private void popUpModOperacion(JFrame parentFrame) {
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(400, 400);
+        dialogo.setLayout(new BorderLayout());
+
+        JLabel tituloModifOp = new JLabel(idOperacion.getText(), SwingConstants.CENTER);
+        tituloModifOp.setFont(new Font("Lexend", Font.BOLD, 30));
+        tituloModifOp.setBorder(new EmptyBorder(25, 15, 0, 15));
+        tituloModifOp.setForeground(new Color(164, 227, 111));
+        tituloModifOp.setBackground(new Color(253, 242, 240));
+
+        dialogo.add(tituloModifOp, BorderLayout.NORTH);
+
+        JPanel nuevosDatosOp = new JPanel();
+        nuevosDatosOp.setLayout(new GridBagLayout());
+        nuevosDatosOp.setVisible(true);
+
+        gbc.insets = new Insets(15, 0, 15, 0);
+
+        JLabel txtSubTitulo = new JLabel("<html> DEJE EN BLANCO LOS VALORES QUE NO QUIERE MODIFICAR. </html>", SwingConstants.LEFT);
+        txtSubTitulo.setFont(new Font("Lexend", Font.BOLD, 10));
+        txtSubTitulo.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 5;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        nuevosDatosOp.add(txtSubTitulo, gbc);
+
+        gbc.insets = new Insets(5, 0, 5, 5);
+
+        JLabel txtNewCant = new JLabel("<html>CANTIDAD: </html>", SwingConstants.LEFT);
+        txtNewCant.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtNewCant.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        nuevosDatosOp.add(txtNewCant, gbc);
+
+        JTextField txtFNewCant = new JTextField(4);
+        txtFNewCant.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFNewCant.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFNewCant.setForeground(new Color(253, 242, 240));
+        txtFNewCant.setBackground(new Color(164, 227, 111));
+        txtFNewCant.setText("0.0");
+        txtFNewCant.setDocument(new NumericDocument(6));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        nuevosDatosOp.add(txtFNewCant, gbc);
+
+        JLabel txtNewCategoria = new JLabel("<html>CATEGORÍA: </html>", SwingConstants.LEFT);
+        txtNewCategoria.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtNewCategoria.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        nuevosDatosOp.add(txtNewCategoria, gbc);
+
+        JTextField txtFNewCategoria = new JTextField(15);
+        txtFNewCategoria.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFNewCategoria.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFNewCategoria.setForeground(new Color(253, 242, 240));
+        txtFNewCategoria.setBackground(new Color(164, 227, 111));
+        txtFNewCategoria.setDocument(new LimitDocument(20));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        nuevosDatosOp.add(txtFNewCategoria, gbc);
+
+        JLabel txtNewAsunto = new JLabel("<html>ASUNTO: </html>", SwingConstants.LEFT);
+        txtNewAsunto.setFont(new Font("Lexend", Font.BOLD, 15));
+        txtNewAsunto.setForeground(new Color(164, 227, 111));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.EAST;
+        nuevosDatosOp.add(txtNewAsunto, gbc);
+
+        JTextField txtFNewAsunto = new JTextField(15);
+        txtFNewAsunto.setFont(new Font("Lexend", Font.BOLD, 13));
+        txtFNewAsunto.setBorder(new EmptyBorder(8, 8, 8, 8));
+        txtFNewAsunto.setForeground(new Color(253, 242, 240));
+        txtFNewAsunto.setBackground(new Color(164, 227, 111));
+        txtFNewAsunto.setDocument(new LimitDocument(50));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        nuevosDatosOp.add(txtFNewAsunto, gbc);
+
+        nuevosDatosOp.setBorder(new EmptyBorder(15,30,15,15));
+        dialogo.add(nuevosDatosOp, BorderLayout.CENTER);
+
+        JButton botonGuardarModOp = new JButton("GUARDAR");
+        botonGuardarModOp.setBorder(new EmptyBorder(9, 9,40, 9));
+        botonGuardarModOp.setForeground(new Color(164, 227, 111));
+        botonGuardarModOp.setBackground(new Color(253, 242, 240));
+
+        dialogo.add(botonGuardarModOp, BorderLayout.SOUTH);
+
+        botonGuardarModOp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OperacionesManager OP = OperacionesManager.getInstancia();
+                if (tOpc.equals(TOperacion.TRANSFERENCIA)){
+                    if (txtFNewCant.getText().isEmpty()){
+                        OP.modificarTransferencia(tituloModifOp.getText(), txtFNewCategoria.getText(), txtFNewAsunto.getText(), 0.0F);
+                        updateOperacion();
+                        dialogo.dispose();
+                    }else{
+                        if (Float.parseFloat(txtFNewCant.getText()) != 0){
+                            float res = cuenta.getSaldo() - Float.parseFloat(txtFNewCant.getText());
+                            if (res < 0 || Float.parseFloat(txtFNewCant.getText()) < 0){
+                                dialogo.dispose();
+                                popUpDatosOp(VistaVentana.this);
+                            }else{
+                                OP.modificarTransferencia(tituloModifOp.getText(), txtFNewCategoria.getText(), txtFNewAsunto.getText(), Float.parseFloat(txtFNewCant.getText()));
+                                updateOperacion();
+                                dialogo.dispose();
+                            }
+                        }
+                    }
+                }else{
+                    if (txtFNewCant.getText().isEmpty()){
+                        OP.modificarIngresoGasto(tOpc, tituloModifOp.getText(),txtFNewCategoria.getText(),txtFNewAsunto.getText(), 0.0F);
+                        updateOperacion();
+                        dialogo.dispose();
+                    }else{
+                        if (Float.parseFloat(txtFNewCant.getText()) != 0){
+                            float res = cuenta.getSaldo() + Float.parseFloat(txtFNewCant.getText());
+                            if (res < 0){
+                                popUpDatosOp(VistaVentana.this);
+                            }else{
+                                OP.modificarIngresoGasto(tOpc, tituloModifOp.getText(),txtFNewCategoria.getText(),txtFNewAsunto.getText(), Float.parseFloat(txtFNewCant.getText()));
+                                updateOperacion();
+                                dialogo.dispose();
+                            }
+                        }
+                    }
+                }
+
+                txtFNewAsunto.setText("");
+                txtFNewCant.setText("");
+                txtFNewCategoria.setText("");
+            }
+        });
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
+    }
+
+
     private void popUpDatosOp(JFrame parentFrame){
         JDialog dialogo = new JDialog(parentFrame, "", true);
         dialogo.setSize(400, 440);
@@ -920,6 +1099,17 @@ public class VistaVentana extends JFrame {
         botonNombreCuenta2.setText(nombre);
         etiquetaSaldo.setText(saldo);
         etiqID.setText(id);
+    }
+
+    private void updateOperacion(){
+        Operacion operacion = OperacionesManager.getInstancia().buscarOperacion(idOperacion.getText(), tOpc);
+        cantOperacion.setText(operacion.getCantidad() + "€");
+        asuntoOperacion.setText(operacion.getMotivo());
+        categoriaOperacion.setText(operacion.getCategoria());
+        if (Float.parseFloat(cantOperacion.getText()) < 0){
+            cantOperacion.setForeground(new Color(227, 111, 111));
+        }
+        else cantOperacion.setForeground(new Color(164, 227, 111));
     }
 
     private void updateCuentas(){
