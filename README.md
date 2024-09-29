@@ -24,7 +24,7 @@
 - **Personalización mediante `UIManager`:** Personalización avanzada de elementos de la interfaz como botones, etiquetas, checkboxes, combo boxes, y barras de desplazamiento.
 
 ## Requisitos del Sistema
-- **Java 8** o superior.
+- **Java 22**.
 - **IDE recomendado:** IntelliJ IDEA  para el desarrollo y ejecución de la aplicación.
 
 ## Licencia
