@@ -41,14 +41,14 @@ public class panelConsultarCuentas extends JPanel implements Panel{
         SCROLL_CUENTAS.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         SCROLL_CUENTAS.setVisible(true);
         SCROLL_CUENTAS.setFocusable(false);
-        SCROLL_CUENTAS.setBackground(new Color(253, 242, 240));
+        SCROLL_CUENTAS.setBackground(VistaVentana.COLOR_PRIMARIO);
         SCROLL_CUENTAS.setBorder(new EmptyBorder(0,0,0,0));
 
         JButton BOTON_CREAR_CUENTA = new JButton("CREAR CUENTA");
         BOTON_CREAR_CUENTA.setFont(new Font("Lexend", Font.BOLD, 15));
         BOTON_CREAR_CUENTA.setBorder(new EmptyBorder(15, 15, 30, 15));
-        BOTON_CREAR_CUENTA.setForeground(new Color(164, 227, 111));
-        BOTON_CREAR_CUENTA.setBackground(new Color(253, 242, 240));
+        BOTON_CREAR_CUENTA.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        BOTON_CREAR_CUENTA.setBackground(VistaVentana.COLOR_PRIMARIO);
 
         this.add(SCROLL_CUENTAS, BorderLayout.CENTER);
         this.add(BOTON_CREAR_CUENTA, BorderLayout.SOUTH);
@@ -73,15 +73,15 @@ public class panelConsultarCuentas extends JPanel implements Panel{
             boton.setFont(new Font("Lexend", Font.BOLD, 20));
             boton.setBorder(new EmptyBorder(1, 5, 1, 5));
             boton.setPreferredSize(new Dimension(200, 30));
-            boton.setForeground(new Color(164, 227, 111));
-            boton.setBackground(new Color(253, 242, 240));
+            boton.setForeground(VistaVentana.COLOR_SECUNDARIO);
+            boton.setBackground(VistaVentana.COLOR_PRIMARIO);
 
             JLabel cant = new JLabel(aux.getSaldo()+"€");
             cant.setFont(new Font("Lexend", Font.BOLD, 20));
             cant.setBorder(new EmptyBorder(1, 20, 1, 5));
             cant.setPreferredSize(new Dimension(100, 30));
-            cant.setForeground(new Color(164, 227, 111));
-            cant.setBackground(new Color(253, 242, 240));
+            cant.setForeground(VistaVentana.COLOR_SECUNDARIO);
+            cant.setBackground(VistaVentana.COLOR_PRIMARIO);
 
             boton.addActionListener(new ActionListener() {
                 @Override
@@ -107,14 +107,14 @@ public class panelConsultarCuentas extends JPanel implements Panel{
         JLabel mensaje = new JLabel("<html>INTRODUCE EL NOMBRE <br>DE LA NUEVA CUENTA.</html>");
         mensaje.setFont(new Font("Lexend", Font.BOLD, 20));
         mensaje.setBorder(new EmptyBorder(25, 15, 15, 15));
-        mensaje.setForeground(new Color(164, 227, 111));
+        mensaje.setForeground(VistaVentana.COLOR_SECUNDARIO);
         dialogo.add(mensaje);
 
         JTextField nombre = new JTextField(15);
         nombre.setFont(new Font("Lexend", Font.BOLD, 12));
         nombre.setBorder(new EmptyBorder(10, 25, 10, 25));
-        nombre.setForeground(new Color(253, 242, 240));
-        nombre.setBackground(new Color(164, 227, 111));
+        nombre.setForeground(VistaVentana.COLOR_PRIMARIO);
+        nombre.setBackground(VistaVentana.COLOR_SECUNDARIO);
         nombre.setDocument(new LimitDocument(20));
         nombre.setAlignmentX(Component.CENTER_ALIGNMENT);
 

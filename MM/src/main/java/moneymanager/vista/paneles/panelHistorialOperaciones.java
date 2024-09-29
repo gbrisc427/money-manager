@@ -42,7 +42,7 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
         scrollOperaciones.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollOperaciones.setVisible(true);
         scrollOperaciones.setFocusable(false);
-        scrollOperaciones.setBackground(new Color(253, 242, 240));
+        scrollOperaciones.setBackground(VistaVentana.COLOR_PRIMARIO);
         scrollOperaciones.setBorder(new EmptyBorder(0,0,0,0));
 
         this.add(scrollOperaciones, BorderLayout.CENTER);
@@ -58,7 +58,7 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             noHayOperaciones.setFont(new Font("Lexend", Font.BOLD, 30));
             noHayOperaciones.setBorder(new EmptyBorder(110, 80, 10, 5));
             noHayOperaciones.setPreferredSize(new Dimension(350, 300));
-            noHayOperaciones.setForeground(new Color(227, 111, 111));
+            noHayOperaciones.setForeground(VistaVentana.COLOR_ALERTA);
             PANEL_OPERACIONES.add(noHayOperaciones);
         }
         for (Operacion opc : VistaVentana.CUENTA.getHistorial()) {
@@ -77,18 +77,18 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             boton.setFont(new Font("Lexend", Font.BOLD, 15));
             boton.setBorder(new EmptyBorder(1, 5, 1, 5));
             boton.setPreferredSize(new Dimension(70, 30));
-            boton.setForeground(new Color(164, 227, 111));
-            boton.setBackground(new Color(253, 242, 240));
+            boton.setForeground(VistaVentana.COLOR_SECUNDARIO);
+            boton.setBackground(VistaVentana.COLOR_PRIMARIO);
 
             JLabel cant = new JLabel(txt);
             cant.setFont(new Font("Lexend", Font.BOLD, 15));
             cant.setBorder(new EmptyBorder(1, 5, 1, 5));
             cant.setPreferredSize(new Dimension(300, 30));
-            cant.setForeground(new Color(164, 227, 111));
-            cant.setBackground(new Color(253, 242, 240));
+            cant.setForeground(VistaVentana.COLOR_SECUNDARIO);
+            cant.setBackground(VistaVentana.COLOR_PRIMARIO);
             if (opc.getCantidad() < 0 || opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
-                boton.setForeground(new Color(227, 111, 111));
-                cant.setForeground(new Color(227, 111, 111));
+                boton.setForeground(VistaVentana.COLOR_ALERTA);
+                cant.setForeground(VistaVentana.COLOR_ALERTA);
             }
 
             boton.addActionListener(new ActionListener() {

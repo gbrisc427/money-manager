@@ -9,18 +9,21 @@ public class App {
 
     private final CuentaManager CM;
     private final OperacionesManager OM;
+    private final AjustesManager AM;
     private VistaVentana VV;
 
 
     public App(){
         CM = CuentaManager.getInstancia();
         OM = OperacionesManager.getInstancia();
+        AM = AjustesManager.getInstancia();
     }
 
     public void init(){
         CM.leerCSV();
         OM.leerCSV();
-        VV = VistaVentana.getInstancia();
+        AM.leerCSV();
+        VV = getInstancia();
         VV.initVentana();
     }
 
@@ -33,8 +36,10 @@ public class App {
 
 
     public void end(){
+        VV.guardarColores();
         OM.escribirCSV();
         CM.escribirCSV();
+        AM.escribirCSV();
         System.out.println("end");
     }
 

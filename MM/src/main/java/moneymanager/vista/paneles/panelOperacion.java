@@ -15,7 +15,6 @@ public class panelOperacion extends JPanel implements Panel{
 
     private final JLabel ETIQUETA_ID_OPERACION;
     private final JLabel ETIQUETA_CANTIDAD;
-    private final JLabel ETIQUETA_FECHA;
     private final JLabel ETIQUETA_CATEGORIA;
     private final JLabel ETIQUETA_ASUNTO;
 
@@ -35,8 +34,8 @@ public class panelOperacion extends JPanel implements Panel{
         ETIQUETA_ID_OPERACION = new JLabel("",SwingConstants.CENTER);
         ETIQUETA_ID_OPERACION.setFont(new Font("Lexend", Font.BOLD, 30));
         ETIQUETA_ID_OPERACION.setBorder(new EmptyBorder(25, 15, 0, 15));
-        ETIQUETA_ID_OPERACION.setForeground(new Color(164, 227, 111));
-        ETIQUETA_ID_OPERACION.setBackground(new Color(253, 242, 240));
+        ETIQUETA_ID_OPERACION.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        ETIQUETA_ID_OPERACION.setBackground(VistaVentana.COLOR_PRIMARIO);
         this.add(ETIQUETA_ID_OPERACION, BorderLayout.NORTH);
 
 
@@ -47,28 +46,28 @@ public class panelOperacion extends JPanel implements Panel{
         ETIQUETA_CANTIDAD = new JLabel("", SwingConstants.CENTER);
         ETIQUETA_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 70));
         ETIQUETA_CANTIDAD.setBorder(new EmptyBorder(60, 0, 30, 0));
-        ETIQUETA_CANTIDAD.setForeground(new Color(164, 227, 111));
+        ETIQUETA_CANTIDAD.setForeground(VistaVentana.COLOR_SECUNDARIO);
         ETIQUETA_CANTIDAD.setPreferredSize(new Dimension(400,160));
         PANEL_DATOS_OPERACION.add(ETIQUETA_CANTIDAD);
 
-        ETIQUETA_FECHA = new JLabel("", SwingConstants.CENTER);
+        JLabel ETIQUETA_FECHA = new JLabel("", SwingConstants.CENTER);
         ETIQUETA_FECHA.setFont(new Font("Lexend", Font.BOLD, 20));
         ETIQUETA_FECHA.setBorder(new EmptyBorder(10, 10, 10, 10));
-        ETIQUETA_FECHA.setForeground(new Color(164, 227, 111));
+        ETIQUETA_FECHA.setForeground(VistaVentana.COLOR_SECUNDARIO);
         ETIQUETA_FECHA.setPreferredSize(new Dimension(400,40));
         PANEL_DATOS_OPERACION.add(ETIQUETA_FECHA);
 
         ETIQUETA_CATEGORIA = new JLabel("", SwingConstants.CENTER);
         ETIQUETA_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 20));
         ETIQUETA_CATEGORIA.setBorder(new EmptyBorder(10, 10, 10, 10));
-        ETIQUETA_CATEGORIA.setForeground(new Color(164, 227, 111));
+        ETIQUETA_CATEGORIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
         ETIQUETA_CATEGORIA.setPreferredSize(new Dimension(400,40));
         PANEL_DATOS_OPERACION.add(ETIQUETA_CATEGORIA);
 
         ETIQUETA_ASUNTO = new JLabel("", SwingConstants.CENTER);
         ETIQUETA_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 12));
         ETIQUETA_ASUNTO.setBorder(new EmptyBorder(10, 10, 10, 10));
-        ETIQUETA_ASUNTO.setForeground(new Color(164, 227, 111));
+        ETIQUETA_ASUNTO.setForeground(VistaVentana.COLOR_SECUNDARIO);
         ETIQUETA_ASUNTO.setPreferredSize(new Dimension(200,40));
         PANEL_DATOS_OPERACION.add(ETIQUETA_ASUNTO);
 
@@ -78,13 +77,13 @@ public class panelOperacion extends JPanel implements Panel{
 
         JButton BOTON_MODIFICAR = new JButton("MODIFICAR");
         BOTON_MODIFICAR.setBorder(new EmptyBorder(9, 9,9, 9));
-        BOTON_MODIFICAR.setForeground(new Color(253, 242, 240));
+        BOTON_MODIFICAR.setForeground(VistaVentana.COLOR_PRIMARIO);
         PANEL_BOTONES.add(BOTON_MODIFICAR);
 
         JButton BOTON_ELIMINAR = new JButton("ELIMINAR");
         BOTON_ELIMINAR.setBorder(new EmptyBorder(9, 9, 9, 9));
-        BOTON_ELIMINAR.setForeground(new Color(253, 242, 240));
-        BOTON_ELIMINAR.setBackground(new Color(227, 111, 111));
+        BOTON_ELIMINAR.setForeground(VistaVentana.COLOR_PRIMARIO);
+        BOTON_ELIMINAR.setBackground(VistaVentana.COLOR_ALERTA);
         PANEL_BOTONES.add(BOTON_ELIMINAR);
 
         PANEL_BOTONES.setBorder(new EmptyBorder(0,0,30,0));
@@ -120,14 +119,14 @@ public class panelOperacion extends JPanel implements Panel{
         JLabel mensaje = new JLabel("<html>PARA ELIMINAR LA OPERACIÓN <br> ESCRIBE \"CONFIRMAR\".</html>");
         mensaje.setFont(new Font("Lexend", Font.BOLD, 15));
         mensaje.setBorder(new EmptyBorder(25, 15, 15, 15));
-        mensaje.setForeground(new Color(227, 111, 111));
+        mensaje.setForeground(VistaVentana.COLOR_ALERTA);
         dialogo.add(mensaje);
 
         JTextField confirmar = new JTextField(8);
         confirmar.setFont(new Font("Lexend", Font.BOLD, 12));
         confirmar.setBorder(new EmptyBorder(10, 25, 10, 25));
-        confirmar.setForeground(new Color(253, 242, 240));
-        confirmar.setBackground(new Color(227, 111, 111));
+        confirmar.setForeground(VistaVentana.COLOR_PRIMARIO);
+        confirmar.setBackground(VistaVentana.COLOR_ALERTA);
         confirmar.setDocument(new LimitDocument(9));
         confirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -161,8 +160,8 @@ public class panelOperacion extends JPanel implements Panel{
         JLabel tituloModifOp = new JLabel(ETIQUETA_ID_OPERACION.getText(), SwingConstants.CENTER);
         tituloModifOp.setFont(new Font("Lexend", Font.BOLD, 30));
         tituloModifOp.setBorder(new EmptyBorder(25, 15, 0, 15));
-        tituloModifOp.setForeground(new Color(164, 227, 111));
-        tituloModifOp.setBackground(new Color(253, 242, 240));
+        tituloModifOp.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        tituloModifOp.setBackground(VistaVentana.COLOR_PRIMARIO);
 
         dialogo.add(tituloModifOp, BorderLayout.NORTH);
 
@@ -174,7 +173,7 @@ public class panelOperacion extends JPanel implements Panel{
 
         JLabel txtSubTitulo = new JLabel("<html> DEJE EN BLANCO LOS VALORES QUE NO QUIERE MODIFICAR. </html>", SwingConstants.LEFT);
         txtSubTitulo.setFont(new Font("Lexend", Font.BOLD, 10));
-        txtSubTitulo.setForeground(new Color(164, 227, 111));
+        txtSubTitulo.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 5;
@@ -187,7 +186,7 @@ public class panelOperacion extends JPanel implements Panel{
 
         JLabel txtNewCant = new JLabel("<html>CANTIDAD: </html>", SwingConstants.LEFT);
         txtNewCant.setFont(new Font("Lexend", Font.BOLD, 15));
-        txtNewCant.setForeground(new Color(164, 227, 111));
+        txtNewCant.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -199,8 +198,8 @@ public class panelOperacion extends JPanel implements Panel{
         JTextField txtFNewCant = new JTextField(4);
         txtFNewCant.setFont(new Font("Lexend", Font.BOLD, 13));
         txtFNewCant.setBorder(new EmptyBorder(8, 8, 8, 8));
-        txtFNewCant.setForeground(new Color(253, 242, 240));
-        txtFNewCant.setBackground(new Color(164, 227, 111));
+        txtFNewCant.setForeground(VistaVentana.COLOR_PRIMARIO);
+        txtFNewCant.setBackground(VistaVentana.COLOR_SECUNDARIO);
         txtFNewCant.setText("0.0");
         txtFNewCant.setDocument(new NumericDocument(6));
         gbc.gridx = 1;
@@ -213,7 +212,7 @@ public class panelOperacion extends JPanel implements Panel{
 
         JLabel txtNewCategoria = new JLabel("<html>CATEGORÍA: </html>", SwingConstants.LEFT);
         txtNewCategoria.setFont(new Font("Lexend", Font.BOLD, 15));
-        txtNewCategoria.setForeground(new Color(164, 227, 111));
+        txtNewCategoria.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -225,8 +224,8 @@ public class panelOperacion extends JPanel implements Panel{
         JTextField txtFNewCategoria = new JTextField(15);
         txtFNewCategoria.setFont(new Font("Lexend", Font.BOLD, 13));
         txtFNewCategoria.setBorder(new EmptyBorder(8, 8, 8, 8));
-        txtFNewCategoria.setForeground(new Color(253, 242, 240));
-        txtFNewCategoria.setBackground(new Color(164, 227, 111));
+        txtFNewCategoria.setForeground(VistaVentana.COLOR_PRIMARIO);
+        txtFNewCategoria.setBackground(VistaVentana.COLOR_SECUNDARIO);
         txtFNewCategoria.setDocument(new LimitDocument(20));
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -238,7 +237,7 @@ public class panelOperacion extends JPanel implements Panel{
 
         JLabel txtNewAsunto = new JLabel("<html>ASUNTO: </html>", SwingConstants.LEFT);
         txtNewAsunto.setFont(new Font("Lexend", Font.BOLD, 15));
-        txtNewAsunto.setForeground(new Color(164, 227, 111));
+        txtNewAsunto.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 1;
@@ -250,8 +249,8 @@ public class panelOperacion extends JPanel implements Panel{
         JTextField txtFNewAsunto = new JTextField(15);
         txtFNewAsunto.setFont(new Font("Lexend", Font.BOLD, 13));
         txtFNewAsunto.setBorder(new EmptyBorder(8, 8, 8, 8));
-        txtFNewAsunto.setForeground(new Color(253, 242, 240));
-        txtFNewAsunto.setBackground(new Color(164, 227, 111));
+        txtFNewAsunto.setForeground(VistaVentana.COLOR_PRIMARIO);
+        txtFNewAsunto.setBackground(VistaVentana.COLOR_SECUNDARIO);
         txtFNewAsunto.setDocument(new LimitDocument(50));
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -266,8 +265,8 @@ public class panelOperacion extends JPanel implements Panel{
 
         JButton botonGuardarModOp = new JButton("GUARDAR");
         botonGuardarModOp.setBorder(new EmptyBorder(9, 9,40, 9));
-        botonGuardarModOp.setForeground(new Color(164, 227, 111));
-        botonGuardarModOp.setBackground(new Color(253, 242, 240));
+        botonGuardarModOp.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        botonGuardarModOp.setBackground(VistaVentana.COLOR_PRIMARIO);
 
         dialogo.add(botonGuardarModOp, BorderLayout.SOUTH);
 
@@ -330,13 +329,15 @@ public class panelOperacion extends JPanel implements Panel{
     private void updateOperacion(){
         Operacion operacion = OperacionesManager.getInstancia().buscarOperacion(VistaVentana.ID_OPERACION,
                 VistaVentana.TIPO_OPERACION);
-        ETIQUETA_CANTIDAD.setText(operacion.getCantidad() + "€");
+        ETIQUETA_ID_OPERACION.setText("#" + VistaVentana.ID_OPERACION);
         ETIQUETA_ASUNTO.setText(operacion.getMotivo());
         ETIQUETA_CATEGORIA.setText(operacion.getCategoria());
-        if (Float.parseFloat(ETIQUETA_CANTIDAD.getText()) < 0){
-            ETIQUETA_CANTIDAD.setForeground(new Color(227, 111, 111));
+        ETIQUETA_CANTIDAD.setText(operacion.getCantidad() + "€");
+        if (operacion.getCantidad()< 0){
+            ETIQUETA_CANTIDAD.setForeground(VistaVentana.COLOR_ALERTA);
         }
-        else ETIQUETA_CANTIDAD.setForeground(new Color(164, 227, 111));
+        else ETIQUETA_CANTIDAD.setForeground(VistaVentana.COLOR_SECUNDARIO);
+
     }
 
     private void popUpDatosOp(JFrame parentFrame){
@@ -347,8 +348,8 @@ public class panelOperacion extends JPanel implements Panel{
         JLabel titulo = new JLabel("",SwingConstants.CENTER);
         titulo.setFont(new Font("Lexend", Font.BOLD, 18));
         titulo.setBorder(new EmptyBorder(25, 15, 15, 15));
-        titulo.setForeground(new Color(227, 111, 111));
-        titulo.setBackground(new Color(253, 242, 240));
+        titulo.setForeground(VistaVentana.COLOR_ALERTA);
+        titulo.setBackground(VistaVentana.COLOR_PRIMARIO);
         titulo.setHorizontalTextPosition(0);
         titulo.setText("<html>ALGUNO DE LOS DATOS <br> INTRODUCIDOS ES INCORRECTO</html>");
         dialogo.add(titulo);
@@ -356,8 +357,8 @@ public class panelOperacion extends JPanel implements Panel{
         JLabel txt = new JLabel();
         txt.setFont(new Font("Lexend", Font.BOLD, 12));
         txt.setBorder(new EmptyBorder(0, 15, 25, 15));
-        txt.setForeground(new Color(164, 227, 111));
-        txt.setBackground(new Color(253, 242, 240));
+        txt.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        txt.setBackground(VistaVentana.COLOR_PRIMARIO);
         txt.setHorizontalAlignment(0);
         txt.setText("<html><p style=\"color: rgb(227, 111, 111);\">CANTIDAD:</p> DEBE CONTENER UN  <br>VALOR NUMÉRICO DIFERENTE A 0. <br>" +
                 " LA OPERACIÓN NO PUEDE <br> DEJAR LA CUENTA EN NEGATIVO. " +

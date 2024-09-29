@@ -32,8 +32,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JLabel ETIQUETA_TITULO = new JLabel("REALIZAR OPERACIÓN", SwingConstants.CENTER);
         ETIQUETA_TITULO.setFont(new Font("Lexend", Font.BOLD, 25));
         ETIQUETA_TITULO.setBorder(new EmptyBorder(35, 15, 20, 15));
-        ETIQUETA_TITULO.setForeground(new Color(164, 227, 111));
-        ETIQUETA_TITULO.setBackground(new Color(253, 242, 240));
+        ETIQUETA_TITULO.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        ETIQUETA_TITULO.setBackground(VistaVentana.COLOR_PRIMARIO);
         ETIQUETA_TITULO.setVisible(true);
         this.add(ETIQUETA_TITULO,BorderLayout.NORTH);
 
@@ -46,7 +46,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JLabel ETIQUETA_SUBTITULO = new JLabel("<html> INTRODUCE LOS VALORES: </html>", SwingConstants.LEFT);
         ETIQUETA_SUBTITULO.setFont(new Font("Lexend", Font.BOLD, 17));
-        ETIQUETA_SUBTITULO.setForeground(new Color(164, 227, 111));
+        ETIQUETA_SUBTITULO.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
@@ -59,7 +59,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JLabel ETIQUETA_CANTIDAD = new JLabel("<html>CANTIDAD: </html>", SwingConstants.LEFT);
         ETIQUETA_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 15));
-        ETIQUETA_CANTIDAD.setForeground(new Color(164, 227, 111));
+        ETIQUETA_CANTIDAD.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -71,8 +71,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JTextField FIELD_CANTIDAD = new JTextField(4);
         FIELD_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_CANTIDAD.setBorder(new EmptyBorder(8, 8, 8, 8));
-        FIELD_CANTIDAD.setForeground(new Color(253, 242, 240));
-        FIELD_CANTIDAD.setBackground(new Color(164, 227, 111));
+        FIELD_CANTIDAD.setForeground(VistaVentana.COLOR_PRIMARIO);
+        FIELD_CANTIDAD.setBackground(VistaVentana.COLOR_SECUNDARIO);
         FIELD_CANTIDAD.setText("0.0");
         FIELD_CANTIDAD.setDocument(new NumericDocument(6));
         gbc.gridx = 1;
@@ -85,7 +85,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JLabel ETIQUETA_CATEGORIA = new JLabel("<html>CATEGORÍA: </html>", SwingConstants.LEFT);
         ETIQUETA_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 15));
-        ETIQUETA_CATEGORIA.setForeground(new Color(164, 227, 111));
+        ETIQUETA_CATEGORIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -97,8 +97,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JTextField FIELD_CATEGORIA = new JTextField(15);
         FIELD_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_CATEGORIA.setBorder(new EmptyBorder(8, 8, 8, 8));
-        FIELD_CATEGORIA.setForeground(new Color(253, 242, 240));
-        FIELD_CATEGORIA.setBackground(new Color(164, 227, 111));
+        FIELD_CATEGORIA.setForeground(VistaVentana.COLOR_PRIMARIO);
+        FIELD_CATEGORIA.setBackground(VistaVentana.COLOR_SECUNDARIO);
         FIELD_CATEGORIA.setDocument(new LimitDocument(20));
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -110,7 +110,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JLabel ETIQUETA_ASUNTO = new JLabel("<html>ASUNTO: </html>", SwingConstants.LEFT);
         ETIQUETA_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 15));
-        ETIQUETA_ASUNTO.setForeground(new Color(164, 227, 111));
+        ETIQUETA_ASUNTO.setForeground(VistaVentana.COLOR_SECUNDARIO);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 1;
@@ -122,8 +122,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JTextField FIELD_ASUNTO = new JTextField(15);
         FIELD_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_ASUNTO.setBorder(new EmptyBorder(8, 8, 8, 8));
-        FIELD_ASUNTO.setForeground(new Color(253, 242, 240));
-        FIELD_ASUNTO.setBackground(new Color(164, 227, 111));
+        FIELD_ASUNTO.setForeground(VistaVentana.COLOR_PRIMARIO);
+        FIELD_ASUNTO.setBackground(VistaVentana.COLOR_SECUNDARIO);
         FIELD_ASUNTO.setDocument(new LimitDocument(50));
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -137,8 +137,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JCheckBox CHECKBOX_TRANSFERENCIA = new JCheckBox("TRANSEFERENCIA");
         CHECKBOX_TRANSFERENCIA.setFont(new Font("Lexend", Font.BOLD, 15));
-        CHECKBOX_TRANSFERENCIA.setForeground(new Color(164, 227, 111));
-        CHECKBOX_TRANSFERENCIA.setBackground(new Color(253, 242, 240));
+        CHECKBOX_TRANSFERENCIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        CHECKBOX_TRANSFERENCIA.setBackground(VistaVentana.COLOR_PRIMARIO);
         CHECKBOX_TRANSFERENCIA.setBorder(new EmptyBorder(1,1,1,1));
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -151,8 +151,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         String[] opciones = CM.getCuentasOpTransf();
         COMBOBOX_CUENTAS_TRASNFERENCIA = new JComboBox<>(opciones);
         COMBOBOX_CUENTAS_TRASNFERENCIA.setFont(new Font("Lexend", Font.BOLD, 15));
-        COMBOBOX_CUENTAS_TRASNFERENCIA.setForeground(new Color(164, 227, 111));
-        COMBOBOX_CUENTAS_TRASNFERENCIA.setBackground(new Color(253, 242, 240));
+        COMBOBOX_CUENTAS_TRASNFERENCIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        COMBOBOX_CUENTAS_TRASNFERENCIA.setBackground(VistaVentana.COLOR_PRIMARIO);
         COMBOBOX_CUENTAS_TRASNFERENCIA.setBorder(new EmptyBorder(0,0,0,0));
         if (opciones.length == 0){
             COMBOBOX_CUENTAS_TRASNFERENCIA.setEnabled(false);
@@ -179,13 +179,13 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         JButton BOTON_GUARDAR = new JButton("ACEPTAR");
         BOTON_GUARDAR.setBorder(new EmptyBorder(9, 9,9, 9));
-        BOTON_GUARDAR.setForeground(new Color(253, 242, 240));
+        BOTON_GUARDAR.setForeground(VistaVentana.COLOR_PRIMARIO);
         PANEL_BOTONES.add(BOTON_GUARDAR);
 
         JButton BOTON_CANCELAR = new JButton("CANCELAR");
         BOTON_CANCELAR.setBorder(new EmptyBorder(9, 9, 9, 9));
-        BOTON_CANCELAR.setForeground(new Color(253, 242, 240));
-        BOTON_CANCELAR.setBackground(new Color(227, 111, 111));
+        BOTON_CANCELAR.setForeground(VistaVentana.COLOR_PRIMARIO);
+        BOTON_CANCELAR.setBackground(VistaVentana.COLOR_ALERTA);
         PANEL_BOTONES.add(BOTON_CANCELAR);
 
         PANEL_BOTONES.setBorder(new EmptyBorder(0,0,30,0));
@@ -269,8 +269,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JLabel titulo = new JLabel("",SwingConstants.CENTER);
         titulo.setFont(new Font("Lexend", Font.BOLD, 18));
         titulo.setBorder(new EmptyBorder(25, 15, 15, 15));
-        titulo.setForeground(new Color(227, 111, 111));
-        titulo.setBackground(new Color(253, 242, 240));
+        titulo.setForeground(VistaVentana.COLOR_ALERTA);
+        titulo.setBackground(VistaVentana.COLOR_PRIMARIO);
         titulo.setHorizontalTextPosition(0);
         titulo.setText("<html>ALGUNO DE LOS DATOS <br> INTRODUCIDOS ES INCORRECTO</html>");
         dialogo.add(titulo);
@@ -278,8 +278,8 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         JLabel txt = new JLabel();
         txt.setFont(new Font("Lexend", Font.BOLD, 12));
         txt.setBorder(new EmptyBorder(0, 15, 25, 15));
-        txt.setForeground(new Color(164, 227, 111));
-        txt.setBackground(new Color(253, 242, 240));
+        txt.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        txt.setBackground(VistaVentana.COLOR_PRIMARIO);
         txt.setHorizontalAlignment(0);
         txt.setText("<html><p style=\"color: rgb(227, 111, 111);\">CANTIDAD:</p> DEBE CONTENER UN  <br>VALOR NUMÉRICO DIFERENTE A 0. <br> LA OPERACIÓN NO PUEDE <br> DEJAR LA CUENTA EN NEGATIVO. " +
                 "<br><p style=\"color: rgb(227, 111, 111);\">CATEGORÍA:</p>  DEBE CONTENER UNA CADENA <br>ALFANUMÉRICA QUE NO SUPERE LOS 20 <br>CARÁCTERES (NO PUEDE QUEDAR VACÍA)" +

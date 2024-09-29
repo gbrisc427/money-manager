@@ -37,15 +37,15 @@ public class panelModificarCuenta extends JPanel implements Panel {
         BOTON_NOMBRE_CUENTA = new JButton(nombreCuenta);
         BOTON_NOMBRE_CUENTA.setFont(new Font("Lexend", Font.BOLD, 30));
         BOTON_NOMBRE_CUENTA.setBorder(new EmptyBorder(25, 15, 0, 15));
-        BOTON_NOMBRE_CUENTA.setForeground(new Color(164, 227, 111));
-        BOTON_NOMBRE_CUENTA.setBackground(new Color(253, 242, 240));
+        BOTON_NOMBRE_CUENTA.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        BOTON_NOMBRE_CUENTA.setBackground(VistaVentana.COLOR_PRIMARIO);
         this.add(BOTON_NOMBRE_CUENTA, BorderLayout.NORTH);
 
         JButton BOTON_ELIMINAR_CUENTA = new JButton("ELIMINAR CUENTA");
         BOTON_ELIMINAR_CUENTA.setFont(new Font("Lexend", Font.BOLD, 15));
         BOTON_ELIMINAR_CUENTA.setBorder(new EmptyBorder(35, 15, 25, 15));
-        BOTON_ELIMINAR_CUENTA.setForeground(new Color(227, 111, 111));
-        BOTON_ELIMINAR_CUENTA.setBackground(new Color(253, 242, 240));
+        BOTON_ELIMINAR_CUENTA.setForeground(VistaVentana.COLOR_ALERTA);
+        BOTON_ELIMINAR_CUENTA.setBackground(VistaVentana.COLOR_PRIMARIO);
         this.add(BOTON_ELIMINAR_CUENTA, BorderLayout.SOUTH);
 
         JPanel PANEL_CAMBIO_NOMBRE = new JPanel();
@@ -55,26 +55,26 @@ public class panelModificarCuenta extends JPanel implements Panel {
         JLabel ETIQUETA_CAMBIO_NOMBRE = new JLabel("CAMBIAR NOMBRE:", SwingConstants.LEFT);
         ETIQUETA_CAMBIO_NOMBRE.setFont(new Font("Lexend", Font.BOLD, 20));
         ETIQUETA_CAMBIO_NOMBRE.setBorder(new EmptyBorder(25, 0, 15, 15));
-        ETIQUETA_CAMBIO_NOMBRE.setForeground(new Color(164, 227, 111));
+        ETIQUETA_CAMBIO_NOMBRE.setForeground(VistaVentana.COLOR_SECUNDARIO);
         PANEL_CAMBIO_NOMBRE.add(ETIQUETA_CAMBIO_NOMBRE);
 
         FIELD_NUEVO_NOMBRE = new JTextField(20);
         FIELD_NUEVO_NOMBRE.setFont(new Font("Lexend", Font.BOLD, 12));
         FIELD_NUEVO_NOMBRE.setBorder(new EmptyBorder(10, 10, 10, 10));
-        FIELD_NUEVO_NOMBRE.setForeground(new Color(253, 242, 240));
-        FIELD_NUEVO_NOMBRE.setBackground(new Color(164, 227, 111));
+        FIELD_NUEVO_NOMBRE.setForeground(VistaVentana.COLOR_PRIMARIO);
+        FIELD_NUEVO_NOMBRE.setBackground(VistaVentana.COLOR_SECUNDARIO);
         FIELD_NUEVO_NOMBRE.setDocument(new LimitDocument(30));
         PANEL_CAMBIO_NOMBRE.add(FIELD_NUEVO_NOMBRE);
 
         JButton BOTON_GUARDAR_NOMBRE = new JButton("GUARDAR");
         BOTON_GUARDAR_NOMBRE.setBorder(new EmptyBorder(10, 10, 10, 10));
-        BOTON_GUARDAR_NOMBRE.setForeground(new Color(253, 242, 240));
+        BOTON_GUARDAR_NOMBRE.setForeground(VistaVentana.COLOR_PRIMARIO);
         PANEL_CAMBIO_NOMBRE.add(BOTON_GUARDAR_NOMBRE);
 
         ETIQUETA_INFO = new JLabel("<html>PORFAVOR INTRODUCE UN NOMBRE <br> PARA GUARDAR LOS CAMBIOS</html>");
         ETIQUETA_INFO.setFont(new Font("Lexend", Font.BOLD, 12));
         ETIQUETA_INFO.setBorder(new EmptyBorder(15, 0, 15, 15));
-        ETIQUETA_INFO.setForeground(new Color(164, 227, 111));
+        ETIQUETA_INFO.setForeground(VistaVentana.COLOR_SECUNDARIO);
         ETIQUETA_INFO.setVisible(false);
         PANEL_CAMBIO_NOMBRE.add(ETIQUETA_INFO);
 
@@ -134,14 +134,14 @@ public class panelModificarCuenta extends JPanel implements Panel {
         JLabel mensaje = new JLabel("<html>PARA ELIMINAR LA CUENTA <br> ESCRIBE \"CONFIRMAR\".</html>");
         mensaje.setFont(new Font("Lexend", Font.BOLD, 15));
         mensaje.setBorder(new EmptyBorder(25, 15, 15, 15));
-        mensaje.setForeground(new Color(227, 111, 111));
+        mensaje.setForeground(VistaVentana.COLOR_ALERTA);
         dialogo.add(mensaje);
 
         JTextField confirmar = new JTextField(8);
         confirmar.setFont(new Font("Lexend", Font.BOLD, 12));
         confirmar.setBorder(new EmptyBorder(10, 25, 10, 25));
-        confirmar.setForeground(new Color(253, 242, 240));
-        confirmar.setBackground(new Color(227, 111, 111));
+        confirmar.setForeground(VistaVentana.COLOR_PRIMARIO);
+        confirmar.setBackground(VistaVentana.COLOR_ALERTA);
         confirmar.setDocument(new LimitDocument(9));
         confirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
 

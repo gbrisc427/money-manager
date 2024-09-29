@@ -19,12 +19,18 @@ public class VistaVentana extends JFrame {
     public static TOperacion TIPO_OPERACION;
     public static String ID_OPERACION;
     public static Cuenta CUENTA;
+    public static Color COLOR_PRIMARIO;
+    public static Color COLOR_SECUNDARIO;
+    public static Color COLOR_ALERTA;
+    public static Color COLOR_TXT;
+
 
     private final panelMenu PANEL_MENU = panelMenu.getInstancia();
 
     public static VistaVentana getInstancia() {
         if (instancia == null) {
-            cambiarEstilo();
+            establecerColores();
+            initEstilo();
             instancia = new VistaVentana();
         }
         return instancia;
@@ -38,6 +44,7 @@ public class VistaVentana extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
         setVisible(true);
+
         // CONTROL DEL CIERRE DE LA VENTANA
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -67,8 +74,8 @@ public class VistaVentana extends JFrame {
         JLabel bienvenidaTitulo = new JLabel();
         bienvenidaTitulo.setFont(new Font("Lexend", Font.BOLD, 30));
         bienvenidaTitulo.setBorder(new EmptyBorder(25, 15, 15, 15));
-        bienvenidaTitulo.setForeground(new Color(164, 227, 111));
-        bienvenidaTitulo.setBackground(new Color(253, 242, 240));
+        bienvenidaTitulo.setForeground(COLOR_SECUNDARIO);
+        bienvenidaTitulo.setBackground(COLOR_PRIMARIO);
         bienvenidaTitulo.setHorizontalAlignment(0);
         bienvenidaTitulo.setText("¡BIENVENIDO!");
         dialogo.add(bienvenidaTitulo);
@@ -76,8 +83,8 @@ public class VistaVentana extends JFrame {
         JLabel bienvenidaTexto = new JLabel();
         bienvenidaTexto.setFont(new Font("Lexend", Font.BOLD, 12));
         bienvenidaTexto.setBorder(new EmptyBorder(15, 15, 25, 15));
-        bienvenidaTexto.setForeground(new Color(164, 227, 111));
-        bienvenidaTexto.setBackground(new Color(253, 242, 240));
+        bienvenidaTexto.setForeground(COLOR_SECUNDARIO);
+        bienvenidaTexto.setBackground(COLOR_PRIMARIO);
         bienvenidaTexto.setHorizontalAlignment(0);
         bienvenidaTexto.setText("<html>BIENVENIDO A MONEY-MANAGER. <br> CIERRE ESTA VENTANA PARA COMENZAR. <br> SE CREARÁ UNA CUENTA POR <br> DEFECTO AUTOMÁTICAMENTE.</html>");
         dialogo.add(bienvenidaTexto);
@@ -86,34 +93,51 @@ public class VistaVentana extends JFrame {
         dialogo.setVisible(true);
     }
 
+    private static void establecerColores(){
+        AjustesManager AM =AjustesManager.getInstancia();
+        COLOR_PRIMARIO = AM.getCOLORES().get(0);
+        COLOR_SECUNDARIO = AM.getCOLORES().get(1);
+        COLOR_ALERTA = AM.getCOLORES().get(2);
+        COLOR_TXT = AM.getCOLORES().get(3);
+    }
 
-    private static void cambiarEstilo() {
-        UIManager.put("Button.background", new Color(164, 227, 111));
-        UIManager.put("Button.foreground", new Color(253, 242, 240));
+    public void guardarColores(){
+        AjustesManager AM =AjustesManager.getInstancia();
+        AM.getCOLORES().set(0, COLOR_PRIMARIO);
+        AM.getCOLORES().set(1, COLOR_SECUNDARIO);
+        AM.getCOLORES().set(2, COLOR_ALERTA);
+        AM.getCOLORES().set(3, COLOR_TXT);
+    }
+
+    private static void initEstilo() {
+        UIManager.put("Label.foreground", COLOR_TXT);
+        UIManager.put("Button.background", COLOR_SECUNDARIO);
+        UIManager.put("Button.foreground",COLOR_PRIMARIO);
         UIManager.put("Button.font", new Font("Lexend", Font.BOLD, 12));
         UIManager.put("Button.border", BorderFactory.createEmptyBorder(10, 15, 10, 15));
         UIManager.put("Button.focus", new Color(0, 0, 0, 0));
-        UIManager.put("Button.select", new Color(253, 242, 240));
-        UIManager.put("Panel.background", new Color(253, 242, 240));
-        UIManager.put("CheckBox.select", new Color(253, 242, 240));
-        UIManager.put("CheckBox.focus", new Color(253, 242, 240));
-        UIManager.put("ComboBox.selectionBackground", new Color(164, 227, 111));
-        UIManager.put("ComboBox.selectionForeground", new Color(253, 242, 240));
-        UIManager.put("ComboBox.focus", new Color(253, 242, 240));
-        UIManager.put("ComboBox.buttonBackground", new Color(253, 242, 240));
-        UIManager.put("ComboBox.buttonDarkShadow", new Color(253, 242, 240));
-        UIManager.put("ComboBox.buttonHighlight", new Color(253, 242, 240));
+        UIManager.put("Button.select",COLOR_PRIMARIO);
+        UIManager.put("Panel.background",COLOR_PRIMARIO);
+        UIManager.put("CheckBox.select",COLOR_PRIMARIO);
+        UIManager.put("CheckBox.focus", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.selectionBackground", COLOR_SECUNDARIO);
+        UIManager.put("ComboBox.selectionForeground", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.focus", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.buttonBackground", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.buttonDarkShadow", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.buttonHighlight", COLOR_PRIMARIO);
+        UIManager.put("ComboBox.disabledBackground", COLOR_PRIMARIO);
 
-        UIManager.put("ScrollBar.thumb", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.thumbDarkShadow", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.thumbHighlight", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.thumbShadow", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.track", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.trackHighlight", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.trackDarkShadow", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.trackShadow", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.foreground", new Color(253, 242, 240));
-        UIManager.put("ScrollBar.background", new Color(253, 242, 240));
+        UIManager.put("ScrollBar.thumb", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.thumbDarkShadow", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.thumbHighlight", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.thumbShadow", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.track", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.trackHighlight", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.trackDarkShadow", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.trackShadow", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.foreground", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.background", COLOR_PRIMARIO);
         UIManager.put("ScrollBar.incrementButtonSize", new Dimension(0, 0));
         UIManager.put("ScrollBar.decrementButtonSize", new Dimension(0, 0));
     }

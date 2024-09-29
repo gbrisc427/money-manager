@@ -35,8 +35,8 @@ public class panelPrincipal extends JPanel implements Panel{
         BOTON_NOMBRE_CUENTA = new JButton(nombreCuenta);
         BOTON_NOMBRE_CUENTA.setFont(new Font("Lexend", Font.BOLD, 30));
         BOTON_NOMBRE_CUENTA.setBorder(new EmptyBorder(35, 15, 0, 15));
-        BOTON_NOMBRE_CUENTA.setForeground(new Color(164, 227, 111));
-        BOTON_NOMBRE_CUENTA.setBackground(new Color(253, 242, 240));
+        BOTON_NOMBRE_CUENTA.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        BOTON_NOMBRE_CUENTA.setBackground(VistaVentana.COLOR_PRIMARIO);
         this.add(BOTON_NOMBRE_CUENTA, BorderLayout.NORTH);
 
         String saldo = CM.getSaldo();
