@@ -21,6 +21,7 @@ public class App {
         CM.leerCSV();
         OM.leerCSV();
         VV = VistaVentana.getInstancia();
+        VV.initVentana();
     }
 
 
