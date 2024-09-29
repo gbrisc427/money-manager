@@ -297,7 +297,7 @@ public class panelOperacion extends JPanel implements Panel{
                     }
                 }else{
                     if (txtFNewCant.getText().isEmpty()){
-                        OP.modificarIngresoGasto(VistaVentana.TIPO_OPERACION, tituloModifOp.getText(),
+                        OP.modificarIngresoGasto(VistaVentana.TIPO_OPERACION, tituloModifOp.getText().replace("#", ""),
                                 txtFNewCategoria.getText(),txtFNewAsunto.getText(), 0.0F);
                         updateOperacion();
                         dialogo.dispose();
@@ -307,7 +307,7 @@ public class panelOperacion extends JPanel implements Panel{
                             if (res < 0){
                                 popUpDatosOp(ventana);
                             }else{
-                                OP.modificarIngresoGasto(VistaVentana.TIPO_OPERACION, tituloModifOp.getText(),
+                                OP.modificarIngresoGasto(VistaVentana.TIPO_OPERACION, tituloModifOp.getText().replace("#", ""),
                                         txtFNewCategoria.getText(),txtFNewAsunto.getText(),
                                         Float.parseFloat(txtFNewCant.getText()));
                                 updateOperacion();
