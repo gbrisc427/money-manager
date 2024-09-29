@@ -14,6 +14,7 @@ public class panelOperacion extends JPanel implements Panel{
     private static panelOperacion instancia = null;
 
     private final JLabel ETIQUETA_ID_OPERACION;
+    private final JLabel ETIQUETA_FECHA;
     private final JLabel ETIQUETA_CANTIDAD;
     private final JLabel ETIQUETA_CATEGORIA;
     private final JLabel ETIQUETA_ASUNTO;
@@ -50,7 +51,7 @@ public class panelOperacion extends JPanel implements Panel{
         ETIQUETA_CANTIDAD.setPreferredSize(new Dimension(400,160));
         PANEL_DATOS_OPERACION.add(ETIQUETA_CANTIDAD);
 
-        JLabel ETIQUETA_FECHA = new JLabel("", SwingConstants.CENTER);
+        ETIQUETA_FECHA = new JLabel("", SwingConstants.CENTER);
         ETIQUETA_FECHA.setFont(new Font("Lexend", Font.BOLD, 20));
         ETIQUETA_FECHA.setBorder(new EmptyBorder(10, 10, 10, 10));
         ETIQUETA_FECHA.setForeground(VistaVentana.COLOR_SECUNDARIO);
@@ -329,8 +330,11 @@ public class panelOperacion extends JPanel implements Panel{
     private void updateOperacion(){
         Operacion operacion = OperacionesManager.getInstancia().buscarOperacion(VistaVentana.ID_OPERACION,
                 VistaVentana.TIPO_OPERACION);
+        String fecha = operacion.getFecha().getDayOfMonth() + "/"  +
+                operacion.getFecha().getMonthValue() + "/" + operacion.getFecha().getYear();
         ETIQUETA_ID_OPERACION.setText("#" + VistaVentana.ID_OPERACION);
         ETIQUETA_ASUNTO.setText(operacion.getMotivo());
+        ETIQUETA_FECHA.setText(fecha);
         ETIQUETA_CATEGORIA.setText(operacion.getCategoria());
         ETIQUETA_CANTIDAD.setText(operacion.getCantidad() + "€");
         if (operacion.getCantidad()< 0){
