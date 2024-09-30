@@ -137,7 +137,7 @@ public class panelOperacion extends JPanel implements Panel{
                 String text = confirmar.getText();
                 if (text.equals("CONFIRMAR")) {
                     dialogo.dispose();
-                    OperacionesManager.getInstancia().eliminarOperacion(ETIQUETA_ID_OPERACION.getText(),
+                    OperacionesManager.getInstancia().eliminarOperacion(ETIQUETA_ID_OPERACION.getText().replace("#", ""),
                             VistaVentana.TIPO_OPERACION);
                     operacionEliminada = true;
                 }else{

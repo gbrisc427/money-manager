@@ -79,8 +79,8 @@ public class panelPrincipal extends JPanel implements Panel{
 
     @Override
     public void mostrarPanel() {
+        updateInfo();
         ventana.add(this, BorderLayout.CENTER);
         this.setVisible(true);
-        updateInfo();
     }
 }

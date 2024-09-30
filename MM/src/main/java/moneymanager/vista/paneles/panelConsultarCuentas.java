@@ -86,9 +86,9 @@ public class panelConsultarCuentas extends JPanel implements Panel{
             boton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    CM.cambiarCuenta(aux);
                     ocultarPanel();
                     panelPrincipal.getInstancia().mostrarPanel();
-                    CM.cambiarCuenta(aux);
                 }
             });
 
