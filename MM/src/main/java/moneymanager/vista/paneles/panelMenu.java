@@ -66,6 +66,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelPrincipal.getInstancia().ocultarPanel();
                     panelHistorialOperaciones.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
+                    panelAjustes.getInstancia().ocultarPanel();
 
                     panelRealizarOperacion.getInstancia().mostrarPanel();
                 }
@@ -81,6 +82,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelRealizarOperacion.getInstancia().ocultarPanel();
                     panelHistorialOperaciones.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
+                    panelAjustes.getInstancia().ocultarPanel();
 
                     panelConsultarCuentas.getInstancia().mostrarPanel();
                 }
@@ -95,6 +97,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelPrincipal.getInstancia().ocultarPanel();
                     panelRealizarOperacion.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
+                    panelAjustes.getInstancia().ocultarPanel();
 
                     panelHistorialOperaciones.getInstancia().mostrarPanel();
                 }
