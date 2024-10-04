@@ -22,12 +22,14 @@ public class Cuenta {
     public void aniadirOperacion(Operacion operacion){
         if (operacionNueva(operacion)) {
             this.saldo += operacion.getCantidad();
+            redondearSaldo();
             historial.add(operacion);
         }
     }
 
     public void modificarSaldo(float cantAntigua, float cantNueva){
         this.saldo = this.saldo - cantAntigua + cantNueva;
+        redondearSaldo();
     }
 
     public void cargarOperacion(Operacion operacion){
@@ -44,6 +46,10 @@ public class Cuenta {
             }
         }
         return nuevo;
+    }
+
+    private void redondearSaldo(){
+        this.saldo = Math.round(saldo * 100) / 100f;
     }
 
     public String getNombre() {
