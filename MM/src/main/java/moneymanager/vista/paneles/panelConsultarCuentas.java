@@ -7,6 +7,7 @@ import moneymanager.vista.VistaVentana;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,25 @@ public class panelConsultarCuentas extends JPanel implements Panel{
         SCROLL_CUENTAS.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         SCROLL_CUENTAS.setVisible(true);
         SCROLL_CUENTAS.setFocusable(false);
+        SCROLL_CUENTAS.getVerticalScrollBar().setUnitIncrement(23);
+        SCROLL_CUENTAS.getVerticalScrollBar().setBlockIncrement(50);
+        SCROLL_CUENTAS.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return createInvisibleButton();
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return createInvisibleButton();
+            }
+
+            private JButton createInvisibleButton() {
+                JButton button = new JButton();
+                button.setPreferredSize(new Dimension(0, 0));
+                return button;
+            }
+        });
         SCROLL_CUENTAS.setBackground(VistaVentana.COLOR_PRIMARIO);
         SCROLL_CUENTAS.setBorder(new EmptyBorder(0,0,0,0));
 
@@ -95,6 +115,7 @@ public class panelConsultarCuentas extends JPanel implements Panel{
             PANEL_CUENTAS.add(boton);
             PANEL_CUENTAS.add(cant);
         }
+        PANEL_CUENTAS.setPreferredSize(new Dimension(300, CM.getCuentas().size()*52));
     }
 
     private void popUpNewCuenta(JFrame parentFrame) {

@@ -128,10 +128,10 @@ public class VistaVentana extends JFrame {
         UIManager.put("ComboBox.buttonHighlight", COLOR_PRIMARIO);
         UIManager.put("ComboBox.disabledBackground", COLOR_PRIMARIO);
 
-        UIManager.put("ScrollBar.thumb", COLOR_PRIMARIO);
-        UIManager.put("ScrollBar.thumbDarkShadow", COLOR_PRIMARIO);
-        UIManager.put("ScrollBar.thumbHighlight", COLOR_PRIMARIO);
-        UIManager.put("ScrollBar.thumbShadow", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.thumb", COLOR_SECUNDARIO);
+        UIManager.put("ScrollBar.thumbDarkShadow", COLOR_SECUNDARIO);
+        UIManager.put("ScrollBar.thumbHighlight", COLOR_SECUNDARIO);
+        UIManager.put("ScrollBar.thumbShadow", COLOR_SECUNDARIO);
         UIManager.put("ScrollBar.track", COLOR_PRIMARIO);
         UIManager.put("ScrollBar.trackHighlight", COLOR_PRIMARIO);
         UIManager.put("ScrollBar.trackDarkShadow", COLOR_PRIMARIO);

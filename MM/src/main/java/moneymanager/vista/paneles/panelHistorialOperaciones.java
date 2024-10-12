@@ -7,6 +7,7 @@ import moneymanager.vista.VistaVentana;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,22 +37,41 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
         updateOperaciones();
 
         PANEL_OPERACIONES.setPreferredSize(new Dimension(300, CM.getCuentaActual().getHistorial().size()*52));
+        JScrollPane SCROLL_OPERACIONES = new JScrollPane(PANEL_OPERACIONES);
+        SCROLL_OPERACIONES.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        SCROLL_OPERACIONES.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        SCROLL_OPERACIONES.setVisible(true);
+        SCROLL_OPERACIONES.setFocusable(false);
+        SCROLL_OPERACIONES.getVerticalScrollBar().setUnitIncrement(23);
+        SCROLL_OPERACIONES.getVerticalScrollBar().setBlockIncrement(50);
+        SCROLL_OPERACIONES.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                return createInvisibleButton();
+            }
 
-        JScrollPane scrollOperaciones = new JScrollPane(PANEL_OPERACIONES);
-        scrollOperaciones.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollOperaciones.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollOperaciones.setVisible(true);
-        scrollOperaciones.setFocusable(false);
-        scrollOperaciones.setBackground(VistaVentana.COLOR_PRIMARIO);
-        scrollOperaciones.setBorder(new EmptyBorder(0,0,0,0));
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                return createInvisibleButton();
+            }
 
-        this.add(scrollOperaciones, BorderLayout.CENTER);
+            private JButton createInvisibleButton() {
+                JButton button = new JButton();
+                button.setPreferredSize(new Dimension(0, 0));
+                return button;
+            }
+        });
+        SCROLL_OPERACIONES.setBackground(VistaVentana.COLOR_PRIMARIO);
+        SCROLL_OPERACIONES.setBorder(new EmptyBorder(0,0,0,0));
+
+        this.add(SCROLL_OPERACIONES, BorderLayout.CENTER);
     }
 
     private void updateOperaciones(){
         PANEL_OPERACIONES.removeAll();
         PANEL_OPERACIONES.revalidate();
         PANEL_OPERACIONES.repaint();
+        CuentaManager CM = CuentaManager.getInstancia();
         if (VistaVentana.CUENTA.getHistorial().isEmpty()){
 
             JLabel noHayOperaciones = new JLabel("<html> EL HISTORIAL ESTÁ VACÍO </html>",SwingConstants.CENTER);
@@ -83,7 +103,7 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             JLabel cant = new JLabel(txt);
             cant.setFont(new Font("Lexend", Font.BOLD, 15));
             cant.setBorder(new EmptyBorder(1, 5, 1, 5));
-            cant.setPreferredSize(new Dimension(300, 30));
+            cant.setPreferredSize(new Dimension(280, 30));
             cant.setForeground(VistaVentana.COLOR_SECUNDARIO);
             cant.setBackground(VistaVentana.COLOR_PRIMARIO);
             if (opc.getCantidad() < 0 || opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
@@ -105,6 +125,8 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             PANEL_OPERACIONES.add(cant);
 
         }
+        PANEL_OPERACIONES.setPreferredSize(new Dimension(300, CM.getCuentaActual().getHistorial().size()*52));
+
     }
 
     @Override
