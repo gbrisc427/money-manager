@@ -15,6 +15,10 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
     private static panelRealizarOperacion instancia = null;
 
     private final  JComboBox<String> COMBOBOX_CUENTAS_TRASNFERENCIA;
+    private final JCheckBox CHECKBOX_TRANSFERENCIA;
+    private final JTextField FIELD_CANTIDAD;
+    private final JTextField FIELD_CATEGORIA;
+    private final JTextField FIELD_ASUNTO;
 
     public static panelRealizarOperacion getInstancia() {
         if (instancia == null) {
@@ -68,7 +72,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_CANTIDAD, gbc);
 
-        JTextField FIELD_CANTIDAD = new JTextField(4);
+        FIELD_CANTIDAD = new JTextField(4);
         FIELD_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_CANTIDAD.setBorder(new EmptyBorder(8, 8, 8, 8));
         FIELD_CANTIDAD.setForeground(VistaVentana.COLOR_PRIMARIO);
@@ -94,7 +98,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_CATEGORIA, gbc);
 
-        JTextField FIELD_CATEGORIA = new JTextField(15);
+        FIELD_CATEGORIA = new JTextField(15);
         FIELD_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_CATEGORIA.setBorder(new EmptyBorder(8, 8, 8, 8));
         FIELD_CATEGORIA.setForeground(VistaVentana.COLOR_PRIMARIO);
@@ -119,7 +123,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_ASUNTO, gbc);
 
-        JTextField FIELD_ASUNTO = new JTextField(15);
+        FIELD_ASUNTO = new JTextField(15);
         FIELD_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 13));
         FIELD_ASUNTO.setBorder(new EmptyBorder(8, 8, 8, 8));
         FIELD_ASUNTO.setForeground(VistaVentana.COLOR_PRIMARIO);
@@ -135,7 +139,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
 
         gbc.insets = new Insets(10, 0, 10, 5);
 
-        JCheckBox CHECKBOX_TRANSFERENCIA = new JCheckBox("TRANSEFERENCIA");
+        CHECKBOX_TRANSFERENCIA = new JCheckBox("TRANSEFERENCIA");
         CHECKBOX_TRANSFERENCIA.setFont(new Font("Lexend", Font.BOLD, 15));
         CHECKBOX_TRANSFERENCIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
         CHECKBOX_TRANSFERENCIA.setBackground(VistaVentana.COLOR_PRIMARIO);
@@ -148,7 +152,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_REALIZAR_OPERACION.add(CHECKBOX_TRANSFERENCIA, gbc);
 
-        String[] opciones = CM.getCuentasOpTransf();
+        String[] opciones = new String[CM.getCuentasOpTransf().length];
         COMBOBOX_CUENTAS_TRASNFERENCIA = new JComboBox<>(opciones);
         COMBOBOX_CUENTAS_TRASNFERENCIA.setFont(new Font("Lexend", Font.BOLD, 15));
         COMBOBOX_CUENTAS_TRASNFERENCIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
@@ -241,10 +245,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
                 }else {
                     popUpDatosOp(ventana);
                 }
-                FIELD_ASUNTO.setText("");
-                FIELD_CANTIDAD.setText("");
-                FIELD_CATEGORIA.setText("");
-                CHECKBOX_TRANSFERENCIA.setSelected(false);
+                updatePanel();
             }
         });
 
@@ -253,10 +254,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
             public void actionPerformed(ActionEvent e) {
                 ocultarPanel();
                 panelPrincipal.getInstancia().mostrarPanel();
-                FIELD_ASUNTO.setText("");
-                FIELD_CANTIDAD.setText("");
-                FIELD_CATEGORIA.setText("");
-                CHECKBOX_TRANSFERENCIA.setSelected(false);
+                updatePanel();
             }
         });
     }
@@ -291,13 +289,25 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         dialogo.setVisible(true);
     }
 
-    private void updateCuentasTransferencia(){
-        for (int i = 0; i < COMBOBOX_CUENTAS_TRASNFERENCIA.getItemCount(); i++ ){
+
+    private void updatePanel(){
+        COMBOBOX_CUENTAS_TRASNFERENCIA.setEnabled(false);
+        CHECKBOX_TRANSFERENCIA.setSelected(false);
+        FIELD_ASUNTO.setText("");
+        FIELD_CANTIDAD.setText("");
+        FIELD_CATEGORIA.setText("");
+        updateCuentasTransf();
+    }
+
+    private void updateCuentasTransf(){
+        for (int i = COMBOBOX_CUENTAS_TRASNFERENCIA.getItemCount() - 1; i >= 0; i--){
             COMBOBOX_CUENTAS_TRASNFERENCIA.removeItemAt(i);
         }
         for (String opc : CuentaManager.getInstancia().getCuentasOpTransf()){
+            System.out.println(CuentaManager.getInstancia().getCuentasOpTransf().length);
             COMBOBOX_CUENTAS_TRASNFERENCIA.addItem(opc);
         }
+        COMBOBOX_CUENTAS_TRASNFERENCIA.setSelectedItem(null);
     }
 
 
@@ -311,6 +321,6 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
     public void mostrarPanel() {
         ventana.add(this, BorderLayout.CENTER);
         this.setVisible(true);
-        updateCuentasTransferencia();
+        updatePanel();
     }
 }

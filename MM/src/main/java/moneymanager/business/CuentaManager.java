@@ -163,6 +163,7 @@ public class CuentaManager {
         for (Cuenta cuenta : cuentas){
             if (!cuenta.equals(cuentaActual)){
                 opc[cont] = cuenta.getId();
+                cont++;
             }
         }
         return opc;
