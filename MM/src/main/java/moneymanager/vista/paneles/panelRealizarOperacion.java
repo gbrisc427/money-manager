@@ -1,7 +1,9 @@
 package moneymanager.vista.paneles;
 
+
 import moneymanager.business.*;
 import moneymanager.vista.VistaVentana;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,15 +12,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
+
 public class panelRealizarOperacion  extends JPanel implements Panel {
 
+
     private static panelRealizarOperacion instancia = null;
+
 
     private final  JComboBox<String> COMBOBOX_CUENTAS_TRASNFERENCIA;
     private final JCheckBox CHECKBOX_TRANSFERENCIA;
     private final JTextField FIELD_CANTIDAD;
     private final JTextField FIELD_CATEGORIA;
     private final JTextField FIELD_ASUNTO;
+
 
     public static panelRealizarOperacion getInstancia() {
         if (instancia == null) {
@@ -27,11 +33,14 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         return instancia;
     }
 
+
     private panelRealizarOperacion(){
         CuentaManager CM = CuentaManager.getInstancia();
 
+
         this.setLayout(new BorderLayout());
         this.setVisible(false);
+
 
         JLabel ETIQUETA_TITULO = new JLabel("REALIZAR OPERACIÓN", SwingConstants.CENTER);
         ETIQUETA_TITULO.setFont(new Font("Lexend", Font.BOLD, 25));
@@ -41,12 +50,15 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         ETIQUETA_TITULO.setVisible(true);
         this.add(ETIQUETA_TITULO,BorderLayout.NORTH);
 
+
         JPanel PANEL_REALIZAR_OPERACION = new JPanel();
         PANEL_REALIZAR_OPERACION.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         PANEL_REALIZAR_OPERACION.setVisible(true);
 
+
         gbc.insets = new Insets(15, 15, 15, 15);
+
 
         JLabel ETIQUETA_SUBTITULO = new JLabel("<html> INTRODUCE LOS VALORES: </html>", SwingConstants.LEFT);
         ETIQUETA_SUBTITULO.setFont(new Font("Lexend", Font.BOLD, 17));
@@ -59,7 +71,9 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.WEST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_SUBTITULO, gbc);
 
+
         gbc.insets = new Insets(5, 0, 5, 5);
+
 
         JLabel ETIQUETA_CANTIDAD = new JLabel("<html>CANTIDAD: </html>", SwingConstants.LEFT);
         ETIQUETA_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 15));
@@ -71,6 +85,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_CANTIDAD, gbc);
+
 
         FIELD_CANTIDAD = new JTextField(4);
         FIELD_CANTIDAD.setFont(new Font("Lexend", Font.BOLD, 13));
@@ -87,6 +102,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.WEST;
         PANEL_REALIZAR_OPERACION.add(FIELD_CANTIDAD, gbc);
 
+
         JLabel ETIQUETA_CATEGORIA = new JLabel("<html>CATEGORÍA: </html>", SwingConstants.LEFT);
         ETIQUETA_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 15));
         ETIQUETA_CATEGORIA.setForeground(VistaVentana.COLOR_SECUNDARIO);
@@ -97,6 +113,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_CATEGORIA, gbc);
+
 
         FIELD_CATEGORIA = new JTextField(15);
         FIELD_CATEGORIA.setFont(new Font("Lexend", Font.BOLD, 13));
@@ -112,6 +129,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.WEST;
         PANEL_REALIZAR_OPERACION.add(FIELD_CATEGORIA, gbc);
 
+
         JLabel ETIQUETA_ASUNTO = new JLabel("<html>ASUNTO: </html>", SwingConstants.LEFT);
         ETIQUETA_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 15));
         ETIQUETA_ASUNTO.setForeground(VistaVentana.COLOR_SECUNDARIO);
@@ -122,6 +140,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.EAST;
         PANEL_REALIZAR_OPERACION.add(ETIQUETA_ASUNTO, gbc);
+
 
         FIELD_ASUNTO = new JTextField(15);
         FIELD_ASUNTO.setFont(new Font("Lexend", Font.BOLD, 13));
@@ -137,7 +156,9 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.WEST;
         PANEL_REALIZAR_OPERACION.add(FIELD_ASUNTO, gbc);
 
+
         gbc.insets = new Insets(10, 0, 10, 5);
+
 
         CHECKBOX_TRANSFERENCIA = new JCheckBox("TRANSEFERENCIA");
         CHECKBOX_TRANSFERENCIA.setFont(new Font("Lexend", Font.BOLD, 15));
@@ -151,6 +172,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_REALIZAR_OPERACION.add(CHECKBOX_TRANSFERENCIA, gbc);
+
 
         String[] opciones = new String[CM.getCuentasOpTransf().length];
         COMBOBOX_CUENTAS_TRASNFERENCIA = new JComboBox<>(opciones);
@@ -174,17 +196,21 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_REALIZAR_OPERACION.add(COMBOBOX_CUENTAS_TRASNFERENCIA, gbc);
 
+
         PANEL_REALIZAR_OPERACION.setBorder(new EmptyBorder(15,30,15,15));
         this.add(PANEL_REALIZAR_OPERACION, BorderLayout.CENTER);
+
 
         JPanel PANEL_BOTONES = new JPanel();
         PANEL_BOTONES.setLayout(new FlowLayout(FlowLayout.CENTER));
         PANEL_BOTONES.setVisible(true);
 
+
         JButton BOTON_GUARDAR = new JButton("ACEPTAR");
         BOTON_GUARDAR.setBorder(new EmptyBorder(9, 9,9, 9));
         BOTON_GUARDAR.setForeground(VistaVentana.COLOR_PRIMARIO);
         PANEL_BOTONES.add(BOTON_GUARDAR);
+
 
         JButton BOTON_CANCELAR = new JButton("CANCELAR");
         BOTON_CANCELAR.setBorder(new EmptyBorder(9, 9, 9, 9));
@@ -192,8 +218,10 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         BOTON_CANCELAR.setBackground(VistaVentana.COLOR_ALERTA);
         PANEL_BOTONES.add(BOTON_CANCELAR);
 
+
         PANEL_BOTONES.setBorder(new EmptyBorder(0,0,30,0));
         this.add(PANEL_BOTONES, BorderLayout.SOUTH);
+
 
         CHECKBOX_TRANSFERENCIA.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -207,6 +235,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
                 COMBOBOX_CUENTAS_TRASNFERENCIA.setEnabled(false);
             }
         });
+
 
         BOTON_GUARDAR.addActionListener(new ActionListener() {
             @Override
@@ -224,6 +253,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
                                 Cuenta cuentaDest = CM.getCuenta((String) COMBOBOX_CUENTAS_TRASNFERENCIA.getSelectedItem());
                                 OM.registrarTransferencia(FIELD_ASUNTO.getText(), Float.parseFloat(FIELD_CANTIDAD.getText()),
                                         FIELD_CATEGORIA.getText(), cuentaDest);
+
 
                                 ocultarPanel();
                                 panelPrincipal.getInstancia().mostrarPanel();
@@ -249,6 +279,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
             }
         });
 
+
         BOTON_CANCELAR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -259,10 +290,12 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         });
     }
 
+
     private void popUpDatosOp(JFrame parentFrame){
         JDialog dialogo = new JDialog(parentFrame, "", true);
         dialogo.setSize(400, 440);
         dialogo.setLayout(new FlowLayout());
+
 
         JLabel titulo = new JLabel("",SwingConstants.CENTER);
         titulo.setFont(new Font("Lexend", Font.BOLD, 18));
@@ -272,6 +305,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         titulo.setHorizontalTextPosition(0);
         titulo.setText("<html>ALGUNO DE LOS DATOS <br> INTRODUCIDOS ES INCORRECTO</html>");
         dialogo.add(titulo);
+
 
         JLabel txt = new JLabel();
         txt.setFont(new Font("Lexend", Font.BOLD, 12));
@@ -285,9 +319,12 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
                 "<br><p style=\"color: rgb(227, 111, 111);\">TRANSFERENCIA:</p>  SI SE SELECCIONA <br>ESTA OPCIÓN, LA CANTIDAD DEBE DE <br>SER UN VALOR POSITIVO.</html>");
         dialogo.add(txt);
 
+
         dialogo.setLocationRelativeTo(parentFrame);
         dialogo.setVisible(true);
     }
+
+
 
 
     private void updatePanel(){
@@ -297,18 +334,30 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         FIELD_CANTIDAD.setText("");
         FIELD_CATEGORIA.setText("");
         updateCuentasTransf();
+        if (COMBOBOX_CUENTAS_TRASNFERENCIA.getItemCount() == 0){
+            COMBOBOX_CUENTAS_TRASNFERENCIA.setEnabled(false);
+            COMBOBOX_CUENTAS_TRASNFERENCIA.setVisible(false);
+            CHECKBOX_TRANSFERENCIA.setVisible(false);
+        }else{
+            COMBOBOX_CUENTAS_TRASNFERENCIA.setSelectedIndex(0);
+            COMBOBOX_CUENTAS_TRASNFERENCIA.setEnabled(false);
+            COMBOBOX_CUENTAS_TRASNFERENCIA.setVisible(true);
+            CHECKBOX_TRANSFERENCIA.setVisible(true);
+        }
     }
+
 
     private void updateCuentasTransf(){
         for (int i = COMBOBOX_CUENTAS_TRASNFERENCIA.getItemCount() - 1; i >= 0; i--){
             COMBOBOX_CUENTAS_TRASNFERENCIA.removeItemAt(i);
         }
         for (String opc : CuentaManager.getInstancia().getCuentasOpTransf()){
-            System.out.println(CuentaManager.getInstancia().getCuentasOpTransf().length);
             COMBOBOX_CUENTAS_TRASNFERENCIA.addItem(opc);
         }
         COMBOBOX_CUENTAS_TRASNFERENCIA.setSelectedItem(null);
     }
+
+
 
 
     @Override
@@ -317,6 +366,7 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         this.setVisible(false);
     }
 
+
     @Override
     public void mostrarPanel() {
         ventana.add(this, BorderLayout.CENTER);
@@ -324,3 +374,4 @@ public class panelRealizarOperacion  extends JPanel implements Panel {
         updatePanel();
     }
 }
+
