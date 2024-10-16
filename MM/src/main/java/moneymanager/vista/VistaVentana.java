@@ -44,6 +44,9 @@ public class VistaVentana extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
         setVisible(true);
+        Image icon = Toolkit.getDefaultToolkit().getImage(VistaVentana.class.getResource("/icono.png"));
+        this.setIconImage(icon);
+
 
         // CONTROL DEL CIERRE DE LA VENTANA
         this.addWindowListener(new WindowAdapter() {
