@@ -22,6 +22,8 @@ public class VistaVentana extends JFrame {
     public static Color COLOR_PRIMARIO;
     public static Color COLOR_SECUNDARIO;
     public static Color COLOR_ALERTA;
+    public static Color COLOR_TRANSFERENCIA;
+    public static Color COLOR_TRANSFERENCIA_REC;
     public static Color COLOR_TXT;
 
 
@@ -101,7 +103,8 @@ public class VistaVentana extends JFrame {
         COLOR_PRIMARIO = AM.getCOLORES().get(0);
         COLOR_SECUNDARIO = AM.getCOLORES().get(1);
         COLOR_ALERTA = AM.getCOLORES().get(2);
-        COLOR_TXT = AM.getCOLORES().get(3);
+        COLOR_TRANSFERENCIA = AM.getCOLORES().get(3);
+        COLOR_TXT = AM.getCOLORES().get(4);
     }
 
     public void guardarColores(){
@@ -109,7 +112,8 @@ public class VistaVentana extends JFrame {
         AM.getCOLORES().set(0, COLOR_PRIMARIO);
         AM.getCOLORES().set(1, COLOR_SECUNDARIO);
         AM.getCOLORES().set(2, COLOR_ALERTA);
-        AM.getCOLORES().set(3, COLOR_TXT);
+        AM.getCOLORES().set(3, COLOR_TRANSFERENCIA);
+        AM.getCOLORES().set(4, COLOR_TXT);
     }
 
     private static void initEstilo() {

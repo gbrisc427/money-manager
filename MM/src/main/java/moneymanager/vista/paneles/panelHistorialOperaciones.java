@@ -229,11 +229,7 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             String fecha = opc.getFecha().getYear()+"/"+opc.getFecha().getDayOfMonth()+"/"
                     +opc.getFecha().getMonthValue();
             String txt = "";
-            if (opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
-                txt = fecha + "  " + -opc.getCantidad() + "€  " + opc.getCategoria() ;
-            }else{
-                txt = fecha + "  " +opc.getCantidad() + "€  " + opc.getCategoria() ;
-            }
+            txt = fecha + "  " +opc.getCantidad() + "€  " + opc.getCategoria() ;
 
 
             JButton boton = new JButton(id);
@@ -252,10 +248,15 @@ public class panelHistorialOperaciones extends JPanel implements Panel{
             cant.setPreferredSize(new Dimension(280, 30));
             cant.setForeground(VistaVentana.COLOR_SECUNDARIO);
             cant.setBackground(VistaVentana.COLOR_PRIMARIO);
-            if (opc.getCantidad() < 0 || opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
+            if (opc.getCantidad() < 0){
                 boton.setForeground(VistaVentana.COLOR_ALERTA);
                 cant.setForeground(VistaVentana.COLOR_ALERTA);
             }
+            if (opc.getTOperacion().equals(TOperacion.TRANSFERENCIA)){
+                boton.setForeground(VistaVentana.COLOR_TRANSFERENCIA);
+                cant.setForeground(VistaVentana.COLOR_TRANSFERENCIA);
+            }
+
 
 
             boton.addActionListener(new ActionListener() {
