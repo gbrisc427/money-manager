@@ -1,6 +1,7 @@
 package moneymanager.vista.paneles;
 
 import moneymanager.business.CuentaManager;
+import moneymanager.business.Gasto;
 import moneymanager.business.OperacionesManager;
 import moneymanager.business.TOperacion;
 import moneymanager.vista.VistaVentana;
@@ -34,6 +35,7 @@ public class panelEstadisticas extends JPanel implements Panel{
     private final JLabel ETIQUETA_ID;
     private final JComboBox<String> COMBOBOX_TIEMPO;
     private final JComboBox<String> COMBOBOX_MESES;
+    private final JComboBox<String> COMBOBOX_CATEGORIAS;
 
     private final String[] MESES = {"ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO",
             "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"};
@@ -43,6 +45,7 @@ public class panelEstadisticas extends JPanel implements Panel{
     private  final JLabel ETIQUETA_INGRESOS_TOTALES;
     private  final JLabel ETIQUETA_GASTOS_TOTALES;
     private  final JLabel ETIQUETA_BENEFICIO;
+    private  final JLabel ETIQUETA_INFO_GRAFICO;
     private final DefaultCategoryDataset DATASET_GRAFICO;
     private final ChartPanel PANEL_GRAFICO;
 
@@ -90,11 +93,15 @@ public class panelEstadisticas extends JPanel implements Panel{
         COMBOBOX_TIEMPO.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "MES")) {
+                if (Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "MES") || Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "SIEMPRE")) {
                     COMBOBOX_MESES.setEnabled(true);
+                    ETIQUETA_INFO_GRAFICO.setVisible(true);
                     COMBOBOX_MESES.setSelectedIndex(0);
+                    PANEL_GRAFICO.setVisible(false);
                 }else{
                     COMBOBOX_MESES.setEnabled(false);
+                    ETIQUETA_INFO_GRAFICO.setVisible(false);
+                    PANEL_GRAFICO.setVisible(true);
                     COMBOBOX_MESES.setSelectedItem(null);
                 }
                 updateInfo();
@@ -207,6 +214,20 @@ public class panelEstadisticas extends JPanel implements Panel{
         gbc.anchor = GridBagConstraints.WEST;
         PANEL_OPERACIONES.add(ETIQUETA_BENEFICIO, gbc);
 
+        ETIQUETA_INFO_GRAFICO = new JLabel("<html>* EL GRÁFICO DE INGRESOS/GASTOS SOLO ESTÁ <br>DISPONIBLE PARA EL ÚLTIMO AÑO Y TIMESTRE<html>");
+        ETIQUETA_INFO_GRAFICO.setFont(new Font("Lexend", Font.BOLD, 10));
+        ETIQUETA_INFO_GRAFICO.setBorder(new EmptyBorder(5, 10, 10, 10));
+        ETIQUETA_INFO_GRAFICO.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 4;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        PANEL_OPERACIONES.add(ETIQUETA_INFO_GRAFICO, gbc);
+
+
+
         DATASET_GRAFICO = new DefaultCategoryDataset();
 
         JFreeChart GRAFICO_ING_GASTOS = ChartFactory.createLineChart(
@@ -254,6 +275,25 @@ public class panelEstadisticas extends JPanel implements Panel{
         PANEL_GRAFICO = new ChartPanel(GRAFICO_ING_GASTOS);
         PANEL_GRAFICO.setPreferredSize(new java.awt.Dimension(300, 200));
         PANEL_OPERACIONES.add(PANEL_GRAFICO, gbc);
+
+        JLabel ETIQUETA_CATEGORIAS = new JLabel("CATEGORÍAS: ");
+        ETIQUETA_CATEGORIAS.setFont(new Font("Lexend", Font.BOLD, 20));
+        ETIQUETA_CATEGORIAS.setBorder(new EmptyBorder(10,  10, 10, 10));
+        ETIQUETA_CATEGORIAS.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        PANEL_OPERACIONES.add(ETIQUETA_CATEGORIAS, gbc);
+
+
+        COMBOBOX_CATEGORIAS = new JComboBox<>(new String[]{"INGRESOS", "GASTOS"});
+
+        //COMBO BOX QUE CONTENGA LA OPCIÓN INGRESOS / GASTOS
+
+        //GRÁFICO QUE MUESTRE LOS ING / GASTOS POR CADA CATEGORÍA SEGÚN EL TIEMPO SELECCIONADO
 
 
         JScrollPane SCROLL_ESTADISTICAS = new JScrollPane(PANEL_OPERACIONES);
@@ -396,23 +436,23 @@ public class panelEstadisticas extends JPanel implements Panel{
         return transf;
     }
 
-    //ARREGLARLO DA FALLO EN EL GRÁFICO
-    public void setData() {
-        CuentaManager CM = CuentaManager.getInstancia();
+    private void setData() {
         DATASET_GRAFICO.clear();
-        double ingreso, gastos;
-
         if (Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "ULT. TRIMESTRE")) {
-            for (int i = 0; i < 3; i++) {
-                ingreso = CM.cantTotal(TOperacion.INGRESO, MES-i, ANIO);
-                gastos = -1 * CM.cantTotal(TOperacion.GASTO, MES-i, ANIO) + -1 * CM.cantTotal(TOperacion.TRANSFERENCIA, MES-i, ANIO);
-                DATASET_GRAFICO.addValue(ingreso, "ING", MESES[MES-1-i]);
-                DATASET_GRAFICO.addValue(gastos, "GASTOS", MESES[MES-1-i]);
-            }
+            setData(3);
         }else if (Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "ULT. AÑO")) {
+            setData(MES);
+        }
+    }
 
-        }else if (Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "SIEMPRE")) {
-
+    private void setData(int meses){
+        CuentaManager CM = CuentaManager.getInstancia();
+        double ingreso, gastos;
+        for (int i = 0; i < meses; i++) {
+            ingreso = CM.cantTotal(TOperacion.INGRESO, MES-i, ANIO);
+            gastos = -1 * CM.cantTotal(TOperacion.GASTO, MES-i, ANIO) + -1 * CM.cantTotal(TOperacion.TRANSFERENCIA, MES-i, ANIO);
+            DATASET_GRAFICO.addValue(ingreso, "ING", MESES[MES-1-i]);
+            DATASET_GRAFICO.addValue(gastos, "GASTOS", MESES[MES-1-i]);
         }
     }
 
@@ -434,7 +474,6 @@ public class panelEstadisticas extends JPanel implements Panel{
 
         setData();
 
-        PANEL_GRAFICO.setVisible(!Objects.equals(COMBOBOX_TIEMPO.getSelectedItem(), "MES"));
         ETIQUETA_NOMBRE_CUENTA.setText(nombre);
         ETIQUETA_INGRESOS_TOTALES.setText(ingresosT);
         ETIQUETA_GASTOS_TOTALES.setText(gastosT);
@@ -453,6 +492,7 @@ public class panelEstadisticas extends JPanel implements Panel{
     @Override
     public void mostrarPanel() {
         updateInfo();
+        COMBOBOX_TIEMPO.setSelectedIndex(0);
         ventana.add(this, BorderLayout.CENTER);
         this.setVisible(true);
     }
