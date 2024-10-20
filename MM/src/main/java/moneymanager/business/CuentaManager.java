@@ -3,11 +3,14 @@ package moneymanager.business;
 
 import moneymanager.persistencia.AccesoDatos;
 import moneymanager.persistencia.AccesoDatosCuentas;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -171,8 +174,6 @@ public class CuentaManager {
     }
 
 
-
-
     public Cuenta getCuentaActual() {
         return cuentaActual;
     }
@@ -195,7 +196,6 @@ public class CuentaManager {
         return opc;
     }
 
-
     public List<Operacion> getOperacionesCAFechaDeterminada (int mes, int anio){
         List<Operacion> operaciones = new ArrayList<>();
         for (Operacion op : cuentaActual.getHistorial()){
@@ -206,6 +206,48 @@ public class CuentaManager {
         return operaciones;
     }
 
+    public float cantTotal(TOperacion tOperacion ){
+        float cant = 0;
+        for (Operacion operacion : cuentaActual.getHistorial()){
+            if (operacion.getTOperacion().equals(tOperacion)){
+                cant+= operacion.getCantidad();
+            }
+        }
+        return cant;
+    }
+
+    public float cantTotal(TOperacion tOperacion, int mes, int anio){
+        float cant = 0;
+        for (Operacion operacion : cuentaActual.getHistorial()){
+            if (operacion.getTOperacion().equals(tOperacion) && operacion.getFecha().getMonthValue() == mes
+                && operacion.getFecha().getYear() == anio){
+                cant+= operacion.getCantidad();
+            }
+        }
+        return cant;
+    }
+
+    public float cantTotal(TOperacion tOperacion, int modo){
+        float cant = 0;
+        int mes = LocalDateTime.now().getMonthValue();
+        int anio = LocalDateTime.now().getYear();
+        if (modo == 0){
+            for (Operacion operacion : cuentaActual.getHistorial()){
+                if (operacion.getTOperacion().equals(tOperacion) && (operacion.getFecha().getMonthValue() == mes ||
+                        operacion.getFecha().getMonthValue() == mes-1 ||operacion.getFecha().getMonthValue() == mes-2 )){
+                    cant+= operacion.getCantidad();
+                }
+            }
+        }else if(modo == 1){
+            for (Operacion operacion : cuentaActual.getHistorial()){
+                if (operacion.getTOperacion().equals(tOperacion) && operacion.getFecha().getYear() == anio){
+                    cant+= operacion.getCantidad();
+                }
+            }
+        }
+
+        return cant;
+    }
 
 
 

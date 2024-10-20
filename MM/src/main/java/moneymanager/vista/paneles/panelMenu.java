@@ -4,13 +4,10 @@ import moneymanager.vista.VistaVentana;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 public class panelMenu extends JPanel implements Panel {
 
@@ -39,12 +36,20 @@ public class panelMenu extends JPanel implements Panel {
         BOTON_VER_HISTORIAL.setMaximumSize(new Dimension(Integer.MAX_VALUE, BOTON_VER_HISTORIAL.getMinimumSize().height));
         this.add(BOTON_VER_HISTORIAL);
 
+        JButton BOTON_ESTADISTICAS = new JButton("ESTADÍSTICAS");
+        BOTON_ESTADISTICAS.setAlignmentX(Component.CENTER_ALIGNMENT);
+        BOTON_ESTADISTICAS.setMaximumSize(new Dimension(Integer.MAX_VALUE, BOTON_ESTADISTICAS.getMinimumSize().height));
+        this.add(BOTON_ESTADISTICAS);
+
         JButton BOTON_CONSULTAR_CUENTAS = new JButton("CUENTAS");
         BOTON_CONSULTAR_CUENTAS.setAlignmentX(Component.CENTER_ALIGNMENT);
         BOTON_CONSULTAR_CUENTAS.setMaximumSize(new Dimension(Integer.MAX_VALUE, BOTON_CONSULTAR_CUENTAS.getMinimumSize().height));
         this.add(BOTON_CONSULTAR_CUENTAS);
 
+
         this.add(Box.createVerticalGlue());
+
+
         JButton BOTON_AYUDA = new JButton("AYUDA");
         BOTON_AYUDA.setAlignmentX(Component.CENTER_ALIGNMENT);
         BOTON_AYUDA.setMaximumSize(new Dimension(Integer.MAX_VALUE, BOTON_AYUDA.getMinimumSize().height));
@@ -67,6 +72,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelHistorialOperaciones.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
                     panelAjustes.getInstancia().ocultarPanel();
+                    panelEstadisticas.getInstancia().ocultarPanel();
 
                     panelRealizarOperacion.getInstancia().mostrarPanel();
                 }
@@ -83,6 +89,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelHistorialOperaciones.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
                     panelAjustes.getInstancia().ocultarPanel();
+                    panelEstadisticas.getInstancia().ocultarPanel();
 
                     panelConsultarCuentas.getInstancia().mostrarPanel();
                 }
@@ -98,8 +105,25 @@ public class panelMenu extends JPanel implements Panel {
                     panelRealizarOperacion.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
                     panelAjustes.getInstancia().ocultarPanel();
+                    panelEstadisticas.getInstancia().ocultarPanel();
 
                     panelHistorialOperaciones.getInstancia().mostrarPanel();
+                }
+            }
+        });
+
+        BOTON_ESTADISTICAS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelNoHayCuentas.getInstancia().isVisible() && !panelConsultarCuentas.getInstancia().isVisible()){
+                    panelModificarCuenta.getInstancia().ocultarPanel();
+                    panelPrincipal.getInstancia().ocultarPanel();
+                    panelRealizarOperacion.getInstancia().ocultarPanel();
+                    panelOperacion.getInstancia().ocultarPanel();
+                    panelAjustes.getInstancia().ocultarPanel();
+                    panelHistorialOperaciones.getInstancia().ocultarPanel();
+
+                   panelEstadisticas.getInstancia().mostrarPanel();
                 }
             }
         });
@@ -121,6 +145,7 @@ public class panelMenu extends JPanel implements Panel {
                     panelHistorialOperaciones.getInstancia().ocultarPanel();
                     panelOperacion.getInstancia().ocultarPanel();
                     panelConsultarCuentas.getInstancia().ocultarPanel();
+                    panelEstadisticas.getInstancia().ocultarPanel();
 
                     panelAjustes.getInstancia().mostrarPanel();
                 }
