@@ -35,6 +35,7 @@ public class Cuenta {
     public void cargarOperacion(Operacion operacion){
         if (operacionNueva(operacion)) {
             historial.add(operacion);
+            redondearSaldo();
         }
     }
 

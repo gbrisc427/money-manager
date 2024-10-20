@@ -23,7 +23,6 @@ public class VistaVentana extends JFrame {
     public static Color COLOR_SECUNDARIO;
     public static Color COLOR_ALERTA;
     public static Color COLOR_TRANSFERENCIA;
-    public static Color COLOR_TRANSFERENCIA_REC;
     public static Color COLOR_TXT;
 
 
