@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class panelEstadisticas extends JPanel implements Panel{
@@ -40,14 +41,14 @@ public class panelEstadisticas extends JPanel implements Panel{
     private final String[] MESES = {"ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO",
             "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"};
 
-    private final String[] OPCIONES = {"MES", "ULT. TRIMESTRE", "ULT. AÑO", "SIEMPRE"};
-
     private  final JLabel ETIQUETA_INGRESOS_TOTALES;
     private  final JLabel ETIQUETA_GASTOS_TOTALES;
     private  final JLabel ETIQUETA_BENEFICIO;
     private  final JLabel ETIQUETA_INFO_GRAFICO;
     private final DefaultCategoryDataset DATASET_GRAFICO;
+    private final DefaultCategoryDataset DATASET_GRAFICO_CATEGORIAS;
     private final ChartPanel PANEL_GRAFICO;
+    private final ChartPanel PANEL_GRAFICO_CATEGORIAS;
 
     private int MES;
     private int ANIO;
@@ -78,6 +79,7 @@ public class panelEstadisticas extends JPanel implements Panel{
         PANEL_OPERACIONES.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
+        String[] OPCIONES = {"MES", "ULT. TRIMESTRE", "ULT. AÑO", "SIEMPRE"};
         COMBOBOX_TIEMPO = new JComboBox<>(OPCIONES);
         COMBOBOX_TIEMPO.setFont(new Font("Lexend", Font.BOLD, 12));
         COMBOBOX_TIEMPO.setForeground(VistaVentana.COLOR_SECUNDARIO);
@@ -267,13 +269,14 @@ public class panelEstadisticas extends JPanel implements Panel{
         GRAFICO_ING_GASTOS.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
 
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 4;
         gbc.gridwidth = 4;
         gbc.gridheight = 3;
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_GRAFICO = new ChartPanel(GRAFICO_ING_GASTOS);
         PANEL_GRAFICO.setPreferredSize(new java.awt.Dimension(300, 200));
+        PANEL_GRAFICO.setBorder(new EmptyBorder(0,0,30,0));
         PANEL_OPERACIONES.add(PANEL_GRAFICO, gbc);
 
         JLabel ETIQUETA_CATEGORIAS = new JLabel("CATEGORÍAS: ");
@@ -291,10 +294,123 @@ public class panelEstadisticas extends JPanel implements Panel{
 
         COMBOBOX_CATEGORIAS = new JComboBox<>(new String[]{"INGRESOS", "GASTOS"});
 
-        //COMBO BOX QUE CONTENGA LA OPCIÓN INGRESOS / GASTOS
+        COMBOBOX_CATEGORIAS.setFont(new Font("Lexend", Font.BOLD, 12));
+        COMBOBOX_CATEGORIAS.setForeground(VistaVentana.COLOR_SECUNDARIO);
+        COMBOBOX_CATEGORIAS.setBackground(VistaVentana.COLOR_PRIMARIO);
+        COMBOBOX_CATEGORIAS.setBorder(new EmptyBorder(0,0,0,0));
+        COMBOBOX_CATEGORIAS.setSelectedIndex(0);
 
-        //GRÁFICO QUE MUESTRE LOS ING / GASTOS POR CADA CATEGORÍA SEGÚN EL TIEMPO SELECCIONADO
+        COMBOBOX_CATEGORIAS.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
+                JComponent popup = (JComponent) COMBOBOX_CATEGORIAS.getUI().getAccessibleChild(COMBOBOX_CATEGORIAS, 0);
+                if (popup instanceof JPopupMenu) {
+                    JScrollPane scrollPane = (JScrollPane) ((JPopupMenu) popup).getComponent(0);
+                    JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
+
+                    scrollPane.setFocusable(false);
+                    scrollPane.getVerticalScrollBar().setUnitIncrement(23);
+                    scrollPane.getVerticalScrollBar().setBlockIncrement(50);
+                    scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+                        @Override
+                        protected JButton createDecreaseButton(int orientation) {
+                            return createInvisibleButton();
+                        }
+
+
+                        @Override
+                        protected JButton createIncreaseButton(int orientation) {
+                            return createInvisibleButton();
+                        }
+
+
+                        private JButton createInvisibleButton() {
+                            JButton button = new JButton();
+                            button.setPreferredSize(new Dimension(0, 0));
+                            return button;
+                        }
+                    });
+                    scrollPane.setBackground(VistaVentana.COLOR_PRIMARIO);
+
+
+                    verticalScrollBar.setPreferredSize(new Dimension(10, 0));
+                }
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {}
+
+            @Override
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {}
+        });
+
+        COMBOBOX_CATEGORIAS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateGraficoCategorias();
+            }
+        });
+
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        PANEL_OPERACIONES.add(COMBOBOX_CATEGORIAS, gbc);
+
+
+
+        DATASET_GRAFICO_CATEGORIAS = new DefaultCategoryDataset();
+
+        JFreeChart GRAFICO_CATEGORIAS = ChartFactory.createLineChart(
+                "",
+                "",
+                "€",
+                DATASET_GRAFICO_CATEGORIAS,
+                PlotOrientation.VERTICAL,
+                false,
+                true,
+                false
+        );
+
+        updateGraficoCategorias();
+
+        CategoryPlot plotCategorias = GRAFICO_CATEGORIAS.getCategoryPlot();
+
+        plotCategorias.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        NumberAxis rangeAxisCategorias = (NumberAxis) plotCategorias.getRangeAxis();
+        rangeAxisCategorias.setRange(0.0, rangeAxisCategorias.getUpperBound());
+
+        rangeAxisCategorias.setRange(0.0, 200.0);
+
+        rangeAxisCategorias.setTickUnit(new NumberTickUnit(25));
+
+        LineAndShapeRenderer rendererCategorias = new LineAndShapeRenderer();
+        rendererCategorias.setSeriesPaint(0, VistaVentana.COLOR_SECUNDARIO);
+        plotCategorias.setRenderer(rendererCategorias);
+        CategoryAxis domainAxisCategorias = plotCategorias.getDomainAxis();
+
+        domainAxisCategorias.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        domainAxisCategorias.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        rangeAxisCategorias.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        rangeAxisCategorias.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        GRAFICO_CATEGORIAS.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 4;
+        gbc.gridheight = 3;
+        gbc.fill = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        PANEL_GRAFICO_CATEGORIAS = new ChartPanel(GRAFICO_CATEGORIAS);
+        PANEL_GRAFICO_CATEGORIAS.setPreferredSize(new java.awt.Dimension(300, 200));
+        PANEL_GRAFICO_CATEGORIAS.setBorder(new EmptyBorder(20,0,50,0));
+        PANEL_OPERACIONES.add(PANEL_GRAFICO_CATEGORIAS, gbc);
 
         JScrollPane SCROLL_ESTADISTICAS = new JScrollPane(PANEL_OPERACIONES);
         SCROLL_ESTADISTICAS.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -460,6 +576,25 @@ public class panelEstadisticas extends JPanel implements Panel{
         return Math.round(num * 100) / 100f;
     }
 
+    private void updateGraficoCategorias(){
+        DATASET_GRAFICO_CATEGORIAS.clear();
+        CuentaManager CM = CuentaManager.getInstancia();
+
+
+        if (Objects.equals(COMBOBOX_CATEGORIAS.getSelectedItem(), "INGRESOS")){
+            List<String> categorias = CM.getCategorias(TOperacion.INGRESO);
+            for (String categoria : categorias){
+                DATASET_GRAFICO_CATEGORIAS.addValue(CM.cantTotal(TOperacion.INGRESO, categoria), "", categoria );
+            }
+        }else if (Objects.equals(COMBOBOX_CATEGORIAS.getSelectedItem(), "GASTOS")){
+            List<String> categorias = CM.getCategorias(TOperacion.GASTO);
+            for (String categoria : categorias){
+                DATASET_GRAFICO_CATEGORIAS.addValue(-1 * CM.cantTotal(TOperacion.GASTO, categoria), "", categoria );
+            }
+        }
+
+    }
+
     private void updateInfo(){
         CuentaManager CM = CuentaManager.getInstancia();
         setFecha();
@@ -492,6 +627,7 @@ public class panelEstadisticas extends JPanel implements Panel{
     @Override
     public void mostrarPanel() {
         updateInfo();
+        updateGraficoCategorias();
         COMBOBOX_TIEMPO.setSelectedIndex(0);
         ventana.add(this, BorderLayout.CENTER);
         this.setVisible(true);

@@ -249,6 +249,26 @@ public class CuentaManager {
         return cant;
     }
 
+    public float cantTotal(TOperacion tOperacion, String categoria){
+        float cant = 0;
+        for (Operacion operacion : cuentaActual.getHistorial()){
+            if (operacion.getTOperacion().equals(tOperacion) && operacion.getCategoria().equals(categoria)){
+                cant+= operacion.getCantidad();
+            }
+        }
+        return cant;
+    }
+
+    public List<String> getCategorias(TOperacion tOp){
+        List<String> categorias = new ArrayList<>();
+        for (Operacion operacion : cuentaActual.getHistorial()){
+            if (!categorias.contains(operacion.getCategoria()) && operacion.getTOperacion().equals(tOp)){
+                categorias.add(operacion.getCategoria());
+            }
+        }
+        return categorias;
+    }
+
 
 
 }
