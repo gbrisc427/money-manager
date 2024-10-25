@@ -5,12 +5,11 @@ import moneymanager.business.Gasto;
 import moneymanager.business.OperacionesManager;
 import moneymanager.business.TOperacion;
 import moneymanager.vista.VistaVentana;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.*;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
@@ -18,10 +17,14 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +35,8 @@ public class panelEstadisticas extends JPanel implements Panel{
 
     private static panelEstadisticas instancia = null;
 
+
+    private  final JPanel PANEL_OPERACIONES = new JPanel();
     private final JLabel ETIQUETA_NOMBRE_CUENTA;
     private final JLabel ETIQUETA_ID;
     private final JComboBox<String> COMBOBOX_TIEMPO;
@@ -75,7 +80,7 @@ public class panelEstadisticas extends JPanel implements Panel{
         ETIQUETA_NOMBRE_CUENTA.setBackground(VistaVentana.COLOR_PRIMARIO);
         this.add(ETIQUETA_NOMBRE_CUENTA, BorderLayout.NORTH);
 
-        JPanel PANEL_OPERACIONES = new JPanel();
+
         PANEL_OPERACIONES.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -119,9 +124,9 @@ public class panelEstadisticas extends JPanel implements Panel{
         COMBOBOX_MESES.setBorder(new EmptyBorder(0,0,0,0));
         COMBOBOX_MESES.setSelectedIndex(0);
 
-        COMBOBOX_MESES.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+        COMBOBOX_MESES.addPopupMenuListener(new PopupMenuListener() {
             @Override
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 JComponent popup = (JComponent) COMBOBOX_MESES.getUI().getAccessibleChild(COMBOBOX_MESES, 0);
                 if (popup instanceof JPopupMenu) {
                     JScrollPane scrollPane = (JScrollPane) ((JPopupMenu) popup).getComponent(0);
@@ -158,10 +163,10 @@ public class panelEstadisticas extends JPanel implements Panel{
             }
 
             @Override
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {}
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
 
             @Override
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {}
+            public void popupMenuCanceled(PopupMenuEvent e) {}
         });
 
         COMBOBOX_MESES.addActionListener(new ActionListener() {
@@ -275,9 +280,21 @@ public class panelEstadisticas extends JPanel implements Panel{
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_GRAFICO = new ChartPanel(GRAFICO_ING_GASTOS);
-        PANEL_GRAFICO.setPreferredSize(new java.awt.Dimension(300, 200));
+        PANEL_GRAFICO.setPreferredSize(new Dimension(300, 200));
         PANEL_GRAFICO.setBorder(new EmptyBorder(0,0,30,0));
         PANEL_OPERACIONES.add(PANEL_GRAFICO, gbc);
+
+        PANEL_GRAFICO.addChartMouseListener(new ChartMouseListener() {
+            @Override
+            public void chartMouseClicked(ChartMouseEvent event) {
+                popUpGraficoIngGastos(ventana);
+            }
+
+            @Override
+            public void chartMouseMoved(ChartMouseEvent event) {
+
+            }
+        });
 
         JLabel ETIQUETA_CATEGORIAS = new JLabel("CATEGORÍAS: ");
         ETIQUETA_CATEGORIAS.setFont(new Font("Lexend", Font.BOLD, 20));
@@ -292,6 +309,8 @@ public class panelEstadisticas extends JPanel implements Panel{
         PANEL_OPERACIONES.add(ETIQUETA_CATEGORIAS, gbc);
 
 
+
+
         COMBOBOX_CATEGORIAS = new JComboBox<>(new String[]{"INGRESOS", "GASTOS"});
 
         COMBOBOX_CATEGORIAS.setFont(new Font("Lexend", Font.BOLD, 12));
@@ -300,9 +319,9 @@ public class panelEstadisticas extends JPanel implements Panel{
         COMBOBOX_CATEGORIAS.setBorder(new EmptyBorder(0,0,0,0));
         COMBOBOX_CATEGORIAS.setSelectedIndex(0);
 
-        COMBOBOX_CATEGORIAS.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+        COMBOBOX_CATEGORIAS.addPopupMenuListener(new PopupMenuListener() {
             @Override
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 JComponent popup = (JComponent) COMBOBOX_CATEGORIAS.getUI().getAccessibleChild(COMBOBOX_CATEGORIAS, 0);
                 if (popup instanceof JPopupMenu) {
                     JScrollPane scrollPane = (JScrollPane) ((JPopupMenu) popup).getComponent(0);
@@ -339,10 +358,10 @@ public class panelEstadisticas extends JPanel implements Panel{
             }
 
             @Override
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {}
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
 
             @Override
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {}
+            public void popupMenuCanceled(PopupMenuEvent e) {}
         });
 
         COMBOBOX_CATEGORIAS.addActionListener(new ActionListener() {
@@ -408,9 +427,21 @@ public class panelEstadisticas extends JPanel implements Panel{
         gbc.fill = GridBagConstraints.RELATIVE;
         gbc.anchor = GridBagConstraints.CENTER;
         PANEL_GRAFICO_CATEGORIAS = new ChartPanel(GRAFICO_CATEGORIAS);
-        PANEL_GRAFICO_CATEGORIAS.setPreferredSize(new java.awt.Dimension(300, 200));
+        PANEL_GRAFICO_CATEGORIAS.setPreferredSize(new Dimension(300, 200));
         PANEL_GRAFICO_CATEGORIAS.setBorder(new EmptyBorder(20,0,50,0));
         PANEL_OPERACIONES.add(PANEL_GRAFICO_CATEGORIAS, gbc);
+
+        PANEL_GRAFICO_CATEGORIAS.addChartMouseListener(new ChartMouseListener() {
+            @Override
+            public void chartMouseClicked(ChartMouseEvent event) {
+                popUpGraficoCategorias(ventana);
+            }
+
+            @Override
+            public void chartMouseMoved(ChartMouseEvent event) {
+
+            }
+        });
 
         JScrollPane SCROLL_ESTADISTICAS = new JScrollPane(PANEL_OPERACIONES);
         SCROLL_ESTADISTICAS.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -448,6 +479,106 @@ public class panelEstadisticas extends JPanel implements Panel{
         ETIQUETA_ID.setBorder(new EmptyBorder(0, 15, 20, 15));
         this.add(ETIQUETA_ID, BorderLayout.SOUTH);
 
+    }
+
+    private void popUpGraficoIngGastos (JFrame parentFrame){
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(600, 400);
+        dialogo.setLayout(new FlowLayout());
+
+        JFreeChart GRAFICO_ING_GASTOS = ChartFactory.createLineChart(
+                "",
+                "",
+                "€",
+                DATASET_GRAFICO,
+                PlotOrientation.VERTICAL,
+                false,
+                true,
+                false
+        );
+
+
+        CategoryPlot plot = GRAFICO_ING_GASTOS.getCategoryPlot();
+
+        plot.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setRange(0.0, rangeAxis.getUpperBound());
+
+        rangeAxis.setRange(0.0, 200.0);
+
+        rangeAxis.setTickUnit(new NumberTickUnit(25));
+
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, VistaVentana.COLOR_SECUNDARIO);
+        plot.setRenderer(renderer);
+        CategoryAxis domainAxis = plot.getDomainAxis();
+
+        domainAxis.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        domainAxis.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        rangeAxis.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        rangeAxis.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        GRAFICO_ING_GASTOS.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        ChartPanel panel = new ChartPanel(GRAFICO_ING_GASTOS);
+        panel.setPreferredSize(new Dimension(600, 350));
+        panel.setBorder(new EmptyBorder(0,0,30,0));
+        dialogo.add(panel);
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
+    }
+
+    private void popUpGraficoCategorias (JFrame parentFrame){
+        JDialog dialogo = new JDialog(parentFrame, "", true);
+        dialogo.setSize(600, 400);
+        dialogo.setLayout(new FlowLayout());
+
+        JFreeChart GRAFICO_ING_GASTOS = ChartFactory.createLineChart(
+                "",
+                "",
+                "€",
+                DATASET_GRAFICO_CATEGORIAS,
+                PlotOrientation.VERTICAL,
+                false,
+                true,
+                false
+        );
+
+
+        CategoryPlot plot = GRAFICO_ING_GASTOS.getCategoryPlot();
+
+        plot.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setRange(0.0, rangeAxis.getUpperBound());
+
+        rangeAxis.setRange(0.0, 200.0);
+
+        rangeAxis.setTickUnit(new NumberTickUnit(25));
+
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, VistaVentana.COLOR_SECUNDARIO);
+        plot.setRenderer(renderer);
+        CategoryAxis domainAxis = plot.getDomainAxis();
+
+        domainAxis.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        domainAxis.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        rangeAxis.setTickLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+        rangeAxis.setLabelPaint(VistaVentana.COLOR_SECUNDARIO);
+
+        GRAFICO_ING_GASTOS.setBackgroundPaint(VistaVentana.COLOR_PRIMARIO);
+
+        ChartPanel panel = new ChartPanel(GRAFICO_ING_GASTOS);
+        panel.setPreferredSize(new Dimension(600, 350));
+        panel.setBorder(new EmptyBorder(0,0,30,0));
+        dialogo.add(panel);
+
+        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setVisible(true);
     }
 
     private String[] getOpcionesComboBoxMeses(){
