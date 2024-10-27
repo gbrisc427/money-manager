@@ -713,12 +713,12 @@ public class panelEstadisticas extends JPanel implements Panel{
 
 
         if (Objects.equals(COMBOBOX_CATEGORIAS.getSelectedItem(), "INGRESOS")){
-            List<String> categorias = CM.getCategorias(TOperacion.INGRESO);
+            List<String> categorias = CM.getCategorias(TOperacion.INGRESO, String.valueOf(COMBOBOX_TIEMPO.getSelectedItem()), MES, ANIO);
             for (String categoria : categorias){
                 DATASET_GRAFICO_CATEGORIAS.addValue(CM.cantTotal(TOperacion.INGRESO, categoria), "", categoria );
             }
         }else if (Objects.equals(COMBOBOX_CATEGORIAS.getSelectedItem(), "GASTOS")){
-            List<String> categorias = CM.getCategorias(TOperacion.GASTO);
+            List<String> categorias = CM.getCategorias(TOperacion.GASTO, String.valueOf(COMBOBOX_TIEMPO.getSelectedItem()), MES, ANIO);
             for (String categoria : categorias){
                 DATASET_GRAFICO_CATEGORIAS.addValue(-1 * CM.cantTotal(TOperacion.GASTO, categoria), "", categoria );
             }
@@ -738,6 +738,7 @@ public class panelEstadisticas extends JPanel implements Panel{
         String gastosT = "GASTOS TOTALES: " + gastos + "€";
         String beneficio = "BENEFICIO: " + round(ingresos - gastos)  +"€";
 
+        updateGraficoCategorias();
         setData();
 
         ETIQUETA_NOMBRE_CUENTA.setText(nombre);
@@ -758,7 +759,6 @@ public class panelEstadisticas extends JPanel implements Panel{
     @Override
     public void mostrarPanel() {
         updateInfo();
-        updateGraficoCategorias();
         COMBOBOX_TIEMPO.setSelectedIndex(0);
         ventana.add(this, BorderLayout.CENTER);
         this.setVisible(true);
