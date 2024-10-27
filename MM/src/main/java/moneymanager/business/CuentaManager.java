@@ -3,14 +3,10 @@ package moneymanager.business;
 
 import moneymanager.persistencia.AccesoDatos;
 import moneymanager.persistencia.AccesoDatosCuentas;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 
@@ -259,9 +255,43 @@ public class CuentaManager {
         return cant;
     }
 
-    public List<String> getCategorias(TOperacion tOp){
+    private List<Operacion> getOperaciones( String tiempo, int mes, int anio){
+        List<Operacion> ops = new ArrayList<>();
+        switch (tiempo){
+            case "MES":
+                for (Operacion operacion : cuentaActual.getHistorial()){
+                    if (operacion.getFecha().getMonthValue() == mes){
+                        ops.add(operacion);
+                    }
+                }
+                break;
+            case "ULT. TRIMESTRE":
+                for (Operacion operacion : cuentaActual.getHistorial()){
+                    if ((operacion.getFecha().getMonthValue() == mes || operacion.getFecha().getMonthValue() == mes-1
+                            ||operacion.getFecha().getMonthValue() == mes-2 )){
+                        ops.add(operacion);
+                    }
+                }
+                break;
+            case  "ULT. AÑO":
+                for (Operacion operacion : cuentaActual.getHistorial()){
+                    if (operacion.getFecha().getYear() == anio){
+                        ops.add(operacion);
+                    }
+                }
+                break;
+            case "SIEMPRE":
+                ops.addAll(cuentaActual.getHistorial());
+                break;
+        }
+
+        return ops;
+    }
+
+    public List<String> getCategorias(TOperacion tOp, String tiempo, int mes, int anio){
         List<String> categorias = new ArrayList<>();
-        for (Operacion operacion : cuentaActual.getHistorial()){
+
+        for (Operacion operacion : getOperaciones(tiempo, mes, anio)){
             if (!categorias.contains(operacion.getCategoria()) && operacion.getTOperacion().equals(tOp)){
                 categorias.add(operacion.getCategoria());
             }
