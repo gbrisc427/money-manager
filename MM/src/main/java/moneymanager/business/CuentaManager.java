@@ -46,8 +46,7 @@ public class CuentaManager {
     public void leerCSV(){
         try {
             AD.leerCsv("CSV/cuentas.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
         }
     }
 
@@ -55,8 +54,8 @@ public class CuentaManager {
     public void escribirCSV(){
         try {
             AD.escribirCsv("CSV/cuentas.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
+
         }
     }
 

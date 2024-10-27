@@ -26,16 +26,16 @@ public class AjustesManager {
     public void leerCSV(){
         try {
             AD.leerCsv("AJUSTES/ajustes.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
+
         }
     }
 
     public void escribirCSV(){
         try {
             AD.escribirCsv("AJUSTES/ajustes.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
+
         }
     }
 
