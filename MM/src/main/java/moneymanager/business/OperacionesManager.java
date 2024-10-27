@@ -30,16 +30,15 @@ public class OperacionesManager {
     public void leerCSV(){
         try {
             AD.leerCsv("CSV/operaciones.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
         }
     }
 
     public void escribirCSV(){
         try {
             AD.escribirCsv("CSV/operaciones.csv");}
-        catch (IOException e){
-            // CREAR MÉTODO QUE LANCE UNA POP UP CON ERROR AL GUARDAR LOS DATOS
+        catch (IOException ignored){
+
         }
     }
 

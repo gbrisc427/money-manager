@@ -1,7 +1,6 @@
 package moneymanager.vista.paneles;
 
 import moneymanager.business.CuentaManager;
-import moneymanager.business.Gasto;
 import moneymanager.business.OperacionesManager;
 import moneymanager.business.TOperacion;
 import moneymanager.vista.VistaVentana;
@@ -9,7 +8,6 @@ import org.jfree.chart.*;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
@@ -23,8 +21,6 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -287,7 +283,7 @@ public class panelEstadisticas extends JPanel implements Panel{
         PANEL_GRAFICO.addChartMouseListener(new ChartMouseListener() {
             @Override
             public void chartMouseClicked(ChartMouseEvent event) {
-                popUpGraficoIngGastos(ventana);
+                popUpGraficoIngGastos();
             }
 
             @Override
@@ -481,8 +477,8 @@ public class panelEstadisticas extends JPanel implements Panel{
 
     }
 
-    private void popUpGraficoIngGastos (JFrame parentFrame){
-        JDialog dialogo = new JDialog(parentFrame, "", true);
+    private void popUpGraficoIngGastos (){
+        JDialog dialogo = new JDialog(Panel.ventana, "", true);
         dialogo.setSize(600, 400);
         dialogo.setLayout(new FlowLayout());
 
@@ -527,7 +523,7 @@ public class panelEstadisticas extends JPanel implements Panel{
         panel.setBorder(new EmptyBorder(0,0,30,0));
         dialogo.add(panel);
 
-        dialogo.setLocationRelativeTo(parentFrame);
+        dialogo.setLocationRelativeTo(Panel.ventana);
         dialogo.setVisible(true);
     }
 
